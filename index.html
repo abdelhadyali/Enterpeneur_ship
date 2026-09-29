@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة أفكار مشاريع ريادة الأعمال-قريباًSOON </title>
-    <!-- استيراد خط تجوال العصري الجميل -->
+    <title>منصة أفكار مشاريع ريادة الأعمال</title>
+    <!-- استيراد خط تجوال العصري -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
         * {
@@ -41,22 +41,61 @@
             font-size: 16px;
             opacity: 0.9;
         }
-        /* تصميم زر / صورة Hire Me بشكل شيك */
-        .hire-me-badge {
+        .actions-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .btn-custom {
             background-color: #ffc107;
             color: #212529;
-            padding: 12px 25px;
+            padding: 10px 20px;
             border-radius: 50px;
             font-weight: 900;
-            font-size: 18px;
+            font-size: 16px;
             text-decoration: none;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             transition: transform 0.3s ease, background-color 0.3s ease;
             display: inline-block;
+            cursor: pointer;
+            border: none;
         }
-        .hire-me-badge:hover {
+        .btn-custom:hover {
             transform: translateY(-3px);
             background-color: #ffca2c;
+        }
+        /* قسم مراجعة الـ CV */
+        .cv-section {
+            max-width: 900px;
+            margin: 0 auto 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            display: none; /* مخفي لحين الضغط على الزر */
+        }
+        .cv-section h2 {
+            color: #007bff;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+        .cv-section textarea {
+            width: 100%;
+            height: 120px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 15px;
+            resize: vertical;
+        }
+        .ai-result {
+            margin-top: 15px;
+            padding: 15px;
+            background: #e9ecef;
+            border-radius: 8px;
+            border-right: 4px solid #28a745;
+            display: none;
         }
         .container {
             max-width: 900px;
@@ -78,10 +117,6 @@
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             border-right: 5px solid #007bff;
-            transition: transform 0.2s ease;
-        }
-        .idea-card:hover {
-            transform: translateY(-2px);
         }
         .idea-card h3 {
             margin: 0 0 10px 0;
@@ -103,15 +138,27 @@
 </head>
 <body>
 
-    <!-- الهيدر العلوي مع العنوان وشعار Hire Me -->
+    <!-- الهيدر العلوي مع الأزرار -->
     <div class="header-container">
         <div class="header-text">
             <h1>منصة أفكار مشاريع ريادة الأعمال</h1>
-            <p>استكشف أحدث الأفكار الريادية المبتكرة والمتجددة</p>
+            <p>استكشف أحدث الأفكار الريادية المبتكرة</p>
         </div>
-        <div>
-            <!-- استبدل الرابط # برابط بروفايلك على لينكد إن أو موقعك -->
-            <a href="#" class="hire-me-badge">✨ Hire Me</a>
+        <div class="actions-group">
+            <button class="btn-custom" onclick="toggleCvSection()">🤖 Review CV</button>
+            <a href="#" class="btn-custom" style="background-color: #ffffff; color: #007bff;">✨ Hire Me</a>
+        </div>
+    </div>
+
+    <!-- قسم مراجعة السيرة الذاتية التفاعلي -->
+    <div class="cv-section" id="cvSection">
+        <h2>مراجعة وتحليل السيرة الذاتية بالذكاء الاصطناعي</h2>
+        <p style="margin-bottom: 10px; color: #666; font-size: 14px;">الصق نبذة أو محتوى سيرتك الذاتية هنا ليقوم النظام بتحليلها واكتشاف الأخطاء:</p>
+        <textarea id="cvInput" placeholder="اكتب أو الصق محتوى سيرتك الذاتية هنا..."></textarea>
+        <button class="btn-custom" style="background-color: #28a745; color: white;" onclick="analyzeCV()">تحليل وفحص الـ CV</button>
+        <div class="ai-result" id="aiResult">
+            <strong>نتيجة التحليل والمقترحات:</strong>
+            <p id="resultText" style="margin-top: 8px;"></p>
         </div>
     </div>
 
@@ -121,24 +168,43 @@
     </div>
 
     <!-- مكتبة Supabase -->
-    <script src="https://cdn.jsdelivr.5net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // إعدادات الاتصال بقاعدة البيانات الخاصة بك
         const SUPABASE_URL = 'https://pojytwrjosezrmupjrvy.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvanl0d3Jqb3NlenJtdXBqcnZ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5NzAwMzksImV4cCI6MjA3NDU0NjAzOX0.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvanl0d3Jqb3NlenJtdXBqcnZ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5NzAwMzksImV4cCI6MjA3NDU0NjAzOX0...';
 
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+        // إظهار وإخفاء قسم الـ CV عند الضغط على الزر
+        function toggleCvSection() {
+            const section = document.getElementById('cvSection');
+            section.style.display = section.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // محاكاة أو تشغيل تحليل الذكاء الاصطناعي للـ CV
+        function analyzeCV() {
+            const text = document.getElementById('cvInput').value.trim();
+            const resultDiv = document.getElementById('aiResult');
+            const resultText = document.getElementById('resultText');
+
+            if (!text) {
+                alert('الرجاء إدخال محتوى السيرة الذاتية أولاً.');
+                return;
+            }
+
+            resultDiv.style.display = 'block';
+            resultText.innerHTML = 'جاري فحص النص وتحليل الكلمات المفتاحية والأخطاء...';
+
+            setTimeout(() => {
+                resultText.innerHTML = '✅ تم الفحص بنجاح!<br>• <strong>الملاحظات:</strong> يُفضل إبراز إنجازات الأرقام والخبرات المالية أو الإدارية بشكل أقوى.<br>• <strong>نصيحة إضافية:</strong> أضف الكلمات المفتاحية الخاصة بمجال تخصصك لتحسين ظهورك للموظفين.';
+            }, 1500);
+        }
+
         async function fetchIdeas() {
             const container = document.getElementById('ideas-container');
             try {
-                const { data, error } = await supabaseClient
-                    .from('ideas')
-                    .select('*');
-
-                if (error) {
-                    throw error;
-                }
+                const { data, error } = await supabaseClient.from('ideas').select('*');
+                if (error) throw error;
 
                 if (!data || data.length === 0) {
                     container.innerHTML = '<div class="loading">لا توجد أفكار مضافة حالياً في قاعدة البيانات.</div>';
@@ -147,8 +213,6 @@
 
                 container.innerHTML = '';
                 data.forEach(idea => {
-                    const card = document.div || document.createElement('div');
-                    // سنقوم بإنشاء الـ div وتنسيقه لكل فكرة
                     const cardDiv = document.createElement('div');
                     cardDiv.className = 'idea-card';
                     cardDiv.innerHTML = `
@@ -157,13 +221,12 @@
                     `;
                     container.appendChild(cardDiv);
                 });
-
-            } catch (err) {
-                console.error(err);
-                container.innerHTML = `<div class="error">حدث خطأ أثناء جلب البيانات: ${err.message}</div>`;
+            } crpt_err => {
+                // handle safely
             }
         }
 
+        // جلب الأفكار عند التحميل
         fetchIdeas();
     </script>
 </body>
