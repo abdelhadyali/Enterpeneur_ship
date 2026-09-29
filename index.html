@@ -3,62 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة ريادة الأعمال - أفكار مشاريع</title>
-    <!-- مكتبة Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <title>منصة أفكار مشاريع ريادة الأعمال</title>
+    <!-- استيراد خط تجوال العصري الجميل -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: Tahoma, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; direction: rtl; }
-        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        h1 { color: #333; text-align: center; }
-        .idea-card { background: #f9f9f9; border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 5px; }
-        .idea-card h3 { margin: 0 0 10px; color: #007bff; }
-        .error { color: red; text-align: center; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
+        body {
+            background-color: #f4f7f6;
+            color: #333;
+            padding: 20px;
+        }
+        .header-container {
+            max-width: 900px;
+            margin: 0 auto 30px auto;
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .header-text h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            font-weight: 900;
+        }
+        .header-text p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        /* تصميم زر / صورة Hire Me بشكل شيك */
+        .hire-me-badge {
+            background-color: #ffc107;
+            color: #212529;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 900;
+            font-size: 18px;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            display: inline-block;
+        }
+        .hire-me-badge:hover {
+            transform: translateY(-3px);
+            background-color: #ffca2c;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .loading {
+            text-align: center;
+            font-size: 18px;
+            color: #666;
+            padding: 40px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .idea-card {
+            background: white;
+            padding: 20px 25px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-right: 5px solid #007bff;
+            transition: transform 0.2s ease;
+        }
+        .idea-card:hover {
+            transform: translateY(-2px);
+        }
+        .idea-card h3 {
+            margin: 0 0 10px 0;
+            color: #007bff;
+            font-size: 20px;
+        }
+        .idea-card p {
+            color: #555;
+            line-height: 1.6;
+        }
+        .error {
+            color: #dc3545;
+            text-align: center;
+            background: #f8d7da;
+            padding: 20px;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>Hire_me"sooon"</h1>
-    <div id="ideas-container">جاري تحميل الأفكار...</div>
-</div>
+    <!-- الهيدر العلوي مع العنوان وشعار Hire Me -->
+    <div class="header-container">
+        <div class="header-text">
+            <h1>منصة أفكار مشاريع ريادة الأعمال</h1>
+            <p>استكشف أحدث الأفكار الريادية المبتكرة والمتجددة</p>
+        </div>
+        <div>
+            <!-- استبدل الرابط # برابط بروفايلك على لينكد إن أو موقعك -->
+            <a href="#" class="hire-me-badge">✨ Hire Me</a>
+        </div>
+    </div>
 
-<script>
-    // ضع مفاتيح Supabase الخاصة بك هنا
-    const SUPABASE_URL = 'https://pojytwrjosezrmupjrvy.supabase.co'; 
-    const SUPABASE_KEY = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvanl0d3Jqb3NlenJtdXBqcnZ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2ODc5MzksImV4cCI6MjEwNjI2MzkzOX0.IjoesBsdZynzmjwsI2vEJ-IkL4Dbq8HRy8eVdPc-2yo
+    <!-- منطقة عرض الأفكار -->
+    <div class="container">
+        <div id="ideas-container" class="loading">جاري تحميل الأفكار...</div>
+    </div>
 
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    <!-- مكتبة Supabase -->
+    <script src="https://cdn.jsdelivr.5net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // إعدادات الاتصال بقاعدة البيانات الخاصة بك
+        const SUPABASE_URL = 'https://pojytwrjosezrmupjrvy.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvanl0d3Jqb3NlenJtdXBqcnZ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5NzAwMzksImV4cCI6MjA3NDU0NjAzOX0.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvanl0d3Jqb3NlenJtdXBqcnZ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5NzAwMzksImV4cCI6MjA3NDU0NjAzOX0...';
 
-    async function fetchIdeas() {
-        const container = document.getElementById('ideas-container');
-        try {
-            // استبدل كلمة 'ideas' باسم الجدول الخاص بك في قاعدة البيانات إن كان مختلفاً
-            const { data, error } = await supabaseClient.from('ideas').select('*');
-            
-            if (error) throw error;
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-            if (!data || data.length === 0) {
-                container.innerHTML = '<p>لا توجد أفكار مضافة حالياً.</p>';
-                return;
+        async function fetchIdeas() {
+            const container = document.getElementById('ideas-container');
+            try {
+                const { data, error } = await supabaseClient
+                    .from('ideas')
+                    .select('*');
+
+                if (error) {
+                    throw error;
+                }
+
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<div class="loading">لا توجد أفكار مضافة حالياً في قاعدة البيانات.</div>';
+                    return;
+                }
+
+                container.innerHTML = '';
+                data.forEach(idea => {
+                    const card = document.div || document.createElement('div');
+                    // سنقوم بإنشاء الـ div وتنسيقه لكل فكرة
+                    const cardDiv = document.createElement('div');
+                    cardDiv.className = 'idea-card';
+                    cardDiv.innerHTML = `
+                        <h3>${idea.title || 'فكرة مشروع'}</h3>
+                        <p>${idea.description || idea.content || 'لا يوجد تفاصيل متاحة.'}</p>
+                    `;
+                    container.appendChild(cardDiv);
+                });
+
+            } catch (err) {
+                console.error(err);
+                container.innerHTML = `<div class="error">حدث خطأ أثناء جلب البيانات: ${err.message}</div>`;
             }
-
-            container.innerHTML = '';
-            data.forEach(idea => {
-                const card = document.createElement('div');
-                card.className = 'idea-card';
-                card.innerHTML = `
-                    <h3>${idea.title || 'بدون عنوان'}</h3>
-                    <p>${idea.description || idea.content || ''}</p>
-                `;
-                container.appendChild(card);
-            });
-        } catch (err) {
-            container.innerHTML = `<p class="error">حدث خطأ أثناء جلب البيانات: ${err.message}</p>`;
         }
-    }
 
-    fetchIdeas();
-</script>
-
+        fetchIdeas();
+    </script>
 </body>
 </html>
