@@ -126,7 +126,15 @@
                         <div class="ai-output-box" id="aiOutputBox">
                             <h3 id="aiOutputTitle" style="color: #0056b3; margin-bottom: 8px;">📊 تقرير الذكاء الاصطناعي:</h3>
                             <p id="aiReportText" style="line-height: 1.8; color: #333; margin-bottom: 15px; font-size: 14px;"></p>
-                            <button class="btn-custom" id="downloadBtn" style="background-color: #007bff; color: white; display: none;" onclick="downloadNewCV()">📥 تحميل السيرة الذاتية المعدلة</button>
+                            
+                            <!-- خيارات صيغ التحميل (Word / Text) -->
+                            <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;" id="downloadOptionsContainer">
+                                <select id="fileFormatSelect" class="lang-select" style="border: 1px solid #007bff; color: #333;">
+                                    <option value="doc">Word Document (.doc)</option>
+                                    <option value="txt">Text File (.txt)</option>
+                                </select>
+                                <button class="btn-custom" id="downloadBtn" style="background-color: #007bff; color: white;" onclick="downloadNewCV()">📥 تحميل السيرة الذاتية المعدلة</button>
+                            </div>
                         </div>
                     </div>
 
@@ -170,7 +178,7 @@
                 cvPlaceholder: "أو الصق محتوى السيرة الذاتية هنا...",
                 analyzeBtn: "🔍 ابدأ التحليل والتعديل",
                 aiOutputTitle: "📊 تقرير الذكاء الاصطناعي والنسخة المعدلة:",
-                downloadBtn: "📥 تحميل السيرة الذاتية الجديدة (معدلة)",
+                downloadBtn: "📥 تحميل السيرة الذاتية المعدلة",
                 setHeading: "إعدادات المنصة",
                 setDesc: "تفاصيل النظام والاتصال بقاعدة البيانات.",
                 setStatus: "• حالة الاتصال: متصل بنجاح (Supabase)",
@@ -251,13 +259,12 @@
             element.classList.add('active');
         }
 
-        // قراءة الملف المرفوع أو النص المكتوب وتوليد الـ CV المعدل بناءً على البيانات الفعليّة
         function runAIReview() {
             const fileInput = document.getElementById('cvFile').files[0];
             const textInput = document.getElementById('cvText').value.trim();
             const outputBox = document.getElementById('aiOutputBox');
             const reportText = document.getElementById('aiReportText');
-            const downloadBtn = document.getElementById('downloadBtn');
+            const downloadOptionsContainer = document.getElementById('downloadOptionsContainer');
 
             if (!fileInput && !textInput) {
                 alert(currentLang === 'ar' ? 'الرجاء إرفاق ملف السيرة الذاتية أو لصق النص أولاً.' : 'Please upload a CV file or paste your text first.');
@@ -266,9 +273,8 @@
 
             outputBox.style.display = 'block';
             reportText.innerHTML = currentLang === 'ar' ? '🤖 جاري قراءة الملف وتدقيق البيانات بالذكاء الاصطناعي...' : '🤖 Reading file and processing data with AI...';
-            downloadBtn.style.display = 'none';
+            downloadOptionsContainer.style.display = 'none';
 
-            // قراءة الملف الفعلي في حال تم رفعه
             if (fileInput) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
@@ -290,7 +296,7 @@
                         ❌ <strong>Identified Issues:</strong><br>
                         • Formatting inconsistencies and structural gaps.<br>
                         • Lack of optimized action verbs.<br><br>
-                        ✨ <strong>Your enhanced CV has been generated incorporating your data and is ready to download!</strong>
+                        ✨ <strong>Your enhanced CV has been generated and is ready to download in your preferred format!</strong>
                     `;
                 } else {
                     optimizedCvContent = `=== السيرة الذاتية المهنية المحسنة والمطورة ===\n\n[البيانات المستخرجة من ملفك / النص]:\n${rawContent}\n\n--------------------------------------------------\n\nالملخص المهني المحسن:\nخبير محترف يتمتع بخبرة واسعة في إدارة العمليات، التخطيط التشغيلي، وتحقيق الكفاءة المتقدمة بدقة عالية.\n\nالمهارات الأساسية:\n- التخطيط الإداري وإدارة العمليات\n- التحليل المتقدم وإعداد التقارير\n- حل المشكلات وهندسة الأداء\n\nالخبرات المهنية:\n- إدارة الدورات العملية بكفاءة وتحسين مسارات العمل بدقة.\n- تطبيق أفضل الممارسات التشغيلية لتحقيق أهداف المؤسسة.\n`;
@@ -299,19 +305,28 @@
                         ✅ <strong>تمت مراجعة السيرة الذاتية بنجاح!</strong><br><br>
                         ❌ <strong>الأخطاء والملاحظات المرصودة:</strong><br>
                         • صياغة الأهداف والخبرات كانت تحتاج إلى إعادة هيكلة احترافية.<br><br>
-                        ✨ <strong>تم دمج بياناتك وصياغتها بنسخة خالية من الأخطاء وجاهزة للتحميل الفوري!</strong>
+                        ✨ <strong>تم دمج بياناتك وصياغتها بنسخة خالية من الأخطاء وجاهزة للتحميل بالصيغة التي تختارها!</strong>
                     `;
                 }
-                document.getElementById('downloadBtn').style.display = 'inline-block';
+                document.getElementById('downloadOptionsContainer').style.display = 'flex';
             }, 1500);
         }
 
         function downloadNewCV() {
-            const blob = new Blob([optimizedCvContent], { type: 'text/plain;charset=utf-8' });
+            const format = document.getElementById('fileFormatSelect').value;
+            let mimeType = 'text/plain;charset=utf-8';
+            let fileExtension = 'txt';
+
+            if (format === 'doc') {
+                mimeType = 'application/msword;charset=utf-8';
+                fileExtension = 'doc';
+            }
+
+            const blob = new Blob([optimizedCvContent], { type: mimeType });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = currentLang === 'ar' ? 'Modified_Professional_CV.txt' : 'Optimized_Professional_CV.txt';
+            a.download = (currentLang === 'ar' ? 'Modified_Professional_CV.' : 'Optimized_Professional_CV.') + fileExtension;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
