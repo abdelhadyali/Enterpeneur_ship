@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة ريادة الأعمال - الأفكار</title>
+    <!-- مكتبة Supabase للاتصال -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body { font-family: Tahoma, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; direction: rtl; }
+        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h1 { color: #333; text-align: center; }
+        .idea-card { background: #f9f9f9; border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 5px; }
+        .idea-card h3 { margin: 0 0 10px; color: #007bff; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>أفكار مشاريع ريادة الأعمال</h1>
+    <div id="ideas-list">جاري تحميل الأفكار...</div>
+</div>
+
+<script>
+    // بيانات الاتصال الخاصة بك
+    const supabaseUrl = 'https://pojytwrjosezrmupjrvy.supabase.co';
+    const supabaseKey = 'sb_publishable_54hbDwygM5QKA4cbV6RnUg_cVulw...'; // مفتاح الـ Publishable key الذي حفظته
+    
+    const { createClient } = supabase;
+    const _supabase = createClient(supabaseUrl, supabaseKey);
+
+    async function fetchIdeas() {
+        const container = document.getElementById('ideas-list');
+        const { data, error } = await _supabase.from('ideas').select('*');
+
+        if (error) {
+            container.innerHTML = '<p style="color:red;">حدث خطأ أثناء جلب البيانات: ' + error.message + '</p>';
+            return;
+        }
+
+        if (data.length === 0) {
+            container.innerHTML = '<p>لا توجد أفكار مضافة حتى الآن في قاعدة البيانات.</p>';
+            return;
+        }
+
+        container.innerHTML = '';
+        data.forEach(idea => {
+            container.innerHTML += `
+                <div class="idea-card">
+                    <h3>${idea.title || 'بدون عنوان'}</h3>
+                    <p>${idea.description || 'لا يوجد وصف'}</p>
+                </div>
+            `;
+        });
+    }
+
+    fetchIdeas();
+</script>
+
+</body>
+</html>
