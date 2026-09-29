@@ -3,55 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة ريادة الأعمال - الأفكار</title>
-    <!-- مكتبة Supabase للاتصال -->
+    <title>منصة ريادة الأعمال - أفكار مشاريع</title>
+    <!-- مكتبة Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         body { font-family: Tahoma, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; direction: rtl; }
         .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         h1 { color: #333; text-align: center; }
-        .idea-card { background: #f9f9f9; border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 5px; }
+        .idea-card { background: #f9f9f9; border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 5px; }
         .idea-card h3 { margin: 0 0 10px; color: #007bff; }
+        .error { color: red; text-align: center; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h1>أفكار مشاريع ريادة الأعمال</h1>
-    <div id="ideas-list">جاري تحميل الأفكار...</div>
+    <div id="ideas-container">جاري تحميل الأفكار...</div>
 </div>
 
 <script>
-    // بيانات الاتصال الخاصة بك
-    const supabaseUrl = 'https://pojytwrjosezrmupjrvy.supabase.co';
-    const supabaseKey = 'sb_publishable_54hbDwygM5QKA4cbV6RnUg_cVulw...'; // مفتاح الـ Publishable key الذي حفظته
-    
-    const { createClient } = supabase;
-    const _supabase = createClient(supabaseUrl, supabaseKey);
+    // ضع مفاتيح Supabase الخاصة بك هنا
+    const SUPABASE_URL = 'https://pojytwrjosezrmupjrvy.supabase.co'; 
+    const SUPABASE_KEY = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvanl0d3Jqb3NlenJtdXBqcnZ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2ODc5MzksImV4cCI6MjEwNjI2MzkzOX0.IjoesBsdZynzmjwsI2vEJ-IkL4Dbq8HRy8eVdPc-2yo
+
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     async function fetchIdeas() {
-        const container = document.getElementById('ideas-list');
-        const { data, error } = await _supabase.from('ideas').select('*');
+        const container = document.getElementById('ideas-container');
+        try {
+            // استبدل كلمة 'ideas' باسم الجدول الخاص بك في قاعدة البيانات إن كان مختلفاً
+            const { data, error } = await supabaseClient.from('ideas').select('*');
+            
+            if (error) throw error;
 
-        if (error) {
-            container.innerHTML = '<p style="color:red;">حدث خطأ أثناء جلب البيانات: ' + error.message + '</p>';
-            return;
-        }
+            if (!data || data.length === 0) {
+                container.innerHTML = '<p>لا توجد أفكار مضافة حالياً.</p>';
+                return;
+            }
 
-        if (data.length === 0) {
-            container.innerHTML = '<p>لا توجد أفكار مضافة حتى الآن في قاعدة البيانات.</p>';
-            return;
-        }
-
-        container.innerHTML = '';
-        data.forEach(idea => {
-            container.innerHTML += `
-                <div class="idea-card">
+            container.innerHTML = '';
+            data.forEach(idea => {
+                const card = document.createElement('div');
+                card.className = 'idea-card';
+                card.innerHTML = `
                     <h3>${idea.title || 'بدون عنوان'}</h3>
-                    <p>${idea.description || 'لا يوجد وصف'}</p>
-                </div>
-            `;
-        });
+                    <p>${idea.description || idea.content || ''}</p>
+                `;
+                container.appendChild(card);
+            });
+        } catch (err) {
+            container.innerHTML = `<p class="error">حدث خطأ أثناء جلب البيانات: ${err.message}</p>`;
+        }
     }
 
     fetchIdeas();
