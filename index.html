@@ -315,17 +315,28 @@
 
         function downloadNewCV() {
             const format = document.getElementById('fileFormatSelect').value;
-            let mimeType = 'text/plain;charset=utf-8';
-            let fileExtension = 'txt';
+            let mimeType, fileExtension, fileContent;
 
             if (format === 'doc') {
+                // تحويل النص إلى ملف Word حقيقي (HTML بترميز يدعم العربية والإنجليزية بالكامل)
                 mimeType = 'application/msword;charset=utf-8';
                 fileExtension = 'doc';
+                const formattedHtmlText = optimizedCvContent.replace(/\n/g, '<br>');
+                fileContent = `
+                    <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/1999/xlink'>
+                    <head><meta charset='utf-8'><title>CV</title></head>
+                    <body style="font-family: 'Tajawal', Arial, sans-serif; font-size: 14pt; direction: ${currentLang === 'ar' ? 'rtl' : 'ltr'}; text-align: ${currentLang === 'ar' ? 'right' : 'left'};">
+                        <p>${formattedHtmlText}</p>
+                    </body>
+                    </html>
+                `;
+            } else {
+                mimeType = 'text/plain;charset=utf-8';
+                fileExtension = 'txt';
+                fileContent = "\uFEFF" + optimizedCvContent;
             }
 
-            // إضافة BOM لتوافق اللغة العربية والإنجليزية في ملف الـ Word بدون مربعات
-            const BOM = "\uFEFF";
-            const blob = new Blob([BOM + optimizedCvContent], { type: mimeType });
+            const blob = new Blob([fileContent], { type: mimeType });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
@@ -349,7 +360,7 @@
                 container.innerHTML = '';
                 data.forEach(idea => {
                     const card = document.createElement('div');
-                    card.className = 'idea-card';
+                    card.className, 'idea-card';
                     card.innerHTML = `
                         <h3>${idea.title || (currentLang === 'ar' ? 'فكرة مشروع' : 'Project Idea')}</h3>
                         <p>${idea.description || idea.content || (currentLang === 'ar' ? 'لا توجد تفاصيل.' : 'No details available.')}</p>
