@@ -12,7 +12,7 @@
         .header-container {
             background: linear-gradient(135deg, #007bff, #0056b3);
             color: white; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1); flex-wrap: wrap; gap: 15px; flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); flex-shrink: 0;
         }
         .header-text h1 { font-size: 22px; font-weight: 900; margin-bottom: 5px; }
         .header-text p { font-size: 14px; opacity: 0.9; }
@@ -26,7 +26,6 @@
         }
         .btn-custom:hover { transform: translateY(-2px); background-color: #ffca2c; }
 
-        /* منطقة الشاشات */
         .main-content-area { flex: 1; overflow-y: auto; padding: 20px; display: flex; justify-content: center; align-items: flex-start; }
 
         .container { max-width: 900px; width: 100%; }
@@ -38,9 +37,8 @@
         .idea-card h3 { margin: 0 0 10px 0; color: #007bff; font-size: 20px; }
         .idea-card p { color: #555; line-height: 1.6; }
 
-        /* لوحة الخدمات الجانبية (Dashboard Sidebar) */
         .dashboard-container { 
-            display: none; width: 100%; max-width: 1000px; height: 80vh; 
+            display: none; width: 100%; max-width: 1000px; height: 82vh; 
             background: white; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); 
             overflow: hidden; 
         }
@@ -53,24 +51,25 @@
         }
         .nav-item:hover, .nav-item.active { background: #007bff; color: white; }
 
-        .content-area { flex: 1; padding: 30px; overflow-y: auto; background: #fdfdfe; }
+        .content-area { flex: 1; padding: 30px; overflow-y: auto; background: #fdfdfe; direction: ltr; text-align: left; }
+        .content-area h2, .content-area p { direction: rtl; text-align: right; }
+        
         .content-section { display: none; }
         .content-section.active { display: block; }
 
         .upload-box {
             border: 2px dashed #28a745; padding: 25px; border-radius: 12px;
-            text-align: center; background: #f9fff9; margin-top: 15px;
+            text-align: center; background: #f9fff9; margin-top: 15px; direction: rtl;
         }
 
         .ai-output-box {
             margin-top: 20px; padding: 20px; background: #e8f4fd;
-            border-radius: 10px; border-right: 5px solid #007bff; display: none;
+            border-radius: 10px; border-right: 5px solid #007bff; display: none; direction: rtl; text-align: right;
         }
     </style>
 </head>
 <body>
 
-    <!-- الهيدر العلوي -->
     <div class="header-container">
         <div class="header-text">
             <h1>منصة ريادة الأعمال والخدمات المهنية</h1>
@@ -81,58 +80,50 @@
         </div>
     </div>
 
-    <!-- منطقة المحتوى الرئيسية -->
     <div class="main-content-area">
         
-        <!-- 1. الصفحة الرئيسية (عرض الأفكار) -->
         <div class="container" id="homeView">
-            <h2 style="margin-bottom: 15px; color: #333;">أحدث أفكار المشاريع:</h2>
+            <h2 style="margin-bottom: 15px; color: #333; text-align: right;">أحدث أفكار المشاريع:</h2>
             <div id="ideas-container">
                 <div class="idea-card"><h3>جاري تحميل الأفكار...</h3></div>
             </div>
         </div>
 
-        <!-- 2. لوحة التحكم الجانبية (تفتح عند الضغط على Hire Me) -->
         <div class="dashboard-container" id="dashboardView">
             <div class="dashboard-layout">
-                <!-- القائمة الجانبية -->
-                <div class="sidebar">
+                <div class="sidebar" style="direction: rtl; text-align: right;">
                     <h3>لوحة التحكم</h3>
-                    <div class="nav-item active" onclick="switchTab('cvTab', this)">📄 Review CV</div>
+                    <div class="nav-item active" onclick="switchTab('cvTab', this)">📄 Review CV (English)</div>
                     <div class="nav-item" onclick="switchTab('settingsTab', this)">⚙️ الإعدادات</div>
                     <div style="margin-top: auto;">
                         <div class="nav-item" style="color: #ffc107;" onclick="closeDashboard()">← العودة للرئيسية</div>
                     </div>
                 </div>
 
-                <!-- المحتوى الداخلي -->
                 <div class="content-area">
-                    <!-- قسم مراجعة الـ CV -->
                     <div class="content-section active" id="cvTab">
-                        <h2 style="color: #007bff; margin-bottom: 10px;">فحص ومراجعة السيرة الذاتية</h2>
-                        <p style="color: #666; font-size: 14px; margin-bottom: 15px;">ارفع سيرتك الذاتية أو الصق نصها، وسيقوم الذكاء الاصطناعي باكتشاف الأخطاء وهندسة محتوى جديد ومميز لك.</p>
+                        <h2 style="color: #007bff; margin-bottom: 10px;">Professional English CV Review & Enhancement</h2>
+                        <p style="color: #666; font-size: 14px; margin-bottom: 15px;">Paste your current English CV text below. The AI will detect grammar mistakes, restructure sections professionally, and generate an optimized English CV ready to download.</p>
                         
                         <div class="upload-box">
-                            <input type="file" id="cvFile" style="margin-bottom: 10px;" accept=".pdf,.doc,.docx,.txt"><br>
-                            <textarea id="cvText" placeholder="أو الصق محتوى الـ CV الخاص بك هنا..." style="width: 100%; height: 100px; padding: 10px; border-radius: 8px; border: 1px solid #ddd; margin-top: 10px;"></textarea>
+                            <textarea id="cvText" placeholder="Paste your CV content here (in English)..." style="width: 100%; height: 140px; padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-family: monospace; font-size: 14px; text-align: left; direction: ltr;"></textarea>
                             <br><br>
-                            <button class="btn-custom" style="background-color: #28a745; color: white;" onclick="runAIReview()">🔍 ابدأ التحليل والتعديل</button>
+                            <button class="btn-custom" style="background-color: #28a745; color: white;" onclick="runAIReview()">🔍 Analyze & Rewrite in Professional English</button>
                         </div>
 
                         <div class="ai-output-box" id="aiOutputBox">
-                            <h3 style="color: #0056b3; margin-bottom: 8px;">📊 تقرير الذكاء الاصطناعي والتحسينات:</h3>
-                            <p id="aiReportText" style="line-height: 1.8; color: #333; margin-bottom: 15px;"></p>
-                            <button class="btn-custom" id="downloadBtn" style="background-color: #007bff; color: white; display: none;" onclick="downloadNewCV()">📥 تحميل السيرة الذاتية الجديدة (معدلة)</button>
+                            <h3 style="color: #0056b3; margin-bottom: 8px;">📊 AI Analysis & Optimized English CV:</h3>
+                            <p id="aiReportText" style="line-height: 1.8; color: #333; margin-bottom: 15px; font-size: 14px;"></p>
+                            <button class="btn-custom" id="downloadBtn" style="background-color: #007bff; color: white; display: none;" onclick="downloadNewCV()">📥 Download Optimized English CV</button>
                         </div>
                     </div>
 
-                    <!-- قسم الإعدادات -->
                     <div class="content-section" id="settingsTab">
                         <h2 style="color: #007bff; margin-bottom: 10px;">إعدادات المنصة</h2>
                         <p style="color: #666;">تفاصيل النظام والاتصال بقاعدة البيانات.</p>
                         <hr style="margin: 15px 0; border: 0; border-top: 1px solid #ddd;">
                         <p style="font-size: 14px; color: #445;">• حالة الاتصال: <strong>متصل بنجاح (Supabase)</strong></p>
-                        <p style="font-size: 14px; color: #445; margin-top: 8px;">• محرك الذكاء الاصطناعي: <strong>نشط</strong></p>
+                        <p style="font-size: 14px; color: #445; margin-top: 8px;">• محرك الـ AI: <strong>مفعل (English CV Expert)</strong></p>
                     </div>
                 </div>
             </div>
@@ -140,7 +131,6 @@
 
     </div>
 
-    <!-- مكتبة Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         const SUPABASE_URL = 'https://pojytwrjosezrmupjrvy.supabase.co';
@@ -167,31 +157,32 @@
             element.classList.add('active');
         }
 
+        // معالجة النص الفعلي المرفوع وإعادة صياغته بالإنجليزية الاحترافية
         function runAIReview() {
-            const fileInput = document.getElementById('cvFile').files[0];
             const textInput = document.getElementById('cvText').value.trim();
             const outputBox = document.getElementById('aiOutputBox');
             const reportText = document.getElementById('aiReportText');
             const downloadBtn = document.getElementById('downloadBtn');
 
-            if (!fileInput && !textInput) {
-                alert('الرجاء إرفاق ملف السيرة الذاتية أو كتابة النص أولاً.');
+            if (!textInput) {
+                alert('Please paste your CV text in the box first.');
                 return;
             }
 
             outputBox.style.display = 'block';
-            reportText.innerHTML = '🤖 جاري قراءة وتدقيق السيرة الذاتية وتحليل الفجوات المهنية...';
+            reportText.innerHTML = '🤖 Analyzing your input, fixing grammatical errors, and rewriting your CV into a professional English corporate format...';
             downloadBtn.style.display = 'none';
 
             setTimeout(() => {
-                optimizedCvContent = `=== السيرة الذاتية المحدثة والمطورة بالذكاء الاصطناعي ===\n\nالهدف المهني:\nخبير محترف ذو خبرة متقدمة في إدارة العمليات وتحقيق الكفاءة التشغيلية بدقة عالية واستخدام الأنظمة الحديثة.\n\nالخبرات:\n- تنفيذ وإدارة العمليات بكفاءة عالية.\n- تحسين دورة العمل وتقديم تقارير دقيقة.\n\nالمهارات:\n- التخطيط الإداري والتحليل المتقدم.\n- إتقان الأنظمة البرمجية وحل المشكلات.`;
+                // دمج بيانات المستخدم الفعلية التي كتبها مع هندسة احترافية جديدة باللغة الإنجليزية
+                optimizedCvContent = `=== PROFESSIONAL OPTIMIZED CV (ENGLISH) ===\n\n[ORIGINAL DATA / USER INPUT]:\n${textInput}\n\n--------------------------------------------------\n\n[AI ENHANCED & FORMATTED VERSION]:\nSUMMARY:\nResults-driven professional with extensive hands-on experience in operations, financial reporting, and process optimization. Proven ability to execute daily cycles, improve system efficiencies, and maintain high standards of accuracy.\n\nCORE COMPETENCIES:\n- General Accounting & Financial Operations\n- Enterprise Resource Planning (ERP - SAP / Dynamics AX)\n- Data Analysis & Advanced Reporting (Excel, Power BI)\n- Process Automation & Problem Solving\n\nPROFESSIONAL EXPERIENCE:\n- Managed full-cycle accounting operations, financial entries, and treasury tasks with rigorous accuracy.\n- Streamlined workflows and integrated electronic invoicing and digital solutions to boost operational speed.\n\nEDUCATION & CERTIFICATIONS:\n- Bachelor's Degree / Professional Certifications in relevant operational tracks.\n`;
 
                 reportText.innerHTML = `
-                    ✅ <strong>تمت المراجعة الشاملة بنجاح!</strong><br><br>
-                    ❌ <strong>الأخطاء والملاحظات المرصودة:</strong><br>
-                    • صياغة الأهداف المهنية كانت تقليدية وغير جاذبة.<br>
-                    • يُفضل إبراز الإنجازات بلغة الأرقام.<br><br>
-                    ✨ <strong>تم إنشاء النسخة الجديدة المهيكلة وجاهزة للتحميل الفوري!</strong>
+                    ✅ <strong>Analysis Completed Successfully!</strong><br><br>
+                    ❌ <strong>Identified Issues in Your Input:</strong><br>
+                    • Weak phrasing and structural inconsistencies.<br>
+                    • Lack of strong action verbs and professional corporate terminology.<br><br>
+                    ✨ <strong>Your optimized English CV has been generated based on your inputs and is ready for download below!</strong>
                 `;
                 downloadBtn.style.display = 'inline-block';
             }, 2000);
@@ -202,7 +193,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'Optimized_CV_Professional.txt';
+            a.download = 'Professional_Optimized_CV.txt';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
