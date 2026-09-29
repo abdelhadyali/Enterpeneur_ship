@@ -7,55 +7,55 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
-        body { background-color: #f4f7f6; color: #333; padding: 20px; }
-        
+        body { background-color: #f4f7f6; color: #333; display: flex; height: 100vh; overflow: hidden; }
+
+        /* الشاشة الرئيسية والهيدر العلوي */
+        .main-wrapper { flex: 1; display: flex; flex-direction: column; height: 100vh; overflow-y: auto; }
         .header-container {
-            max-width: 900px; margin: 0 auto 30px auto;
             background: linear-gradient(135deg, #007bff, #0056b3);
-            color: white; padding: 30px; border-radius: 15px;
-            display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1); flex-wrap: wrap; gap: 20px;
+            color: white; padding: 25px 30px; display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); flex-wrap: wrap; gap: 15px;
         }
-        .header-text h1 { font-size: 28px; margin-bottom: 8px; font-weight: 900; }
-        .header-text p { font-size: 16px; opacity: 0.9; }
-        
+        .header-text h1 { font-size: 24px; font-weight: 900; margin-bottom: 5px; }
+        .header-text p { font-size: 14px; opacity: 0.9; }
+
         .btn-custom {
-            background-color: #ffc107; color: #212529; padding: 12px 25px;
-            border-radius: 50px; font-weight: 900; font-size: 16px;
+            background-color: #ffc107; color: #212529; padding: 10px 20px;
+            border-radius: 50px; font-weight: 900; font-size: 15px;
             text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             transition: transform 0.3s ease, background-color 0.3s ease;
             display: inline-block; cursor: pointer; border: none;
         }
-        .btn-custom:hover { transform: translateY(-3px); background-color: #ffca2c; }
+        .btn-custom:hover { transform: translateY(-2px); background-color: #ffca2c; }
 
-        /* الأقسام التفاعلية */
-        .page-section {
-            max-width: 900px; margin: 0 auto 30px auto;
-            background: white; padding: 30px; border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            display: none;
-        }
-        .page-section.active { display: block; }
-
-        .page-section h2 { color: #007bff; margin-bottom: 15px; font-size: 24px; }
-        .service-card {
-            background: #f8f9fa; border: 2px dashed #007bff; padding: 25px;
-            border-radius: 12px; text-align: center; margin-top: 15px; cursor: pointer;
-            transition: background 0.3s;
-        }
-        .service-card:hover { background: #e9ecef; }
+        /* نظام اللوحات الجانبية (Dashboard Sidebar) */
+        .dashboard-container { display: none; max-width: 1000px; margin: 30px auto; width: 95%; background: white; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); overflow: hidden; display: flex; flex: 1; margin-bottom: 30px; }
+        .dashboard-container.hidden { display: none !important; }
         
+        .sidebar { width: 260px; background: #212529; color: white; padding: 25px 15px; display: flex; flex-direction: column; gap: 10px; }
+        .sidebar h3 { font-size: 16px; color: #adb5bd; margin-bottom: 10px; padding-right: 10px; }
+        .nav-item {
+            padding: 12px 15px; border-radius: 8px; color: #ced4da; text-decoration: none; font-weight: 500; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 10px;
+        }
+        .nav-item:hover, .nav-item.active { background: #007bff; color: white; }
+
+        .content-area { flex: 1; padding: 30px; overflow-y: auto; background: #fdfdfe; }
+        
+        /* الأقسام الداخلية */
+        .content-section { display: none; }
+        .content-section.active { display: block; }
+
         .upload-box {
-            border: 2px dashed #28a745; padding: 30px; border-radius: 12px;
-            text-align: center; background: #fdfdfe; margin-top: 20px;
+            border: 2px dashed #28a745; padding: 25px; border-radius: 12px;
+            text-align: center; background: #f9fff9; margin-top: 15px;
         }
-        
-        .ai-output {
+
+        .ai-output-box {
             margin-top: 20px; padding: 20px; background: #e8f4fd;
             border-radius: 10px; border-right: 5px solid #007bff; display: none;
         }
 
-        .container { max-width: 900px; margin: 0 auto; }
+        .container { max-width: 900px; margin: 20px auto; width: 95%; }
         .idea-card {
             background: white; padding: 20px 25px; margin-bottom: 20px;
             border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
@@ -67,56 +67,71 @@
 </head>
 <body>
 
-    <!-- الهيدر الرئيسي -->
-    <div class="header-container">
-        <div class="header-text">
-            <h1 id="main-title">منصة أفكار مشاريع ريادة الأعمال</h1>
-            <p>استكشف أحدث الأفكار والخدمات المهنية المتقدمة</p>
-        </div>
-        <div>
-            <button class="btn-custom" onclick="showSection('hireSection')">✨ Hire Me</button>
-        </div>
-    </div>
-
-    <!-- 1. الصفحة الرئيسية (الأفكار) -->
-    <div class="container page-section active" id="homeSection" style="background: transparent; box-shadow: none; padding: 0;">
-        <div id="ideas-container">
-            <div class="idea-card"><h3>جاري تحميل الأفكار...</h3></div>
-        </div>
-    </div>
-
-    <!-- 2. صفحة Hire Me (عرض الخدمات) -->
-    <div class="page-section" id="hireSection">
-        <h2>أهلاً بك! اختر الخدمة المطلوبة:</h2>
-        <p style="color: #666; margin-bottom: 20px;">نقدم لك حلولاً احترافية لتعزيز سيرتك ومشاريعك.</p>
-        <div class="service-card" onclick="showSection('uploadSection')">
-            <h3 style="color: #007bff; margin-bottom: 5px;">📄 مراجعة السيرة الذاتية (Review CV)</h3>
-            <p style="color: #555;">احصل على تحليل فوري بالذكاء الاصطناعي لاكتشاف الأخطاء والحصول على نسخة محسنة.</p>
-        </div>
-        <br>
-        <button class="btn-custom" style="background-color: #6c757d; color: white;" onclick="showSection('homeSection')">← العودة للرئيسية</button>
-    </div>
-
-    <!-- 3. صفحة رفع الـ CV والتحليل بالذكاء الاصطناعي -->
-    <div class="page-section" id="uploadSection">
-        <h2>رفع وتحليل السيرة الذاتية (Upload CV)</h2>
-        <p style="color: #666; margin-bottom: 15px;">ارفع ملف الـ CV أو الصق النص هنا ليقوم الذكاء الاصطناعي بمراجعته وتدقيقه:</p>
-        
-        <div class="upload-box">
-            <input type="file" id="cvFile" style="margin-bottom: 10px;" accept=".pdf,.doc,.docx,.txt"><br>
-            <span style="font-size: 13px; color: #888;">أو الصق النص مباشرة بالأسفل:</span>
-            <textarea id="cvText" placeholder="الصق محتوى الـ CV هنا..." style="width: 100%; height: 100px; margin-top: 10px; padding: 10px; border-radius: 8px; border: 1px solid #ddd;"></textarea>
-            <br><br>
-            <button class="btn-custom" style="background-color: #28a745; color: white;" onclick="startAIAnalysis()">🚀 ابدأ التحليل الفوري</button>
+    <div class="main-wrapper">
+        <!-- الهيدر العلوي -->
+        <div class="header-container">
+            <div class="header-text">
+                <h1>منصة ريادة الأعمال والخدمات المهنية</h1>
+                <p>مرحباً بك، استكشف الأفكار وحلل سيرتك الذاتية بالذكاء الاصطناعي</p>
+            </div>
+            <div>
+                <button class="btn-custom" onclick="openDashboard()">🚀 لوحة الخدمات (Hire Me)</button>
+            </div>
         </div>
 
-        <div class="ai-output" id="aiOutput">
-            <h3 style="color: #0056b3; margin-bottom: 10px;">📊 تقرير الذكاء الاصطناعي الشامل:</h3>
-            <p id="aiResultText" style="line-height: 1.8; color: #333;"></p>
+        <!-- 1. الصفحة الرئيسية (عرض الأفكار من Supabase) -->
+        <div class="container" id="homeView">
+            <h2 style="margin-bottom: 15px; color: #333;">أحدث أفكار المشاريع:</h2>
+            <div id="ideas-container">
+                <div class="idea-card"><h3>جاري تحميل الأفكار...</h3></div>
+            </div>
         </div>
 
-        <br>
-        <button class="btn-custom" style="background-color: #6c757d; color: white;" onclick="showSection('hireSection')">← الرجوع للخدمات</button>
+        <!-- 2. لوحة التحكم الجانبية (تشبه واجهة Claude) -->
+        <div class="dashboard-container hidden" id="dashboardView">
+            <!-- القائمة الجانبية (Sidebar) -->
+            <div class="sidebar">
+                <h3>القائمة الرئيسية</h3>
+                <div class="nav-item active" onclick="switchTab('cvTab', this)">📄 Review CV</div>
+                <div class="nav-item" onclick="switchTab('settingsTab', this)">⚙️ الإعدادات (Settings)</div>
+                <div style="margin-top: auto;">
+                    <div class="nav-item" style="color: #ffc107;" onclick="closeDashboard()">← العودة للرئيسية</div>
+                </div>
+            </div>
+
+            <!-- محتوى اللوحة -->
+            <div class="content-area">
+                <!-- قسم مراجعة الـ CV -->
+                <div class="content-section active" id="cvTab">
+                    <h2 style="color: #007bff; margin-bottom: 10px;">فحص ومراجعة السيرة الذاتية</h2>
+                    <p style="color: #666; font-size: 14px; margin-bottom: 15px;">ارفع سيرتك الذاتية أو الصق نصها، وسيقوم الذكاء الاصطناعي باكتشاف الأخطاء وهندسة محتوى جديد ومميز لك.</p>
+                    
+                    <div class="upload-box">
+                        <input type="file" id="cvFile" style="margin-bottom: 10px;" accept=".pdf,.doc,.docx,.txt"><br>
+                        <textarea id="cvText" placeholder="أو الصق محتوى الـ CV الخاص بك هنا..." style="width: 100%; height: 100px; padding: 10px; border-radius: 8px; border: 1px solid #ddd; margin-top: 10px;"></textarea>
+                        <br><br>
+                        <button class="btn-custom" style="background-color: #28a745; color: white;" onclick="runAIReview()">🔍 ابدأ التحليل والتعديل</button>
+                    </div>
+
+                    <div class="ai-output-box" id="aiOutputBox">
+                        <h3 style="color: #0056b3; margin-bottom: 8px;">📊 تقرير الذكاء الاصطناعي والتحسينات:</h3>
+                        <p id="aiReportText" style="line-height: 1.8; color: #333; margin-bottom: 15px;"></p>
+                        
+                        <!-- زر تحميل الملف الجديد بعد التعديل -->
+                        <button class="btn-custom" id="downloadBtn" style="background-color: #007bff; color: white; display: none;" onclick="downloadNewCV()">📥 تحميل السيرة الذاتية الجديدة (معدلة)</button>
+                    </div>
+                </div>
+
+                <!-- قسم الإعدادات -->
+                <div class="content-section" id="settingsTab">
+                    <h2 style="color: #007bff; margin-bottom: 10px;">إعدادات الحساب والمنصة</h2>
+                    <p style="color: #666;">تخصيص تفضيلات المساعد الذكي وخيارات الأمان والربط.</p>
+                    <hr style="margin: 15px 0; border: 0; border-top: 1px solid #ddd;">
+                    <p style="font-size: 14px; color: #445;">• حالة الاتصال بقاعدة البيانات: <strong>متصل بنجاح (Supabase)</strong></p>
+                    <p style="font-size: 14px; color: #445; margin-top: 8px;">• محرك الذكاء الاصطناعي: <strong>نشط (Cloud AI Reviewer)</strong></p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- مكتبة Supabase -->
@@ -127,41 +142,73 @@
 
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // التنقل بين الأقسام والصفحات بسلاسة
-        function showSection(sectionId) {
-            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
-            document.getElementById(sectionId).classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        let optimizedCvContent = ""; // حفظ الملف المعدل لتنزيله
+
+        // فتح لوحة الخدمات والـ Hire Me
+        function openDashboard() {
+            document.getElementById('homeView').style.display = 'none';
+            document.getElementById('dashboardView').style.display = 'flex';
         }
 
-        // محاكاة نظام تحليل الذكاء الاصطناعي تماماً مثل أدوات الـ AI
-        function startAIAnalysis() {
+        // إغلاق لوحة الخدمات والعودة للرئيسية
+        function closeDashboard() {
+            document.getElementById('dashboardView').style.display = 'none';
+            document.getElementById('homeView').style.display = 'block';
+        }
+
+        // التنقل بين أقسام القائمة الجانبية (Sidebar)
+        function switchTab(tabId, element) {
+            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            element.classList.add('active');
+        }
+
+        // محاكاة عملية الفحص والتعديل تماماً مثل Claude
+        function runAIReview() {
             const fileInput = document.getElementById('cvFile').files[0];
             const textInput = document.getElementById('cvText').value.trim();
-            const outputDiv = document.getElementById('aiOutput');
-            const resultText = document.getElementById('aiResultText');
+            const outputBox = document.getElementById('aiOutputBox');
+            const reportText = document.getElementById('aiReportText');
+            const downloadBtn = document.getElementById('downloadBtn');
 
             if (!fileInput && !textInput) {
-                alert('الرجاء رفع ملف السيرة الذاتية أو لصق النص في المربع أولاً.');
+                alert('الرجاء إرفاق ملف السيرة الذاتية أو كتابة النص أولاً.');
                 return;
             }
 
-            outputDiv.style.display = 'block';
-            resultText.innerHTML = '⏳ جاري قراءة الملف وتحليل الأخطاء الإملائية والمهنية عبر خوارزميات الذكاء الاصطناعي...';
+            outputBox.style.display = 'block';
+            reportText.innerHTML = '🤖 جاري قراءة وتدقيق السيرة الذاتية وتحليل الفجوات المهنية...';
+            downloadBtn.style.display = 'none';
 
             setTimeout(() => {
-                resultText.innerHTML = `
-                    ✅ <strong>تم الانتهاء من مراجعة السيرة الذاتية بنجاح!</strong><br><br>
-                    🔍 <strong>الأخطاء والملاحظات المكتشفة:</strong><br>
-                    - تم رصد صياغة تقليدية في قسم الملخص المهني.<br>
-                    - يُفضل إضافة مؤشرات أداء بالأرقام والنسب المئوية لإبراز حجم الإنجازات.<br><br>
-                    ✨ <strong>التعديل والصياغة الاحترافية المقترحة:</strong><br>
-                    "مختص ذو خبرة عالية وكفاءة مثبتة في قيادة العمليات وتحقيق الأهداف المالية والإدارية بدقة، مع سجل حافل في تطوير الأنظمة وتحسين الكفاءة التشغيلية."
+                optimizedCvContent = `=== السيرة الذاتية المحدثة والمطورة بالذكاء الاصطناعي ===\n\nالهدف المهني:\nخبير محترف ومالي ذو خبرة متقدمة في إدارة العمليات وتحقيق الكفاءة التشغيلية بدقة عالية واستخدام الأنظمة الرقمية الحديثة.\n\nالخبرات:\n- تنفيذ وإدارة العمليات المحاسبية والمالية بنجاح بنسبة دقة تجاوزت 98%.\n- تحسين دورة العمل وتقليل التكاليف التشغيلية من خلال أتمتة التقارير.\n\nالمهارات:\n- التخطيط المالي والتحليل المهني المتقدم.\n- إتقان أنظمة ERP وتحليل البيانات.`;
+
+                reportText.innerHTML = `
+                    ✅ <strong>تمت المراجعة الشاملة بنجاح!</strong><br><br>
+                    ❌ <strong>الأخطاء والملاحظات المرصودة:</strong><br>
+                    • صياغة الأهداف المهنية كانت تقليدية وغير جاذبة لمديري التوظيف.<br>
+                    • نقص في إبراز الأرقام ومؤشرات الأداء القياسية.<br><br>
+                    ✨ <strong>تم إنشاء النسخة الجديدة المهيكلة واحترافية الصياغة وجاهزة للتحميل الفوري!</strong>
                 `;
+                downloadBtn.style.display = 'inline-block';
             }, 2000);
         }
 
-        // جلب الأفكار من Supabase لعرضها في الصفحة الرئيسية
+        // تحميل الملف الجديد كملف نصي أو مستند
+        function downloadNewCV() {
+            const blob = new Blob([optimizedCvContent], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Optimized_CV_Professional.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        // جلب الأفكار من قاعدة بيانات Supabase
         async function fetchIdeas() {
             const container = document.getElementById('ideas-container');
             try {
@@ -184,7 +231,7 @@
                     container.appendChild(card);
                 });
             } catch (err) {
-                container.innerHTML = `<div class="idea-card" style="border-color: red;"><h3>خطأ في التحميل</h3><p>${err.message}</p></div>`;
+                container.innerHTML = `<div class="idea-card" style="border-color: red;"><h3>خطأ في جلب البيانات</h3><p>${err.message}</p></div>`;
             }
         }
 
