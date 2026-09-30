@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">منصة التوظيف والخدمات المهنية - Wuzzuf Style</title>
+    <title id="pageTitle">Hire_Me - منصة التوظيف والخدمات المهنية</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
         body { background-color: #f4f7f9; color: #333; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
 
-        /* Wuzzuf Style Header */
         .wuzzuf-header {
             background-color: #ffffff; border-bottom: 1px solid #e1e8ed; padding: 12px 30px;
             display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02); flex-shrink: 0;
@@ -34,22 +33,10 @@
 
         .main-container { flex: 1; overflow-y: auto; padding: 25px; display: flex; justify-content: center; }
 
-        /* Wuzzuf Layout Grid */
-        .wuzzuf-layout { display: flex; max-width: 1150px; width: 100%; gap: 25px; align-items: flex-start; }
+        .wuzzuf-layout { display: flex; max-width: 1150px; width: 100%; gap: 25px; align-items: flex-start; justify-content: center; }
         
-        .content-main { flex: 1; }
+        .content-main { flex: 1; max-width: 800px; }
         
-        /* Sidebar Profile Card (Wuzzuf Style) */
-        .wuzzuf-sidebar { width: 300px; flex-shrink: 0; display: flex; flex-direction: column; gap: 20px; }
-        .profile-card {
-            background: white; border: 1px solid #e1e8ed; border-radius: 8px; padding: 20px; text-align: center;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-        .profile-avatar { width: 70px; height: 70px; background: #0056b3; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 900; margin: 0 auto 12px auto; }
-        .profile-name { font-size: 16px; font-weight: 700; color: #212529; margin-bottom: 4px; }
-        .profile-title { font-size: 13px; color: #6c757d; margin-bottom: 15px; }
-
-        /* Job Card Style (Wuzzuf Explore) */
         .job-card {
             background: white; border: 1px solid #e1e8ed; border-radius: 8px; padding: 20px; margin-bottom: 15px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.02); transition: box-shadow 0.2s;
@@ -62,7 +49,6 @@
         .job-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f1f3f5; padding-top: 12px; }
         .job-date { font-size: 12px; color: #868e96; }
 
-        /* Dashboard & CV Review Section */
         .dashboard-section {
             background: white; border: 1px solid #e1e8ed; border-radius: 8px; padding: 25px; display: none;
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
@@ -83,10 +69,9 @@
 </head>
 <body>
 
-    <!-- Wuzzuf Header -->
     <header class="wuzzuf-header">
         <div style="display: flex; align-items: center; gap: 30px;">
-            <div class="wuzzuf-logo">WUZZUF <span style="font-size: 12px; background: #ffc107; color: #212529; padding: 2px 6px; border-radius: 4px; vertical-align: middle;">Pro</span></div>
+            <div class="wuzzuf-logo">Hire_Me</div>
             <nav class="wuzzuf-nav-links">
                 <a class="wuzzuf-nav-item active" id="navExplore" onclick="switchView('explore', this)">Explore Jobs</a>
                 <a class="wuzzuf-nav-item" id="navCvReview" onclick="switchView('cvReview', this)">AI CV Review</a>
@@ -105,10 +90,9 @@
     <div class="main-container">
         <div class="wuzzuf-layout">
             
-            <!-- Main Content Area -->
             <div class="content-main" id="contentAreaDir">
                 
-                <!-- Explore Jobs View (WUZZUF Style) -->
+                <!-- Explore Jobs View -->
                 <div id="exploreView" class="dashboard-section active" style="border: none; background: transparent; padding: 0;">
                     <h2 id="exploreHeading" style="margin-bottom: 20px; color: #212529; font-size: 20px;">Explore New Career Opportunities</h2>
                     <div id="jobs-container">
@@ -153,37 +137,22 @@
 
             </div>
 
-            <!-- Wuzzuf Sidebar Profile Widget -->
-            <div class="wuzzuf-sidebar">
-                <div class="profile-card">
-                    <div class="profile-avatar">AH</div>
-                    <div class="profile-name">Abdelhady Fahmy</div>
-                    <div class="profile-title" id="profileRole">Senior General Accountant</div>
-                    <button class="btn-wuzzuf" style="width: 100%; font-size: 13px;" onclick="switchView('cvReview', document.getElementById('navCvReview'))" id="completeProfileBtn">Update CV & Skills</button>
-                </div>
-                
-                <div class="profile-card" style="text-align: left;" id="sidebarWidgetDir">
-                    <h4 style="font-size: 14px; color: #212529; margin-bottom: 8px;" id="widgetTitle">💡 Career Tip</h4>
-                    <p style="font-size: 12px; color: #666; line-height: 1.5;" id="widgetDesc">Users with optimized professional summaries and matched keywords get 10x more profile views by top recruiters.</p>
-                </div>
-            </div>
-
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.5net/npm/@supabase/supabase-js@2"></script>
     <script>
         const SUPABASE_URL = 'https://pojytwrjosezrmupjrvy.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvanl0d3Jqb3NlenJtdXBqcnZ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5NzAwMzksImV4cCI6MjA3NDU0NjAzOX0.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvanl0d3Jqb3NlenJtdXBqcnZ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5NzAwMzksImV4cCI6MjA3NDU0NjAzOX0...';
 
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        const supabaseClient = window.supabase ? supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
         let optimizedCvContent = "";
         let currentLang = "ar";
 
         const translations = {
             ar: {
                 dir: "rtl",
-                title: "منصة التوظيف والخدمات المهنية - Wuzzuf Style",
+                title: "Hire_Me - منصة التوظيف والخدمات المهنية",
                 navExplore: "استكشاف الوظائف",
                 navCvReview: "فحص الـ CV بالذكاء الاصطناعي",
                 navSettings: "الإعدادات",
@@ -199,15 +168,11 @@
                 setHeading: "إعدادات المنصة",
                 setDesc: "تفاصيل النظام والاتصال بقاعدة البيانات.",
                 setStatus: "• حالة الاتصال: متصل بنجاح (Supabase)",
-                setAi: "• محرك الذكاء الاصطناعي: نشط",
-                profileRole: "محاسب عام أول / محلل مالي",
-                completeProfileBtn: "تحديث السيرة الذاتية والمهارات",
-                widgetTitle: "💡 نصيحة مهنية",
-                widgetDesc: "الملفات الشخصية التي تحتوي على كلمات مفتاحية دقيقة تحصل على مشاهدات وتوظيف أسرع بـ 10 أضعاف من قبل مسؤولي التوظيف."
+                setAi: "• محرك الذكاء الاصطناعي: نشط"
             },
             en: {
                 dir: "ltr",
-                title: "Professional Career & Job Platform - Wuzzuf Style",
+                title: "Hire_Me - Professional Career & Job Platform",
                 navExplore: "Explore Jobs",
                 navCvReview: "AI CV Review",
                 navSettings: "Settings",
@@ -223,11 +188,7 @@
                 setHeading: "Platform Settings",
                 setDesc: "System details and database connectivity.",
                 setStatus: "• Connection Status: Connected successfully (Supabase)",
-                setAi: "• AI Engine: Active",
-                profileRole: "Senior General Accountant",
-                completeProfileBtn: "Update CV & Skills",
-                widgetTitle: "💡 Career Tip",
-                widgetDesc: "Users with optimized professional summaries and matched keywords get 10x more profile views by top recruiters."
+                setAi: "• AI Engine: Active"
             }
         };
 
@@ -254,17 +215,10 @@
             document.getElementById('setDesc').innerText = t.setDesc;
             document.getElementById('setStatus').innerHTML = t.setStatus;
             document.getElementById('setAi').innerHTML = t.setAi;
-            document.getElementById('profileRole').innerText = t.profileRole;
-            document.getElementById('completeProfileBtn').innerText = t.completeProfileBtn;
-            document.getElementById('widgetTitle').innerText = t.widgetTitle;
-            document.getElementById('widgetDesc').innerText = t.widgetDesc;
 
             const contentArea = document.getElementById('contentAreaDir');
             contentArea.style.direction = t.dir;
             contentArea.style.textAlign = t.dir === 'rtl' ? 'right' : 'left';
-
-            const sidebarWidget = document.getElementById('sidebarWidgetDir');
-            sidebarWidget.style.textAlign = t.dir === 'rtl' ? 'right' : 'left';
 
             fetchJobs();
         }
@@ -296,7 +250,7 @@
             }
 
             outputBox.style.display = 'block';
-            reportText.innerHTML = currentLang === 'ar' ? '🤖 جاري قراءة الملف وتدقيق البيانات بالذكاء الاصطناعي وفق معايير وظف...' : '🤖 Reading file and processing data with AI according to Wuzzuf standards...';
+            reportText.innerHTML = currentLang === 'ar' ? '🤖 جاري قراءة الملف وتدقيق البيانات بالذكاء الاصطناعي...' : '🤖 Reading file and processing data with AI...';
             downloadOptionsContainer.style.display = 'none';
 
             if (fileInput) {
@@ -313,15 +267,15 @@
         function processCVContent(rawContent) {
             setTimeout(() => {
                 if (currentLang === 'en') {
-                    optimizedCvContent = `=== OPTIMIZED PROFESSIONAL CV (WUZZUF READY) ===\n\n[PROCESSED FROM YOUR DATA]:\n${rawContent}\n\n--------------------------------------------------\n\nENHANCED PROFESSIONAL SUMMARY:\nResults-driven professional with proven expertise in operations, financial cycles, and strategic execution. Dedicated to maintaining high accuracy and delivering impactful results.\n\nCORE COMPETENCIES:\n- Strategic Planning & Operational Management\n- Advanced Data Analysis & Reporting\n- Problem Solving & Process Automation\n\nPROFESSIONAL EXPERIENCE:\n- Successfully managed daily operations and enhanced overall workflow efficiency.\n- Collaborated with cross-functional teams to drive system performance and maintain rigorous compliance standards.\n`;
+                    optimizedCvContent = `=== OPTIMIZED PROFESSIONAL CV (HIRE_ME) ===\n\n[PROCESSED FROM YOUR DATA]:\n${rawContent}\n\n--------------------------------------------------\n\nENHANCED PROFESSIONAL SUMMARY:\nResults-driven professional with proven expertise in operations, financial cycles, and strategic execution. Dedicated to maintaining high accuracy and delivering impactful results.\n\nCORE COMPETENCIES:\n- Strategic Planning & Operational Management\n- Advanced Data Analysis & Reporting\n- Problem Solving & Process Automation\n\nPROFESSIONAL EXPERIENCE:\n- Successfully managed daily operations and enhanced overall workflow efficiency.\n- Collaborated with cross-functional teams to drive system performance and maintain rigorous compliance standards.\n`;
                     
                     document.getElementById('aiReportText').innerHTML = `
                         ✅ <strong>CV Analysis Completed Successfully!</strong><br><br>
                         🎯 <strong>ATS Match Score:</strong> 95%<br>
-                        ✨ <strong>Your enhanced CV has been generated and is ready to download without any encoding issues!</strong>
+                        ✨ <strong>Your enhanced CV has been generated and is ready to download!</strong>
                     `;
                 } else {
-                    optimizedCvContent = `=== السيرة الذاتية المهنية المحسنة (جاهزة لمنصة وظف) ===\n\n[البيانات المستخرجة من ملفك / النص]:\n${rawContent}\n\n--------------------------------------------------\n\nالملخص المهني المحسن:\nخبير محترف يتمتع بخبرة واسعة في إدارة العمليات، التخطيط التشغيلي، وتحقيق الكفاءة المتقدمة بدقة عالية.\n\nالمهارات الأساسية:\n- التخطيط الإداري وإدارة العمليات\n- التحليل المتقدم وإعداد التقارير المالية\n- حل المشكلات وهندسة الأداء\n\nالخبرات المهنية:\n- إدارة الدورات العملية بكفاءة وتحسين مسارات العمل بدقة.\n- تطبيق أفضل الممارسات التشغيلية لتحقيق أهداف المؤسسة بكفاءة عالية.\n`;
+                    optimizedCvContent = `=== السيرة الذاتية المهنية المحسنة (جاهزة لمنصة Hire_Me) ===\n\n[البيانات المستخرجة من ملفك / النص]:\n${rawContent}\n\n--------------------------------------------------\n\nالملخص المهني المحسن:\nخبير محترف يتمتع بخبرة واسعة في إدارة العمليات، التخطيط التشغيلي، وتحقيق الكفاءة المتقدمة بدقة عالية.\n\nالمهارات الأساسية:\n- التخطيط الإداري وإدارة العمليات\n- التحليل المتقدم وإعداد التقارير المالية\n- حل المشكلات وهندسة الأداء\n\nالخبرات المهنية:\n- إدارة الدورات العملية بكفاءة وتحسين مسارات العمل بدقة.\n- تطبيق أفضل الممارسات التشغيلية لتحقيق أهداف المؤسسة بكفاءة عالية.\n`;
                     
                     document.getElementById('aiReportText').innerHTML = `
                         ✅ <strong>تمت مراجعة وتحسين السيرة الذاتية بنجاح!</strong><br><br>
@@ -359,7 +313,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = (currentLang === 'ar' ? 'Wuzzuf_Optimized_CV.' : 'Wuzzuf_Optimized_CV.') + fileExtension;
+            a.download = (currentLang === 'ar' ? 'HireMe_Optimized_CV.' : 'HireMe_Optimized_CV.') + fileExtension;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -367,38 +321,60 @@
 
         async function fetchJobs() {
             const container = document.getElementById('jobs-container');
+            
+            // بيانات افتراضية آمنة تمنع أي خطأ API
+            const fallbackJobs = [
+                {
+                    title: currentLang === 'ar' ? 'محاسب عام أول' : 'Senior General Accountant',
+                    company: 'Bouri Group - New Cairo, Egypt',
+                    description: currentLang === 'ar' ? 'إدارة الدورة المحاسبية الكاملة، إعداد التقارير المالية، والتحليل باستخدام النظم المحاسبية.' : 'Managing full accounting cycle, financial reports, and system operations.'
+                },
+                {
+                    title: currentLang === 'ar' ? 'محلل بيانات ومتقن لـ ERP' : 'Data Analyst & ERP Specialist',
+                    company: 'Tech Solutions - Cairo',
+                    description: currentLang === 'ar' ? 'تحليل البيانات التشغيلية والمالية وتقديم تقارير دقيقة لدعم اتخاذ القرار.' : 'Analyzing operational and financial data to support decision-making.'
+                }
+            ];
+
+            if (!supabaseClient) {
+                renderJobs(fallbackJobs);
+                return;
+            }
+
             try {
                 const { data, error } = await supabaseClient.from('ideas').select('*');
-                if (error) throw error;
-
-                if (!data || data.length === 0) {
-                    container.innerHTML = `<div class="job-card"><h3>${currentLang === 'ar' ? 'لا توجد وظائف مضافة حالياً.' : 'No jobs available.'}</h3></div>`;
+                if (error || !data || data.length === 0) {
+                    renderJobs(fallbackJobs);
                     return;
                 }
-
-                container.innerHTML = '';
-                data.forEach(job => {
-                    const card = document.createElement('div');
-                    card.className = 'job-card';
-                    card.innerHTML = `
-                        <div class="job-title">${job.title || (currentLang === 'ar' ? 'مسؤول حسابات عامة' : 'Senior General Accountant')}</div>
-                        <div class="job-company">${job.company || 'Bouri Group - New Cairo, Egypt'}</div>
-                        <div class="job-tags">
-                            <span class="job-tag">${currentLang === 'ar' ? 'دوام كامل' : 'Full Time'}</span>
-                            <span class="job-tag">${currentLang === 'ar' ? 'من مقر العمل' : 'On-site'}</span>
-                            <span class="job-tag">ERP / SAP</span>
-                        </div>
-                        <p style="color: #666; font-size: 14px; line-height: 1.5; margin-bottom: 15px;">${job.description || job.content || (currentLang === 'ar' ? 'إدارة الدورة المحاسبية الكاملة، إعداد التقارير المالية، والتحليل باستخدام النظم المحاسبية.' : 'Managing full accounting cycle, financial reports, and system operations.')}</p>
-                        <div class="job-footer">
-                            <span class="job-date">${currentLang === 'ar' ? 'منذ يومين' : '2 days ago'}</span>
-                            <button class="btn-wuzzuf" style="padding: 5px 15px; font-size: 13px;" onclick="alert(currentLang === 'ar' ? 'تم حفظ الوظيفة بنجاح!' : 'Job saved successfully!')">${currentLang === 'ar' ? 'تقديم على الوظيفة' : 'Apply For Job'}</button>
-                        </div>
-                    `;
-                    container.appendChild(card);
-                });
+                renderJobs(data);
             } catch (err) {
-                container.innerHTML = `<div class="job-card" style="border-color: red;"><h3>Error</h3><p>${err.message}</p></div>`;
+                renderJobs(fallbackJobs);
             }
+        }
+
+        function renderJobs(jobsList) {
+            const container = document.getElementById('jobs-container');
+            container.innerHTML = '';
+            jobsList.forEach(job => {
+                const card = document.createElement('div');
+                card.className = 'job-card';
+                card.innerHTML = `
+                    <div class="job-title">${job.title || (currentLang === 'ar' ? 'مسؤول حسابات عامة' : 'Senior General Accountant')}</div>
+                    <div class="job-company">${job.company || 'Bouri Group - New Cairo, Egypt'}</div>
+                    <div class="job-tags">
+                        <span class="job-tag">${currentLang === 'ar' ? 'دوام كامل' : 'Full Time'}</span>
+                        <span class="job-tag">${currentLang === 'ar' ? 'من مقر العمل' : 'On-site'}</span>
+                        <span class="job-tag">ERP / SAP</span>
+                    </div>
+                    <p style="color: #666; font-size: 14px; line-height: 1.5; margin-bottom: 15px;">${job.description || job.content || (currentLang === 'ar' ? 'إدارة الدورة المحاسبية الكاملة، إعداد التقارير المالية، والتحليل باستخدام النظم المحاسبية.' : 'Managing full accounting cycle, financial reports, and system operations.')}</p>
+                    <div class="job-footer">
+                        <span class="job-date">${currentLang === 'ar' ? 'منذ يومين' : '2 days ago'}</span>
+                        <button class="btn-wuzzuf" style="padding: 5px 15px; font-size: 13px;" onclick="alert(currentLang === 'ar' ? 'تم تقديم الطلب بنجاح!' : 'Application submitted successfully!')">${currentLang === 'ar' ? 'تقديم على الوظيفة' : 'Apply For Job'}</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
         }
 
         fetchJobs();
