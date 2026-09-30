@@ -16,4 +16,547 @@
 [data-theme="dark"]{
   --bg:#0f1422; --surface:#182033; --text:#e8ecf7; --muted:#9aa5c2; --border:#27314a;
   --primary:#7b93ff; --primary-dark:#6079f0; --primary-soft:#222c52;
-  --ok:#57d27a; --ok-soft:#173526; --warn:#ffb454; --warn-soft:#3a2b14; --bad:#ff7aa8;
+  --ok:#57d27a; --ok-soft:#173526; --warn:#ffb454; --warn-soft:#3a2b14; --bad:#ff7aa8; --bad-soft:#3b1a29;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
+  --shadow-hover:0 8px 26px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Tajawal',sans-serif}
+body{background:var(--bg);color:var(--text);min-height:100vh;transition:background .25s,color .25s}
+button,input,select,textarea{font:inherit;color:inherit}
+
+/* Header */
+.header{position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:1px solid var(--border);
+  padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-size:24px;font-weight:900;color:var(--primary);letter-spacing:.3px}
+.nav{display:flex;gap:6px}
+.nav a{padding:8px 14px;border-radius:8px;font-weight:700;font-size:14px;color:var(--muted);cursor:pointer;transition:.2s}
+.nav a:hover{color:var(--primary);background:var(--primary-soft)}
+.nav a.active{color:var(--primary);background:var(--primary-soft)}
+.controls{display:flex;gap:10px;align-items:center}
+.select,.icon-btn{border:1px solid var(--border);background:var(--surface);border-radius:8px;padding:7px 10px;font-weight:700;cursor:pointer}
+.icon-btn{width:38px;height:38px;display:grid;place-items:center;font-size:16px}
+.btn{background:var(--primary);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:700;font-size:14px;cursor:pointer;transition:.2s}
+.btn:hover{background:var(--primary-dark);transform:translateY(-1px)}
+.btn.ghost{background:var(--primary-soft);color:var(--primary)}
+.btn.ghost:hover{background:var(--primary);color:#fff}
+
+/* Layout */
+.container{max-width:920px;margin:0 auto;padding:28px 20px 60px}
+.view{display:none;animation:fade .3s ease}
+.view.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.hero{margin-bottom:20px}
+.hero h1{font-size:26px;font-weight:900;margin-bottom:6px}
+.hero p{color:var(--muted);font-size:15px}
+
+/* Filters */
+.filters{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}
+.filters input{flex:1;min-width:200px;border:1px solid var(--border);background:var(--surface);border-radius:10px;padding:11px 14px;outline:none}
+.filters input:focus,.filters select:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+.count{color:var(--muted);font-size:13px;margin-bottom:12px}
+
+/* Job cards */
+.job-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:14px;
+  box-shadow:var(--shadow);transition:.2s;display:flex;gap:16px}
+.job-card:hover{box-shadow:var(--shadow-hover);transform:translateY(-2px)}
+.avatar{width:52px;height:52px;border-radius:12px;background:var(--primary-soft);color:var(--primary);
+  display:grid;place-items:center;font-weight:900;font-size:20px;flex-shrink:0}
+.job-body{flex:1;min-width:0}
+.job-title{font-size:18px;font-weight:800;margin-bottom:3px}
+.job-company{font-size:14px;color:var(--muted);margin-bottom:10px}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.tag{background:var(--primary-soft);color:var(--primary);padding:4px 11px;border-radius:999px;font-size:12px;font-weight:700}
+.job-desc{color:var(--muted);font-size:14px;line-height:1.8;margin-bottom:14px}
+.job-footer{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:12px}
+.job-date{font-size:12px;color:var(--muted)}
+.skeleton{height:130px;border-radius:14px;margin-bottom:14px;background:linear-gradient(90deg,var(--surface) 25%,var(--border) 50%,var(--surface) 75%);
+  background-size:200% 100%;animation:sh 1.3s infinite}
+@keyframes sh{to{background-position:-200% 0}}
+.empty{text-align:center;color:var(--muted);padding:40px 0}
+
+/* Panels */
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;box-shadow:var(--shadow);margin-bottom:16px}
+.panel h2{font-size:20px;margin-bottom:6px}
+.panel .sub{color:var(--muted);font-size:14px;margin-bottom:16px;line-height:1.7}
+.drop{border:2px dashed var(--primary);background:var(--primary-soft);border-radius:12px;padding:18px;text-align:center;margin-bottom:12px}
+.drop input{margin-top:6px}
+textarea{width:100%;border:1px solid var(--border);background:var(--bg);border-radius:10px;padding:12px;outline:none;resize:vertical;line-height:1.7}
+label.l{display:block;font-weight:700;font-size:14px;margin:14px 0 6px}
+.hint{font-size:12px;color:var(--muted);margin-top:4px}
+.err{color:var(--bad);font-size:13px;margin-top:8px;min-height:18px}
+
+/* Result */
+.score-wrap{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+.ring{--p:0;width:130px;height:130px;border-radius:50%;display:grid;place-items:center;flex-shrink:0;
+  background:conic-gradient(var(--c,var(--primary)) calc(var(--p)*1%),var(--border) 0)}
+.ring>div{width:104px;height:104px;border-radius:50%;background:var(--surface);display:grid;place-items:center;text-align:center}
+.ring b{font-size:30px;line-height:1}
+.ring small{color:var(--muted);font-size:12px}
+.verdict h3{font-size:19px;margin-bottom:4px}
+.verdict p{color:var(--muted);font-size:14px;line-height:1.7}
+.checks{list-style:none;margin-top:6px}
+.checks li{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:10px;margin-bottom:8px;font-size:14px;line-height:1.6}
+.checks li.ok{background:var(--ok-soft)}
+.checks li.warn{background:var(--warn-soft)}
+.checks li.bad{background:var(--bad-soft)}
+.checks .pts{margin-inline-start:auto;font-weight:800;font-size:12px;white-space:nowrap;opacity:.8}
+.kw{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.kw span{padding:4px 11px;border-radius:999px;font-size:12px;font-weight:700}
+.kw .miss{background:var(--bad-soft);color:var(--bad)}
+.kw .hit{background:var(--ok-soft);color:var(--ok)}
+.result{display:none}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.status-line{display:flex;align-items:center;gap:8px;font-size:14px;margin-top:8px}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--muted)}
+.dot.on{background:var(--ok)} .dot.off{background:var(--bad)}
+.toast{position:fixed;bottom:24px;inset-inline:0;margin:auto;width:max-content;max-width:90%;background:var(--text);color:var(--bg);
+  padding:12px 20px;border-radius:10px;font-weight:700;font-size:14px;opacity:0;pointer-events:none;transition:.3s;transform:translateY(10px)}
+.toast.show{opacity:1;transform:none}
+@media(max-width:600px){.header{padding:10px 14px}.job-card{flex-direction:column}.nav a{padding:7px 10px;font-size:13px}}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div style="display:flex;align-items:center;gap:22px;flex-wrap:wrap">
+    <div class="brand">Hire_Me</div>
+    <nav class="nav">
+      <a id="navExplore" class="active" onclick="switchView('explore')" data-i18n="navExplore"></a>
+      <a id="navCv" onclick="switchView('cv')" data-i18n="navCv"></a>
+      <a id="navSettings" onclick="switchView('settings')" data-i18n="navSettings"></a>
+    </nav>
+  </div>
+  <div class="controls">
+    <button class="icon-btn" id="themeBtn" onclick="toggleTheme()" title="Theme">🌙</button>
+    <select id="langSelector" class="select" onchange="changeLanguage(this.value)">
+      <option value="ar">العربية</option>
+      <option value="en">English</option>
+    </select>
+    <button class="btn" onclick="switchView('cv')" data-i18n="cta"></button>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- Explore -->
+  <section id="view-explore" class="view active">
+    <div class="hero">
+      <h1 data-i18n="exploreHeading"></h1>
+      <p data-i18n="exploreSub"></p>
+    </div>
+    <div class="filters">
+      <input id="searchInput" oninput="applyFilters()" data-i18n-ph="searchPh">
+      <select id="typeFilter" class="select" onchange="applyFilters()"></select>
+    </div>
+    <div class="count" id="jobsCount"></div>
+    <div id="jobs-container"></div>
+  </section>
+
+  <!-- CV Review -->
+  <section id="view-cv" class="view">
+    <div class="panel">
+      <h2 data-i18n="cvHeading"></h2>
+      <p class="sub" data-i18n="cvDesc"></p>
+
+      <div class="drop">
+        <div data-i18n="uploadLabel"></div>
+        <input type="file" id="cvFile" accept=".pdf,.docx,.txt" onchange="handleFile(this.files[0])">
+        <div class="hint" data-i18n="uploadHint"></div>
+      </div>
+      <textarea id="cvText" rows="8" data-i18n-ph="cvPh"></textarea>
+
+      <label class="l" data-i18n="jdLabel"></label>
+      <textarea id="jdText" rows="4" data-i18n-ph="jdPh"></textarea>
+      <div class="hint" data-i18n="jdHint"></div>
+
+      <div class="row">
+        <button class="btn" id="analyzeBtn" onclick="runReview()" data-i18n="analyzeBtn"></button>
+      </div>
+      <div class="err" id="cvErr"></div>
+    </div>
+
+    <div class="result" id="result">
+      <div class="panel">
+        <div class="score-wrap">
+          <div class="ring" id="ring"><div><span><b id="scoreNum">0</b><br><small>/ 100</small></span></div></div>
+          <div class="verdict"><h3 id="verdictTitle"></h3><p id="verdictText"></p></div>
+        </div>
+      </div>
+      <div class="panel">
+        <h2 data-i18n="detailsTitle"></h2>
+        <ul class="checks" id="checksList"></ul>
+      </div>
+      <div class="panel" id="matchPanel" style="display:none">
+        <h2 data-i18n="matchTitle"></h2>
+        <p class="sub" id="matchSummary"></p>
+        <b style="font-size:14px" data-i18n="missingKw"></b>
+        <div class="kw" id="missingKw"></div>
+        <b style="font-size:14px;display:block;margin-top:14px" data-i18n="foundKw"></b>
+        <div class="kw" id="foundKw"></div>
+      </div>
+      <div class="row">
+        <button class="btn ghost" onclick="downloadReport()" data-i18n="downloadBtn"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Settings -->
+  <section id="view-settings" class="view">
+    <div class="panel">
+      <h2 data-i18n="setHeading"></h2>
+      <p class="sub" data-i18n="setDesc"></p>
+      <div class="status-line"><span class="dot" id="dbDot"></span><span id="dbStatus"></span></div>
+      <div class="status-line"><span class="dot on"></span><span data-i18n="setCv"></span></div>
+    </div>
+  </section>
+
+</main>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* ============ CONFIG ============ */
+const SUPABASE_URL  = 'https://pojytwrjosezrmupjrvy.supabase.co';
+const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvanl0d3Jqb3NlenJtdXBqcnZ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2ODc5MzksImV4cCI6MjEwNjI2MzkzOX0.IjoesBsdZynzmjwsI2vEJ-IkL4Dbq8HRy8eVdPc-2yo';
+const JOBS_TABLE    = 'ideas';
+
+let supabaseClient = null;
+try {
+  if (window.supabase && SUPABASE_KEY) {
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  }
+} catch (e) { supabaseClient = null; }
+
+let currentLang = 'ar';
+let allJobs = [];
+let dbConnected = false;
+let lastReport = '';
+
+/* ============ TRANSLATIONS ============ */
+const T = {
+ar:{dir:'rtl',navExplore:'استكشاف الوظائف',navCv:'فحص الـ CV',navSettings:'الإعدادات',cta:'✨ حلل سيرتي الذاتية',
+ exploreHeading:'أحدث الوظائف وفرص العمل',exploreSub:'وظائف بتفاصيل واضحة وشركات موثقة.',searchPh:'ابحث بالمسمى الوظيفي أو الشركة أو المكان...',
+ allTypes:'كل أنواع الدوام',fullTime:'دوام كامل',partTime:'دوام جزئي',remote:'عن بُعد',onsite:'من مقر العمل',
+ jobsCount:n=>`${n} وظيفة`,noJobs:'مفيش وظائف مطابقة للبحث.',apply:'تقديم على الوظيفة',applied:'تم إرسال طلبك ✅',
+ today:'النهارده',daysAgo:d=>d===1?'منذ يوم':d===2?'منذ يومين':`منذ ${d} أيام`,
+ cvHeading:'فحص ومراجعة السيرة الذاتية',cvDesc:'ارفع الـ CV أو الصق نصه، ولو عندك وصف الوظيفة ضيفه وهنقولك الكلمات المفتاحية الناقصة. التحليل بيتم على جهازك ومفيش بيانات بتتبعت لأي مكان.',
+ uploadLabel:'ارفع ملف السيرة الذاتية',uploadHint:'PDF أو Word (docx) أو txt',cvPh:'أو الصق نص السيرة الذاتية هنا...',
+ jdLabel:'وصف الوظيفة (اختياري)',jdPh:'الصق وصف الوظيفة اللي عايز تقدم عليها...',jdHint:'بنقارن الـ CV بالوظيفة ونطلعلك الكلمات الناقصة.',
+ analyzeBtn:'🔍 ابدأ التحليل',reading:'جاري القراءة...',emptyErr:'ارفع ملف أو الصق نص الـ CV الأول.',shortErr:'النص قصير جداً، اتأكد إن الملف اتقرأ صح أو الصق النص يدوي.',
+ readErr:'معرفتش أقرأ الملف. جرب الصق النص يدوي.',
+ detailsTitle:'تفاصيل التقييم',matchTitle:'التوافق مع الوظيفة',missingKw:'كلمات مفتاحية ناقصة في الـ CV:',foundKw:'كلمات موجودة:',
+ matchSummary:(p)=>`نسبة توافق الكلمات المفتاحية: ${p}%`,noneMissing:'مفيش كلمات ناقصة 👌',
+ downloadBtn:'📥 تحميل التقرير',
+ v:{great:['CV قوي 👏','سيرتك مرتبة وفيها عناصر أنظمة الفرز بتدور عليها.'],good:['CV كويس ويحتاج تحسينات بسيطة','عدّل النقاط الحمراء والبرتقالي تحت وهتعلى كتير.'],weak:['CV محتاج شغل','ناقصه عناصر أساسية. ابدأ بالنقاط الحمراء.']},
+ setHeading:'إعدادات المنصة',setDesc:'حالة الاتصال بقاعدة البيانات.',dbOn:'متصل بقاعدة البيانات (Supabase)',dbOff:'غير متصل، بيتم عرض وظائف تجريبية',setCv:'محلل الـ CV: يعمل محلياً على جهازك',
+ chk:{email:'بريد إلكتروني',phone:'رقم هاتف',link:'رابط LinkedIn أو موقع/Portfolio',summary:'ملخص مهني',exp:'قسم الخبرات',edu:'قسم التعليم',skills:'قسم المهارات',len:'طول مناسب',nums:'أرقام ونتائج قابلة للقياس',verbs:'أفعال إنجاز قوية'},
+ ok:{email:'البريد الإلكتروني موجود.',phone:'رقم الهاتف موجود.',link:'فيه رابط LinkedIn أو Portfolio.',summary:'فيه ملخص مهني.',exp:'قسم الخبرات موجود.',edu:'قسم التعليم موجود.',skills:'قسم المهارات موجود.',len:w=>`الطول مناسب (${w} كلمة).`,nums:n=>`فيه ${n} رقم/نسبة بتثبت إنجازاتك.`,verbs:n=>`استخدمت ${n} فعل إنجاز قوي.`},
+ fix:{email:'ضيف بريد إلكتروني احترافي.',phone:'ضيف رقم هاتف للتواصل.',link:'ضيف رابط LinkedIn أو أعمالك.',summary:'ضيف ملخص مهني من 2-3 سطور في أول الـ CV.',exp:'ضيف قسم "الخبرات" بعناوين واضحة.',edu:'ضيف قسم "التعليم".',skills:'ضيف قسم "المهارات" بكلمات مفتاحية من الوظيفة.',len:w=>w<250?`الـ CV قصير (${w} كلمة). فصّل أكتر في مهامك وإنجازاتك.`:`الـ CV طويل (${w} كلمة). حاول تختصر لصفحة أو صفحتين.`,nums:'اكتب إنجازاتك بأرقام. مثال: "قللت وقت الإقفال 20%".',verbs:'ابدأ كل نقطة بفعل قوي. مثال: أدرت، حسّنت، خفّضت، أعددت.'}},
+en:{dir:'ltr',navExplore:'Explore Jobs',navCv:'CV Review',navSettings:'Settings',cta:'✨ Analyze My CV',
+ exploreHeading:'Explore New Career Opportunities',exploreSub:'Clear job details and verified companies.',searchPh:'Search by title, company or location...',
+ allTypes:'All job types',fullTime:'Full Time',partTime:'Part Time',remote:'Remote',onsite:'On-site',
+ jobsCount:n=>`${n} jobs`,noJobs:'No jobs match your search.',apply:'Apply Now',applied:'Application sent ✅',
+ today:'Today',daysAgo:d=>d===1?'1 day ago':`${d} days ago`,
+ cvHeading:'Professional CV Review',cvDesc:'Upload your CV or paste its text. Add a job description to see missing keywords. Analysis runs in your browser; nothing is uploaded anywhere.',
+ uploadLabel:'Upload your CV',uploadHint:'PDF, Word (docx) or txt',cvPh:'Or paste your CV text here...',
+ jdLabel:'Job description (optional)',jdPh:'Paste the job description you are applying for...',jdHint:'We compare your CV to the job and list missing keywords.',
+ analyzeBtn:'🔍 Analyze',reading:'Reading...',emptyErr:'Upload a file or paste your CV text first.',shortErr:'Text is too short. Make sure the file was read correctly or paste it manually.',
+ readErr:'Could not read the file. Try pasting the text manually.',
+ detailsTitle:'Score Breakdown',matchTitle:'Job Match',missingKw:'Missing keywords in your CV:',foundKw:'Keywords found:',
+ matchSummary:(p)=>`Keyword match: ${p}%`,noneMissing:'Nothing missing 👌',
+ downloadBtn:'📥 Download Report',
+ v:{great:['Strong CV 👏','Well structured, with what ATS systems look for.'],good:['Good CV, small fixes needed','Fix the red and orange items below for a big boost.'],weak:['CV needs work','Key elements are missing. Start with the red items.']},
+ setHeading:'Platform Settings',setDesc:'Database connection status.',dbOn:'Connected to database (Supabase)',dbOff:'Not connected, showing demo jobs',setCv:'CV analyzer: runs locally in your browser',
+ chk:{email:'Email address',phone:'Phone number',link:'LinkedIn / portfolio link',summary:'Professional summary',exp:'Experience section',edu:'Education section',skills:'Skills section',len:'Suitable length',nums:'Measurable results',verbs:'Strong action verbs'},
+ ok:{email:'Email found.',phone:'Phone number found.',link:'LinkedIn / portfolio link found.',summary:'Summary section found.',exp:'Experience section found.',edu:'Education section found.',skills:'Skills section found.',len:w=>`Good length (${w} words).`,nums:n=>`${n} numbers/percentages back up your achievements.`,verbs:n=>`${n} strong action verbs used.`},
+ fix:{email:'Add a professional email address.',phone:'Add a contact phone number.',link:'Add your LinkedIn or portfolio link.',summary:'Add a 2-3 line professional summary at the top.',exp:'Add a clearly labeled "Experience" section.',edu:'Add an "Education" section.',skills:'Add a "Skills" section with keywords from the job.',len:w=>w<250?`CV is short (${w} words). Expand on duties and achievements.`:`CV is long (${w} words). Trim it to 1-2 pages.`,nums:'Quantify achievements. Example: "Cut month-end close time by 20%".',verbs:'Start bullets with strong verbs. Example: managed, improved, reduced, prepared.'}}
+};
+
+/* ============ UI ============ */
+function esc(s){const d=document.createElement('div');d.textContent=s==null?'':String(s);return d.innerHTML;}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+
+function switchView(name){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'));
+  const target = document.getElementById('view-'+name);
+  if(target) target.classList.add('active');
+  const map={explore:'navExplore',cv:'navCv',settings:'navSettings'};
+  if(map[name]) document.getElementById(map[name]).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleTheme(){
+  const root=document.getElementById('htmlRoot');
+  const next=root.dataset.theme==='dark'?'light':'dark';
+  root.dataset.theme=next;
+  const btn = document.getElementById('themeBtn');
+  if(btn) btn.textContent=next==='dark'?'☀️':'🌙';
+  try{localStorage.setItem('theme',next);}catch(e){}
+}
+
+function changeLanguage(lang){
+  currentLang=lang; const t=T[lang];
+  const root=document.getElementById('htmlRoot');
+  if(root){ root.dir=t.dir; root.lang=lang; }
+  document.title='Hire_Me';
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const v=t[el.dataset.i18n]; if(typeof v==='string') el.textContent=v;});
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{el.placeholder=t[el.dataset.i18nPh];});
+  const tf=document.getElementById('typeFilter');
+  if(tf) tf.innerHTML=`<option value="">${t.allTypes}</option><option value="full">${t.fullTime}</option><option value="part">${t.partTime}</option><option value="remote">${t.remote}</option>`;
+  updateStatus();
+  const res = document.getElementById('result');
+  if(res && res.style.display==='block') runReview(true);
+  fetchJobs();
+}
+
+function updateStatus(){
+  const t=T[currentLang];
+  const dot = document.getElementById('dbDot');
+  const status = document.getElementById('dbStatus');
+  if(dot) dot.className='dot '+(dbConnected?'on':'off');
+  if(status) status.textContent=dbConnected?t.dbOn:t.dbOff;
+}
+
+/* ============ JOBS ============ */
+function demoJobs(){
+  return [
+    {title:'محاسب عام أول',title_en:'Senior General Accountant',company:'Bouri Group',location:'New Cairo, Egypt',type:'full',
+     description:'إدارة الدورة المحاسبية الكاملة، إعداد التقارير المالية، والتحليل باستخدام النظم المحاسبية.',
+     description_en:'Managing the full accounting cycle, financial reporting, and analysis using accounting systems.',days:2},
+    {title:'محلل بيانات ومتقن لـ ERP',title_en:'Data Analyst & ERP Specialist',company:'Tech Solutions',location:'Cairo',type:'full',
+     description:'تحليل البيانات التشغيلية والمالية وتقديم تقارير دقيقة لدعم اتخاذ القرار.',
+     description_en:'Analyzing operational and financial data and delivering accurate reports to support decisions.',days:2}
+  ];
+}
+
+async function fetchJobs(){
+  const c=document.getElementById('jobs-container');
+  if(!c) return;
+  c.innerHTML='<div class="skeleton"></div><div class="skeleton"></div>';
+  allJobs=demoJobs(); dbConnected=false;
+  if(supabaseClient){
+    try{
+      const {data,error}=await supabaseClient.from(JOBS_TABLE).select('*');
+      if(!error && data && data.length){ allJobs=data; dbConnected=true; }
+    }catch(e){}
+  }
+  updateStatus();
+  applyFilters();
+}
+
+function applyFilters(){
+  const qEl = document.getElementById('searchInput');
+  const tyEl = document.getElementById('typeFilter');
+  const q = qEl ? qEl.value.trim().toLowerCase() : '';
+  const ty = tyEl ? tyEl.value : '';
+  const list=allJobs.filter(j=>{
+    const hay=[j.title,j.title_en,j.company,j.location,j.description].join(' ').toLowerCase();
+    return (!q||hay.includes(q)) && (!ty||(j.type||'full')===ty);
+  });
+  renderJobs(list);
+}
+
+function renderJobs(list){
+  const t=T[currentLang], c=document.getElementById('jobs-container');
+  if(!c) return;
+  const countEl = document.getElementById('jobsCount');
+  if(countEl) countEl.textContent=t.jobsCount(list.length);
+  if(!list.length){c.innerHTML=`<div class="empty">${t.noJobs}</div>`;return;}
+  c.innerHTML='';
+  list.forEach((j,i)=>{
+    const en=currentLang==='en';
+    const title=(en&&j.title_en)||j.title||'-';
+    const desc=(en&&j.description_en)||j.description||j.content||'';
+    const typeKey=j.type||'full';
+    const typeLabel={full:t.fullTime,part:t.partTime,remote:t.remote}[typeKey]||t.fullTime;
+    let days=j.days;
+    if(j.created_at){days=Math.max(0,Math.floor((Date.now()-new Date(j.created_at))/86400000));}
+    const when=days==null?'':(days===0?t.today:t.daysAgo(days));
+    const company=j.company||'-';
+    const card=document.createElement('div');
+    card.className='job-card';
+    card.innerHTML=`
+      <div class="avatar">${esc(company.trim().charAt(0).toUpperCase())}</div>
+      <div class="job-body">
+        <div class="job-title">${esc(title)}</div>
+        <div class="job-company">${esc(company)}${j.location?' · '+esc(j.location):''}</div>
+        <div class="tags"><span class="tag">${esc(typeLabel)}</span>${j.location?`<span class="tag">${esc(t.onsite)}</span>`:''}</div>
+        <p class="job-desc">${esc(desc)}</p>
+        <div class="job-footer"><span class="job-date">${esc(when)}</span>
+          <button class="btn" data-i="${i}">${t.apply}</button></div>
+      </div>`;
+    card.querySelector('button').onclick=()=>applyToJob(j);
+    c.appendChild(card);
+  });
+}
+
+function applyToJob(job){
+  toast(T[currentLang].applied);
+}
+
+/* ============ FILE READING ============ */
+function loadScript(src){return new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=rej;document.head.appendChild(s);});}
+
+async function handleFile(file){
+  if(!file) return;
+  const t=T[currentLang], err=document.getElementById('cvErr');
+  if(err) err.textContent=t.reading;
+  try{
+    const ext=file.name.split('.').pop().toLowerCase();
+    let text='';
+    if(ext==='txt'){ text=await file.text(); }
+    else if(ext==='docx'){
+      if(!window.mammoth) await loadScript('https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js');
+      const r=await window.mammoth.extractRawText({arrayBuffer:await file.arrayBuffer()});
+      text=r.value;
+    } else if(ext==='pdf'){
+      if(!window.pdfjsLib){
+        await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      }
+      const pdf=await window.pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise;
+      for(let p=1;p<=pdf.numPages;p++){
+        const pg=await pdf.getPage(p); const c=await pg.getTextContent();
+        text+=c.items.map(i=>i.str).join(' ')+'\n';
+      }
+    } else { throw new Error('type'); }
+    const cvTextEl = document.getElementById('cvText');
+    if(cvTextEl) cvTextEl.value=text.trim();
+    if(err) err.textContent='';
+  }catch(e){ if(err) err.textContent=t.readErr; }
+}
+
+/* ============ CV ANALYZER ============ */
+const RX={
+  email:/[\w.+-]+@[\w-]+\.[\w.-]+/,
+  phone:/(\+?\d[\d\s().-]{8,}\d)/,
+  link:/(linkedin\.com|github\.com|behance\.net|portfolio|https?:\/\/)/i,
+  summary:/(professional summary|career objective|\bsummary\b|\bprofile\b|\bobjective\b|الملخص|نبذة|الهدف الوظيفي|ملخص مهني)/i,
+  exp:/(experience|work history|employment|الخبرات|الخبرة|الخبرات العملية|الخبرة العملية)/i,
+  edu:/(education|qualification|degree|التعليم|المؤهل|المؤهلات|الدراسة)/i,
+  skills:/(\bskills\b|competencies|المهارات|الكفاءات)/i
+};
+const VERBS=['managed','led','developed','improved','reduced','increased','created','implemented','prepared','analyzed','designed','coordinated','delivered','achieved','built','optimized','reconciled','audited','trained','launched',
+ 'أدرت','قدت','طورت','حسنت','حسّنت','خفضت','خفّضت','زدت','أنشأت','نفذت','نفّذت','أعددت','حللت','صممت','نسقت','نسّقت','حققت','بنيت','راجعت','دربت','دعمت','أشرفت'];
+const STOP=new Set(('the and for with you your our are will this that have from has not but all can any who job role work team years year experience ability strong must should able such their they them his her its also more than into over per out use using used including other etc about which what when where while within across '+
+ 'على في من الى إلى عن مع هذا هذه ذلك التي الذي التى الذى كما أو او ان أن كان يكون لدى لديه خلال بين عند حتى كل بعد قبل ذات وفق تكون يجب المطلوب مطلوب خبرة سنوات سنة').split(' '));
+
+function words(s){return (s.toLowerCase().match(/[a-z0-9#+.]{2,}|[\u0600-\u06FF]{2,}/g)||[]);}
+
+function analyze(cv){
+  const w=words(cv).length;
+  const verbHits=VERBS.filter(v=>cv.toLowerCase().includes(v)).length;
+  const nums=(cv.match(/\d+\s?%|\d+[.,]?\d*\s?(k|m|million|مليون|ألف)?\b/gi)||[]).filter(x=>!/^(19|20)\d\d$/.test(x.trim())).length;
+  const items=[
+    {k:'email',pts:10,pass:RX.email.test(cv)},
+    {k:'phone',pts:10,pass:RX.phone.test(cv)},
+    {k:'link', pts:5, pass:RX.link.test(cv)},
+    {k:'summary',pts:10,pass:RX.summary.test(cv)},
+    {k:'exp',pts:15,pass:RX.exp.test(cv)},
+    {k:'edu',pts:10,pass:RX.edu.test(cv)},
+    {k:'skills',pts:10,pass:RX.skills.test(cv)},
+    {k:'len',pts:10,pass:w>=250&&w<=800,arg:w,partial:(w>=150&&w<250)||(w>800&&w<=1000)},
+    {k:'nums',pts:10,pass:nums>=3,arg:nums,partial:nums>=1&&nums<3},
+    {k:'verbs',pts:10,pass:verbHits>=4,arg:verbHits,partial:verbHits>=2&&verbHits<4}
+  ];
+  let score=0;
+  items.forEach(i=>{ i.got=i.pass?i.pts:(i.partial?Math.round(i.pts/2):0); score+=i.got; });
+  return {score,items,words:w};
+}
+
+function matchJob(cv,jd){
+  const cvSet=new Set(words(cv));
+  const freq={};
+  words(jd).forEach(x=>{ if(x.length>=3&&!STOP.has(x)&&!/^\d+$/.test(x)) freq[x]=(freq[x]||0)+1; });
+  const kws=Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,25).map(e=>e[0]);
+  const found=kws.filter(k=>cvSet.has(k)), missing=kws.filter(k=>!cvSet.has(k));
+  return {pct:kws.length?Math.round(found.length/kws.length*100):0,found,missing};
+}
+
+function runReview(silent){
+  const t=T[currentLang], err=document.getElementById('cvErr');
+  const cvEl = document.getElementById('cvText');
+  const jdEl = document.getElementById('jdText');
+  const cv=cvEl ? cvEl.value.trim() : '';
+  const jd=jdEl ? jdEl.value.trim() : '';
+  
+  if(!cv){ if(!silent && err) err.textContent=t.emptyErr; return; }
+  if(words(cv).length<30){ if(err) err.textContent=t.shortErr; return; }
+  if(err) err.textContent='';
+
+  const r=analyze(cv);
+  const color=r.score>=75?'var(--ok)':r.score>=50?'var(--warn)':'var(--bad)';
+  const ring=document.getElementById('ring');
+  if(ring){
+    ring.style.setProperty('--c',color);
+    ring.style.setProperty('--p',r.score);
+  }
+  const scoreNum = document.getElementById('scoreNum');
+  if(scoreNum) scoreNum.textContent=r.score;
+  const v=r.score>=75?t.v.great:r.score>=50?t.v.good:t.v.weak;
+  const vTitle = document.getElementById('verdictTitle');
+  const vText = document.getElementById('verdictText');
+  if(vTitle) vTitle.textContent=v[0];
+  if(vText) vText.textContent=v[1];
+
+  const ul=document.getElementById('checksList');
+  if(ul){
+    ul.innerHTML='';
+    const lines=[];
+    r.items.forEach(i=>{
+      const cls=i.pass?'ok':(i.partial?'warn':'bad');
+      const okTxt=typeof t.ok[i.k]==='function'?t.ok[i.k](i.arg):t.ok[i.k];
+      const fixTxt=typeof t.fix[i.k]==='function'?t.fix[i.k](i.arg):t.fix[i.k];
+      const msg=i.pass?okTxt:fixTxt;
+      const li=document.createElement('li'); li.className=cls;
+      li.innerHTML=`<span>${i.pass?'✅':(i.partial?'⚠️':'❌')}</span><span><b>${esc(t.chk[i.k])}:</b> ${esc(msg)}</span><span class="pts">${i.got}/${i.pts}</span>`;
+      ul.appendChild(li);
+      lines.push(`${i.pass?'[OK]':(i.partial?'[~]':'[X]')} ${t.chk[i.k]} (${i.got}/${i.pts}): ${msg}`);
+    });
+  }
+
+  let matchTxt='';
+  const mp=document.getElementById('matchPanel');
+  if(jd && mp){
+    const m=matchJob(cv,jd);
+    mp.style.display='block';
+    const sumEl = document.getElementById('matchSummary');
+    if(sumEl) sumEl.textContent=t.matchSummary(m.pct);
+    const mk=document.getElementById('missingKw'), fk=document.getElementById('foundKw');
+    if(mk) mk.innerHTML=m.missing.length?m.missing.map(k=>`<span class="miss">${esc(k)}</span>`).join(''):`<span class="hit">${t.noneMissing}</span>`;
+    if(fk) fk.innerHTML=m.found.map(k=>`<span class="hit">${esc(k)}</span>`).join('');
+    matchTxt=`\n${t.matchTitle}: ${m.pct}%\n${t.missingKw} ${m.missing.join(', ')}\n${t.foundKw} ${m.found.join(', ')}\n`;
+  } else if(mp) { mp.style.display='none'; }
+
+  lastReport=`Hire_Me - CV Report\n${'='.repeat(30)}\nScore: ${r.score}/100\n${v[0]}\n\n${matchTxt}`;
+  const resEl = document.getElementById('result');
+  if(resEl){
+    resEl.style.display='block';
+    if(!silent) resEl.scrollIntoView({behavior:'smooth'});
+  }
+}
+
+function downloadReport(){
+  const blob=new Blob(["\uFEFF"+lastReport],{type:'text/plain;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob); a.download='HireMe_CV_Report.txt';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+
+/* ============ INIT ============ */
+try{
+  const saved=localStorage.getItem('theme');
+  if(saved){
+    const root = document.getElementById('htmlRoot');
+    if(root) root.dataset.theme=saved;
+    const btn = document.getElementById('themeBtn');
+    if(btn) btn.textContent=saved==='dark'?'☀️':'🌙';
+  }
+}catch(e){}
+
+changeLanguage('ar');
+</script>
+</body>
+</html>
