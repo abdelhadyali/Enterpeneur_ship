@@ -39,6 +39,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .btn:hover{background:var(--primary-dark);transform:translateY(-1px)}
 .btn.ghost{background:var(--primary-soft);color:var(--primary)}
 .btn.ghost:hover{background:var(--primary);color:#fff}
+.btn.danger{background:var(--bad);color:#fff}
 
 /* Layout */
 .container{max-width:920px;margin:0 auto;padding:28px 20px 60px}
@@ -52,7 +53,6 @@ button,input,select,textarea{font:inherit;color:inherit}
 /* Filters */
 .filters{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}
 .filters input{flex:1;min-width:200px;border:1px solid var(--border);background:var(--surface);border-radius:10px;padding:11px 14px;outline:none}
-.filters input:focus,.filters select:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
 .count{color:var(--muted);font-size:13px;margin-bottom:12px}
 
 /* Job cards */
@@ -79,11 +79,11 @@ button,input,select,textarea{font:inherit;color:inherit}
 .panel h2{font-size:20px;margin-bottom:6px}
 .panel .sub{color:var(--muted);font-size:14px;margin-bottom:16px;line-height:1.7}
 .drop{border:2px dashed var(--primary);background:var(--primary-soft);border-radius:12px;padding:18px;text-align:center;margin-bottom:12px}
-.drop input{margin-top:6px}
-textarea{width:100%;border:1px solid var(--border);background:var(--bg);border-radius:10px;padding:12px;outline:none;resize:vertical;line-height:1.7}
+textarea,input[type="email"],input[type="password"]{width:100%;border:1px solid var(--border);background:var(--bg);border-radius:10px;padding:12px;outline:none;line-height:1.7;margin-bottom:12px}
 label.l{display:block;font-weight:700;font-size:14px;margin:14px 0 6px}
 .hint{font-size:12px;color:var(--muted);margin-top:4px}
 .err{color:var(--bad);font-size:13px;margin-top:8px;min-height:18px}
+.success{color:var(--ok);font-size:13px;margin-top:8px;min-height:18px}
 
 /* Result */
 .score-wrap{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
@@ -123,6 +123,7 @@ label.l{display:block;font-weight:700;font-size:14px;margin:14px 0 6px}
     <nav class="nav">
       <a id="navExplore" class="active" onclick="switchView('explore')" data-i18n="navExplore"></a>
       <a id="navCv" onclick="switchView('cv')" data-i18n="navCv"></a>
+      <a id="navAuth" onclick="switchView('auth')" data-i18n="navAuth">تسجيل / دخول</a>
       <a id="navSettings" onclick="switchView('settings')" data-i18n="navSettings"></a>
     </nav>
   </div>
@@ -132,7 +133,7 @@ label.l{display:block;font-weight:700;font-size:14px;margin:14px 0 6px}
       <option value="ar">العربية</option>
       <option value="en">English</option>
     </select>
-    <button class="btn" onclick="switchView('cv')" data-i18n="cta"></button>
+    <button class="btn" id="headerCtaBtn" onclick="switchView('auth')" data-i18n="ctaLogin">تسجيل الدخول</button>
   </div>
 </header>
 
@@ -200,6 +201,35 @@ label.l{display:block;font-weight:700;font-size:14px;margin:14px 0 6px}
     </div>
   </section>
 
+  <!-- Auth View (Sign Up / Sign In) -->
+  <section id="view-auth" class="view">
+    <div class="panel" style="max-width: 450px; margin: 0 auto;">
+      <h2 id="authTitle" data-i18n="authLoginTitle">تسجيل الدخول إلى حسابك</h2>
+      <p class="sub" id="authSub" data-i18n="authLoginSub">أدخل بريدك الإلكتروني وكلمة المرور للمتابعة.</p>
+      
+      <div id="userLoggedBox" style="display:none;">
+        <p style="margin-bottom: 12px;" data-i18n="loggedInAs">أنت مسجل الدخول حالياً بريد:</p>
+        <b id="userEmailDisplay" style="color:var(--primary); display:block; margin-bottom:16px;"></b>
+        <button class="btn danger" onclick="handleSignOut()" data-i18n="signOutBtn">تسجيل الخروج</button>
+      </div>
+
+      <div id="authFormBox">
+        <label class="l" data-i18n="emailLabel">البريد الإلكتروني</label>
+        <input type="email" id="authEmail" placeholder="name@example.com">
+
+        <label class="l" data-i18n="passLabel">كلمة المرور</label>
+        <input type="password" id="authPass" placeholder="••••••••">
+
+        <div class="row" style="margin-top:10px;">
+          <button class="btn" id="authSubmitBtn" onclick="handleAuthSubmit()" data-i18n="loginBtn">دخول</button>
+          <button class="btn ghost" onclick="toggleAuthMode()" id="authSwitchModeBtn" data-i18n="switchToSignup">إنشاء حساب جديد؟</button>
+        </div>
+        <div class="err" id="authErr"></div>
+        <div class="success" id="authSuccess"></div>
+      </div>
+    </div>
+  </section>
+
   <!-- Settings -->
   <section id="view-settings" class="view">
     <div class="panel">
@@ -228,48 +258,55 @@ try {
 } catch (e) { supabaseClient = null; }
 
 let currentLang = 'ar';
+let isSignUpMode = false; // لوضع التسجيل أو الدخول
 let allJobs = [];
 let dbConnected = false;
 let lastReport = '';
 
 /* ============ TRANSLATIONS ============ */
 const T = {
-ar:{dir:'rtl',navExplore:'استكشاف الوظائف',navCv:'فحص الـ CV',navSettings:'الإعدادات',cta:'✨ حلل سيرتي الذاتية',
+ar:{dir:'rtl',navExplore:'استكشاف الوظائف',navCv:'فحص الـ CV',navAuth:'حسابي',navSettings:'الإعدادات',cta:'✨ حلل سيرتي الذاتية', ctaLogin:'تسجيل الدخول',
  exploreHeading:'أحدث الوظائف وفرص العمل',exploreSub:'وظائف بتفاصيل واضحة وشركات موثقة.',searchPh:'ابحث بالمسمى الوظيفي أو الشركة أو المكان...',
  allTypes:'كل أنواع الدوام',fullTime:'دوام كامل',partTime:'دوام جزئي',remote:'عن بُعد',onsite:'من مقر العمل',
  jobsCount:n=>`${n} وظيفة`,noJobs:'مفيش وظائف مطابقة للبحث.',apply:'تقديم على الوظيفة',applied:'تم إرسال طلبك ✅',
  today:'النهارده',daysAgo:d=>d===1?'منذ يوم':d===2?'منذ يومين':`منذ ${d} أيام`,
- cvHeading:'فحص ومراجعة السيرة الذاتية',cvDesc:'ارفع الـ CV أو الصق نصه، ولو عندك وصف الوظيفة ضيفه وهنقولك الكلمات المفتاحية الناقصة. التحليل بيتم على جهازك ومفيش بيانات بتتبعت لأي مكان.',
+ cvHeading:'فحص ومراجعة السيرة الذاتية',cvDesc:'ارفع الـ CV أو الصق نصه، ولو عندك وصف الوظيفة ضيفه وهنقولك الكلمات المفتاحية الناقصة.',
  uploadLabel:'ارفع ملف السيرة الذاتية',uploadHint:'PDF أو Word (docx) أو txt',cvPh:'أو الصق نص السيرة الذاتية هنا...',
  jdLabel:'وصف الوظيفة (اختياري)',jdPh:'الصق وصف الوظيفة اللي عايز تقدم عليها...',jdHint:'بنقارن الـ CV بالوظيفة ونطلعلك الكلمات الناقصة.',
- analyzeBtn:'🔍 ابدأ التحليل',reading:'جاري القراءة...',emptyErr:'ارفع ملف أو الصق نص الـ CV الأول.',shortErr:'النص قصير جداً، اتأكد إن الملف اتقرأ صح أو الصق النص يدوي.',
- readErr:'معرفتش أقرأ الملف. جرب الصق النص يدوي.',
- detailsTitle:'تفاصيل التقييم',matchTitle:'التوافق مع الوظيفة',missingKw:'كلمات مفتاحية ناقصة في الـ CV:',foundKw:'كلمات موجودة:',
- matchSummary:(p)=>`نسبة توافق الكلمات المفتاحية: ${p}%`,noneMissing:'مفيش كلمات ناقصة 👌',
- downloadBtn:'📥 تحميل التقرير',
- v:{great:['CV قوي 👏','سيرتك مرتبة وفيها عناصر أنظمة الفرز بتدور عليها.'],good:['CV كويس ويحتاج تحسينات بسيطة','عدّل النقاط الحمراء والبرتقالي تحت وهتعلى كتير.'],weak:['CV محتاج شغل','ناقصه عناصر أساسية. ابدأ بالنقاط الحمراء.']},
+ analyzeBtn:'🔍 ابدأ التحليل',reading:'جاري القراءة...',emptyErr:'ارفع ملف أو الصق نص الـ CV الأول.',shortErr:'النص قصير جداً.',
+ readErr:'معرفتش أقرأ الملف.',
+ detailsTitle:'تفاصيل التقييم',matchTitle:'التوافق مع الوظيفة',missingKw:'كلمات ناقصة:',foundKw:'كلمات موجودة:',
+ matchSummary:(p)=>`نسبة توافق الكلمات: ${p}%`,noneMissing:'مفيش كلمات ناقصة 👌',downloadBtn:'📥 تحميل التقرير',
+ authLoginTitle:'تسجيل الدخول إلى حسابك',authLoginSub:'أدخل بريدك الإلكتروني وكلمة المرور للمتابعة.',
+ authSignupTitle:'إنشاء حساب جديد',authSignupSub:'سجل بريدك الإلكتروني وكلمة مرور جديدة للانضمام.',
+ emailLabel:'البريد الإلكتروني',passLabel:'كلمة المرور',loginBtn:'دخول',signupBtn:'إنشاء حساب',
+ switchToSignup:'حساب جديد؟ سجل الآن',switchToLogin:'عندك حساب؟ سجل دخول',
+ loggedInAs:'أنت مسجل الدخول حالياً بالبريد:',signOutBtn:'تسجيل الخروج',
  setHeading:'إعدادات المنصة',setDesc:'حالة الاتصال بقاعدة البيانات.',dbOn:'متصل بقاعدة البيانات (Supabase)',dbOff:'غير متصل، بيتم عرض وظائف تجريبية',setCv:'محلل الـ CV: يعمل محلياً على جهازك',
  chk:{email:'بريد إلكتروني',phone:'رقم هاتف',link:'رابط LinkedIn أو موقع/Portfolio',summary:'ملخص مهني',exp:'قسم الخبرات',edu:'قسم التعليم',skills:'قسم المهارات',len:'طول مناسب',nums:'أرقام ونتائج قابلة للقياس',verbs:'أفعال إنجاز قوية'},
- ok:{email:'البريد الإلكتروني موجود.',phone:'رقم الهاتف موجود.',link:'فيه رابط LinkedIn أو Portfolio.',summary:'فيه ملخص مهني.',exp:'قسم الخبرات موجود.',edu:'قسم التعليم موجود.',skills:'قسم المهارات موجود.',len:w=>`الطول مناسب (${w} كلمة).`,nums:n=>`فيه ${n} رقم/نسبة بتثبت إنجازاتك.`,verbs:n=>`استخدمت ${n} فعل إنجاز قوي.`},
- fix:{email:'ضيف بريد إلكتروني احترافي.',phone:'ضيف رقم هاتف للتواصل.',link:'ضيف رابط LinkedIn أو أعمالك.',summary:'ضيف ملخص مهني من 2-3 سطور في أول الـ CV.',exp:'ضيف قسم "الخبرات" بعناوين واضحة.',edu:'ضيف قسم "التعليم".',skills:'ضيف قسم "المهارات" بكلمات مفتاحية من الوظيفة.',len:w=>w<250?`الـ CV قصير (${w} كلمة). فصّل أكتر في مهامك وإنجازاتك.`:`الـ CV طويل (${w} كلمة). حاول تختصر لصفحة أو صفحتين.`,nums:'اكتب إنجازاتك بأرقام. مثال: "قللت وقت الإقفال 20%".',verbs:'ابدأ كل نقطة بفعل قوي. مثال: أدرت، حسّنت، خفّضت، أعددت.'}},
-en:{dir:'ltr',navExplore:'Explore Jobs',navCv:'CV Review',navSettings:'Settings',cta:'✨ Analyze My CV',
+ ok:{email:'البريد الإلكتروني موجود.',phone:'رقم الهاتف موجود.',link:'فيه رابط LinkedIn أو Portfolio.',summary:'فيه ملخص مهني.',exp:'قسم الخبرات موجود.',edu:'قسم التعليم موجود.',skills:'قسم المهارات موجود.',len:w=>`الطول مناسب (${w} كلمة).`,nums:n=>`فيه ${n} رقم/نسبة.`,verbs:n=>`استخدمت ${n} فعل إنجاز.`},
+ fix:{email:'ضيف بريد إلكتروني.',phone:'ضيف رقم هاتف.',link:'ضيف رابط.',summary:'ضيف ملخص مهني.',exp:'ضيف قسم الخبرات.',edu:'ضيف قسم التعليم.',skills:'ضيف قسم المهارات.',len:w=>`الطول (${w} كلمة).`,nums:'اكتب إنجازاتك بأرقام.',verbs:'ابدأ بفعل قوي.'}},
+en:{dir:'ltr',navExplore:'Explore Jobs',navCv:'CV Review',navAuth:'Account',navSettings:'Settings',cta:'✨ Analyze My CV', ctaLogin:'Sign In',
  exploreHeading:'Explore New Career Opportunities',exploreSub:'Clear job details and verified companies.',searchPh:'Search by title, company or location...',
  allTypes:'All job types',fullTime:'Full Time',partTime:'Part Time',remote:'Remote',onsite:'On-site',
  jobsCount:n=>`${n} jobs`,noJobs:'No jobs match your search.',apply:'Apply Now',applied:'Application sent ✅',
  today:'Today',daysAgo:d=>d===1?'1 day ago':`${d} days ago`,
- cvHeading:'Professional CV Review',cvDesc:'Upload your CV or paste its text. Add a job description to see missing keywords. Analysis runs in your browser; nothing is uploaded anywhere.',
+ cvHeading:'Professional CV Review',cvDesc:'Upload your CV or paste its text. Add a job description to see missing keywords.',
  uploadLabel:'Upload your CV',uploadHint:'PDF, Word (docx) or txt',cvPh:'Or paste your CV text here...',
- jdLabel:'Job description (optional)',jdPh:'Paste the job description you are applying for...',jdHint:'We compare your CV to the job and list missing keywords.',
- analyzeBtn:'🔍 Analyze',reading:'Reading...',emptyErr:'Upload a file or paste your CV text first.',shortErr:'Text is too short. Make sure the file was read correctly or paste it manually.',
- readErr:'Could not read the file. Try pasting the text manually.',
- detailsTitle:'Score Breakdown',matchTitle:'Job Match',missingKw:'Missing keywords in your CV:',foundKw:'Keywords found:',
- matchSummary:(p)=>`Keyword match: ${p}%`,noneMissing:'Nothing missing 👌',
- downloadBtn:'📥 Download Report',
- v:{great:['Strong CV 👏','Well structured, with what ATS systems look for.'],good:['Good CV, small fixes needed','Fix the red and orange items below for a big boost.'],weak:['CV needs work','Key elements are missing. Start with the red items.']},
+ jdLabel:'Job description (optional)',jdPh:'Paste the job description...',jdHint:'We compare your CV to the job.',
+ analyzeBtn:'🔍 Analyze',reading:'Reading...',emptyErr:'Upload a file or paste your CV text first.',shortErr:'Text is too short.',
+ readErr:'Could not read the file.',
+ detailsTitle:'Score Breakdown',matchTitle:'Job Match',missingKw:'Missing keywords:',foundKw:'Keywords found:',
+ matchSummary:(p)=>`Keyword match: ${p}%`,noneMissing:'Nothing missing 👌',downloadBtn:'📥 Download Report',
+ authLoginTitle:'Sign In to Your Account',authLoginSub:'Enter your email and password to continue.',
+ authSignupTitle:'Create a New Account',authSignupSub:'Register with your email and a new password.',
+ emailLabel:'Email Address',passLabel:'Password',loginBtn:'Sign In',signupBtn:'Sign Up',
+ switchToSignup:'No account? Sign up',switchToLogin:'Have an account? Sign in',
+ loggedInAs:'You are currently signed in as:',signOutBtn:'Sign Out',
  setHeading:'Platform Settings',setDesc:'Database connection status.',dbOn:'Connected to database (Supabase)',dbOff:'Not connected, showing demo jobs',setCv:'CV analyzer: runs locally in your browser',
  chk:{email:'Email address',phone:'Phone number',link:'LinkedIn / portfolio link',summary:'Professional summary',exp:'Experience section',edu:'Education section',skills:'Skills section',len:'Suitable length',nums:'Measurable results',verbs:'Strong action verbs'},
- ok:{email:'Email found.',phone:'Phone number found.',link:'LinkedIn / portfolio link found.',summary:'Summary section found.',exp:'Experience section found.',edu:'Education section found.',skills:'Skills section found.',len:w=>`Good length (${w} words).`,nums:n=>`${n} numbers/percentages back up your achievements.`,verbs:n=>`${n} strong action verbs used.`},
- fix:{email:'Add a professional email address.',phone:'Add a contact phone number.',link:'Add your LinkedIn or portfolio link.',summary:'Add a 2-3 line professional summary at the top.',exp:'Add a clearly labeled "Experience" section.',edu:'Add an "Education" section.',skills:'Add a "Skills" section with keywords from the job.',len:w=>w<250?`CV is short (${w} words). Expand on duties and achievements.`:`CV is long (${w} words). Trim it to 1-2 pages.`,nums:'Quantify achievements. Example: "Cut month-end close time by 20%".',verbs:'Start bullets with strong verbs. Example: managed, improved, reduced, prepared.'}}
+ ok:{email:'Email found.',phone:'Phone number found.',link:'LinkedIn / portfolio link found.',summary:'Summary section found.',exp:'Experience section found.',edu:'Education section found.',skills:'Skills section found.',len:w=>`Good length (${w} words).`,nums:n=>`${n} numbers/percentages.`,verbs:n=>`${n} action verbs.`},
+ fix:{email:'Add email.',phone:'Add phone.',link:'Add link.',summary:'Add summary.',exp:'Add experience.',edu:'Add education.',skills:'Add skills.',len:w=>`Length (${w} words).`,nums:'Add numbers.',verbs:'Use action verbs.'}}
 };
 
 /* ============ UI ============ */
@@ -281,7 +318,7 @@ function switchView(name){
   document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'));
   const target = document.getElementById('view-'+name);
   if(target) target.classList.add('active');
-  const map={explore:'navExplore',cv:'navCv',settings:'navSettings'};
+  const map={explore:'navExplore',cv:'navCv',auth:'navAuth',settings:'navSettings'};
   if(map[name]) document.getElementById(map[name]).classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -305,8 +342,7 @@ function changeLanguage(lang){
   const tf=document.getElementById('typeFilter');
   if(tf) tf.innerHTML=`<option value="">${t.allTypes}</option><option value="full">${t.fullTime}</option><option value="part">${t.partTime}</option><option value="remote">${t.remote}</option>`;
   updateStatus();
-  const res = document.getElementById('result');
-  if(res && res.style.display==='block') runReview(true);
+  updateAuthUI();
   fetchJobs();
 }
 
@@ -316,6 +352,93 @@ function updateStatus(){
   const status = document.getElementById('dbStatus');
   if(dot) dot.className='dot '+(dbConnected?'on':'off');
   if(status) status.textContent=dbConnected?t.dbOn:t.dbOff;
+}
+
+/* ============ AUTHENTICATION SYSTEM ============ */
+async function checkUserSession(){
+  if(!supabaseClient) return;
+  try {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if(session && session.user){
+      showLoggedInState(session.user.email);
+    } else {
+      showLoggedOutState();
+    }
+  } catch(e){ showLoggedOutState(); }
+}
+
+function toggleAuthMode(){
+  isSignUpMode = !isSignUpMode;
+  const t = T[currentLang];
+  document.getElementById('authTitle').textContent = isSignUpMode ? t.authSignupTitle : t.authLoginTitle;
+  document.getElementById('authSub').textContent = isSignUpMode ? t.authSignupSub : t.authLoginSub;
+  document.getElementById('authSubmitBtn').textContent = isSignUpMode ? t.signupBtn : t.loginBtn;
+  document.getElementById('authSwitchModeBtn').textContent = isSignUpMode ? t.switchToLogin : t.switchToSignup;
+  document.getElementById('authErr').textContent = '';
+  document.getElementById('authSuccess').textContent = '';
+}
+
+async function handleAuthSubmit(){
+  const t = T[currentLang];
+  const email = document.getElementById('authEmail').value.trim();
+  const password = document.getElementById('authPass').value.trim();
+  const errEl = document.getElementById('authErr');
+  const succEl = document.getElementById('authSuccess');
+  
+  errEl.textContent = '';
+  succEl.textContent = '';
+
+  if(!email || !password){
+    errEl.textContent = currentLang==='ar' ? 'الرجاء إدخال البريد وكلمة المرور' : 'Please enter email and password';
+    return;
+  }
+
+  if(!supabaseClient){
+    errEl.textContent = 'Supabase client not initialized.';
+    return;
+  }
+
+  try {
+    if(isSignUpMode){
+      const { data, error } = await supabaseClient.auth.signUp({ email, password });
+      if(error) throw error;
+      succEl.textContent = currentLang==='ar' ? 'تم إنشاء الحساب بنجاح! يمكنك تسجيل الدخول الآن.' : 'Account created successfully! You can now sign in.';
+      toast(currentLang==='ar' ? 'تم إنشاء الحساب بنجاح' : 'Account created successfully');
+    } else {
+      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+      if(error) throw error;
+      showLoggedInState(email);
+      toast(currentLang==='ar' ? 'مرحباً بك مجدداً!' : 'Welcome back!');
+      setTimeout(()=>switchView('explore'), 1000);
+    }
+  } catch(e){
+    errEl.textContent = e.message;
+  }
+}
+
+async function handleSignOut(){
+  if(supabaseClient) await supabaseClient.auth.signOut();
+  showLoggedOutState();
+  toast(currentLang==='ar' ? 'تم تسجيل الخروج' : 'Signed out');
+}
+
+function showLoggedInState(email){
+  document.getElementById('userLoggedBox').style.display = 'block';
+  document.getElementById('authFormBox').style.display = 'none';
+  document.getElementById('userEmailDisplay').textContent = email;
+  document.getElementById('navAuth').textContent = currentLang==='ar' ? 'حسابي (مفعل)' : 'My Account';
+  document.getElementById('headerCtaBtn').textContent = currentLang==='ar' ? 'حسابي' : 'Account';
+}
+
+function showLoggedOutState(){
+  document.getElementById('userLoggedBox').style.display = 'none';
+  document.getElementById('authFormBox').style.display = 'block';
+  document.getElementById('navAuth').textContent = currentLang==='ar' ? 'تسجيل / دخول' : 'Sign In';
+  document.getElementById('headerCtaBtn').textContent = currentLang==='ar' ? 'تسجيل الدخول' : 'Sign In';
+}
+
+function updateAuthUI(){
+  checkUserSession();
 }
 
 /* ============ JOBS ============ */
@@ -557,6 +680,7 @@ try{
 }catch(e){}
 
 changeLanguage('ar');
+checkUserSession();
 </script>
 </body>
 </html>
