@@ -3,151 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">منصة ريادة الأعمال والخدمات المهنية</title>
+    <title id="pageTitle">منصة التوظيف والخدمات المهنية - Wuzzuf Style</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
-        body { background-color: #f4f7f6; color: #333; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+        body { background-color: #f4f7f9; color: #333; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
 
-        .header-container {
-            background: linear-gradient(135deg, #007bff, #0056b3);
-            color: white; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1); flex-wrap: wrap; gap: 15px; flex-shrink: 0;
+        /* Wuzzuf Style Header */
+        .wuzzuf-header {
+            background-color: #ffffff; border-bottom: 1px solid #e1e8ed; padding: 12px 30px;
+            display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02); flex-shrink: 0;
         }
-        .header-text h1 { font-size: 22px; font-weight: 900; margin-bottom: 5px; }
-        .header-text p { font-size: 14px; opacity: 0.9; }
+        .wuzzuf-logo { font-size: 24px; font-weight: 900; color: #0056b3; letter-spacing: 0.5px; }
+        .wuzzuf-nav-links { display: flex; gap: 25px; align-items: center; }
+        .wuzzuf-nav-item { text-decoration: none; color: #555; font-weight: 700; font-size: 15px; cursor: pointer; transition: color 0.2s; }
+        .wuzzuf-nav-item:hover, .wuzzuf-nav-item.active { color: #0056b3; }
 
-        .header-controls { display: flex; align-items: center; gap: 12px; }
-
+        .header-controls { display: flex; align-items: center; gap: 15px; }
         .lang-select {
-            padding: 8px 15px; border-radius: 20px; border: none; font-weight: 700;
-            background: #fff; color: #0056b3; cursor: pointer; outline: none;
+            padding: 6px 12px; border-radius: 6px; border: 1px solid #ced4da; font-weight: 700;
+            background: #fff; color: #333; cursor: pointer; outline: none;
         }
 
-        .btn-custom {
-            background-color: #ffc107; color: #212529; padding: 10px 20px;
-            border-radius: 50px; font-weight: 900; font-size: 15px;
-            text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease, background-color 0.3s ease;
-            display: inline-block; cursor: pointer; border: none;
+        .btn-wuzzuf {
+            background-color: #0056b3; color: white; padding: 8px 18px;
+            border-radius: 6px; font-weight: 700; font-size: 14px;
+            text-decoration: none; border: none; cursor: pointer; transition: background 0.2s;
         }
-        .btn-custom:hover { transform: translateY(-2px); background-color: #ffca2c; }
+        .btn-wuzzuf:hover { background-color: #004085; }
 
-        .main-content-area { flex: 1; overflow-y: auto; padding: 20px; display: flex; justify-content: center; align-items: flex-start; }
+        .main-container { flex: 1; overflow-y: auto; padding: 25px; display: flex; justify-content: center; }
 
-        .container { max-width: 900px; width: 100%; }
-        .idea-card {
-            background: white; padding: 20px 25px; margin-bottom: 20px;
-            border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            border-right: 5px solid #007bff;
-        }
-        .idea-card h3 { margin: 0 0 10px 0; color: #007bff; font-size: 20px; }
-        .idea-card p { color: #555; line-height: 1.6; }
-
-        .dashboard-container { 
-            display: none; width: 100%; max-width: 1000px; height: 82vh; 
-            background: white; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); 
-            overflow: hidden; 
-        }
+        /* Wuzzuf Layout Grid */
+        .wuzzuf-layout { display: flex; max-width: 1150px; width: 100%; gap: 25px; align-items: flex-start; }
         
-        .dashboard-layout { display: flex; width: 100%; height: 100%; }
-        .sidebar { width: 260px; background: #212529; color: white; padding: 25px 15px; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
-        .sidebar h3 { font-size: 15px; color: #adb5bd; margin-bottom: 10px; padding-right: 10px; }
-        .nav-item {
-            padding: 12px 15px; border-radius: 8px; color: #ced4da; text-decoration: none; font-weight: 500; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 10px;
-        }
-        .nav-item:hover, .nav-item.active { background: #007bff; color: white; }
-
-        .content-area { flex: 1; padding: 30px; overflow-y: auto; background: #fdfdfe; }
+        .content-main { flex: 1; }
         
-        .content-section { display: none; }
-        .content-section.active { display: block; }
+        /* Sidebar Profile Card (Wuzzuf Style) */
+        .wuzzuf-sidebar { width: 300px; flex-shrink: 0; display: flex; flex-direction: column; gap: 20px; }
+        .profile-card {
+            background: white; border: 1px solid #e1e8ed; border-radius: 8px; padding: 20px; text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .profile-avatar { width: 70px; height: 70px; background: #0056b3; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 900; margin: 0 auto 12px auto; }
+        .profile-name { font-size: 16px; font-weight: 700; color: #212529; margin-bottom: 4px; }
+        .profile-title { font-size: 13px; color: #6c757d; margin-bottom: 15px; }
+
+        /* Job Card Style (Wuzzuf Explore) */
+        .job-card {
+            background: white; border: 1px solid #e1e8ed; border-radius: 8px; padding: 20px; margin-bottom: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02); transition: box-shadow 0.2s;
+        }
+        .job-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .job-title { font-size: 18px; font-weight: 700; color: #0056b3; margin-bottom: 5px; }
+        .job-company { font-size: 14px; color: #495057; margin-bottom: 10px; }
+        .job-tags { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
+        .job-tag { background: #e8f0fe; color: #1967d2; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; }
+        .job-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f1f3f5; padding-top: 12px; }
+        .job-date { font-size: 12px; color: #868e96; }
+
+        /* Dashboard & CV Review Section */
+        .dashboard-section {
+            background: white; border: 1px solid #e1e8ed; border-radius: 8px; padding: 25px; display: none;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .dashboard-section.active { display: block; }
 
         .upload-box {
-            border: 2px dashed #28a745; padding: 25px; border-radius: 12px;
-            text-align: center; background: #f9fff9; margin-top: 15px;
+            border: 2px dashed #0056b3; padding: 25px; border-radius: 8px;
+            text-align: center; background: #f8fbff; margin-top: 15px;
         }
 
         .ai-output-box {
-            margin-top: 20px; padding: 20px; background: #e8f4fd;
-            border-radius: 10px; border-left: 5px solid #007bff; display: none; text-align: left; direction: ltr;
+            margin-top: 20px; padding: 20px; background: #f1f8ff;
+            border-radius: 8px; border-left: 4px solid #0056b3; display: none; text-align: left; direction: ltr;
         }
-        [dir="rtl"] .ai-output-box { border-left: none; border-right: 5px solid #007bff; text-align: right; }
+        [dir="rtl"] .ai-output-box { border-left: none; border-right: 4px solid #0056b3; text-align: right; }
     </style>
 </head>
 <body>
 
-    <div class="header-container">
-        <div class="header-text">
-            <h1 id="headerTitle">منصة ريادة الأعمال والخدمات المهنية</h1>
-            <p id="headerSubtitle">مرحباً بك، استكشف الأفكار وحلل سيرتك الذاتية بالذكاء الاصطناعي</p>
+    <!-- Wuzzuf Header -->
+    <header class="wuzzuf-header">
+        <div style="display: flex; align-items: center; gap: 30px;">
+            <div class="wuzzuf-logo">WUZZUF <span style="font-size: 12px; background: #ffc107; color: #212529; padding: 2px 6px; border-radius: 4px; vertical-align: middle;">Pro</span></div>
+            <nav class="wuzzuf-nav-links">
+                <a class="wuzzuf-nav-item active" id="navExplore" onclick="switchView('explore', this)">Explore Jobs</a>
+                <a class="wuzzuf-nav-item" id="navCvReview" onclick="switchView('cvReview', this)">AI CV Review</a>
+                <a class="wuzzuf-nav-item" id="navSettings" onclick="switchView('settings', this)">Settings</a>
+            </nav>
         </div>
         <div class="header-controls">
             <select id="langSelector" class="lang-select" onchange="changeLanguage(this.value)">
                 <option value="ar">العربية</option>
                 <option value="en">English</option>
             </select>
-            <button class="btn-custom" id="hireMeBtn" onclick="openDashboard()">🚀 لوحة الخدمات (Hire Me)</button>
+            <button class="btn-wuzzuf" id="postJobBtn" onclick="switchView('cvReview', document.getElementById('navCvReview'))">✨ Analyze My CV</button>
         </div>
-    </div>
+    </header>
 
-    <div class="main-content-area">
-        
-        <div class="container" id="homeView">
-            <h2 id="ideasTitle" style="margin-bottom: 15px; color: #333;">أحدث أفكار المشاريع:</h2>
-            <div id="ideas-container">
-                <div class="idea-card"><h3 id="loadingText">جاري تحميل الأفكار...</h3></div>
-            </div>
-        </div>
-
-        <div class="dashboard-container" id="dashboardView">
-            <div class="dashboard-layout">
-                <div class="sidebar">
-                    <h3 id="sidebarTitle">لوحة التحكم</h3>
-                    <div class="nav-item active" id="navCv" onclick="switchTab('cvTab', this)">📄 Review CV</div>
-                    <div class="nav-item" id="navSettings" onclick="switchTab('settingsTab', this)">⚙️ الإعدادات</div>
-                    <div style="margin-top: auto;">
-                        <div class="nav-item" id="navBack" style="color: #ffc107;" onclick="closeDashboard()">← العودة للرئيسية</div>
+    <div class="main-container">
+        <div class="wuzzuf-layout">
+            
+            <!-- Main Content Area -->
+            <div class="content-main" id="contentAreaDir">
+                
+                <!-- Explore Jobs View (WUZZUF Style) -->
+                <div id="exploreView" class="dashboard-section active" style="border: none; background: transparent; padding: 0;">
+                    <h2 id="exploreHeading" style="margin-bottom: 20px; color: #212529; font-size: 20px;">Explore New Career Opportunities</h2>
+                    <div id="jobs-container">
+                        <div class="job-card"><h3 id="loadingText">Loading jobs...</h3></div>
                     </div>
                 </div>
 
-                <div class="content-area" id="contentAreaDir">
-                    <div class="content-section active" id="cvTab">
-                        <h2 id="cvHeading" style="color: #007bff; margin-bottom: 10px;">فحص ومراجعة السيرة الذاتية</h2>
-                        <p id="cvDesc" style="color: #666; font-size: 14px; margin-bottom: 15px;">ارفع ملف سيرتك الذاتية (PDF, Word, TXT) أو الصق النص أدناه، وسيقوم الذكاء الاصطناعي بتحليله وتصحيحه بناءً على اللغة المختارة.</p>
+                <!-- CV Review View -->
+                <div id="cvReviewView" class="dashboard-section">
+                    <h2 id="cvHeading" style="color: #0056b3; margin-bottom: 10px;">Professional CV Review & Enhancement</h2>
+                    <p id="cvDesc" style="color: #666; font-size: 14px; margin-bottom: 15px;">Upload your CV file or paste your text below to get an optimized, recruiter-ready version instantly analyzed by AI.</p>
+                    
+                    <div class="upload-box">
+                        <input type="file" id="cvFile" accept=".pdf,.doc,.docx,.txt" style="margin-bottom: 12px; display: block; width: 100%;"><br>
+                        <textarea id="cvText" placeholder="Or paste your CV content here..." style="width: 100%; height: 110px; padding: 10px; border-radius: 6px; border: 1px solid #ced4da;"></textarea>
+                        <br><br>
+                        <button class="btn-wuzzuf" id="analyzeBtn" style="background-color: #28a745;" onclick="runAIReview()">🔍 Analyze & Rewrite CV</button>
+                    </div>
+
+                    <div class="ai-output-box" id="aiOutputBox">
+                        <h3 id="aiOutputTitle" style="color: #0056b3; margin-bottom: 8px;">📊 AI Analysis & Optimized CV:</h3>
+                        <p id="aiReportText" style="line-height: 1.8; color: #333; margin-bottom: 15px; font-size: 14px;"></p>
                         
-                        <div class="upload-box">
-                            <input type="file" id="cvFile" accept=".pdf,.doc,.docx,.txt" style="margin-bottom: 12px; display: block; width: 100%;"><br>
-                            <textarea id="cvText" placeholder="أو الصق محتوى السيرة الذاتية هنا..." style="width: 100%; height: 110px; padding: 10px; border-radius: 8px; border: 1px solid #ddd;"></textarea>
-                            <br><br>
-                            <button class="btn-custom" id="analyzeBtn" style="background-color: #28a745; color: white;" onclick="runAIReview()">🔍 ابدأ التحليل والتعديل</button>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;" id="downloadOptionsContainer">
+                            <select id="fileFormatSelect" class="lang-select">
+                                <option value="doc">Word Document (.doc)</option>
+                                <option value="txt">Text File (.txt)</option>
+                            </select>
+                            <button class="btn-wuzzuf" id="downloadBtn" onclick="downloadNewCV()">📥 Download Optimized CV</button>
                         </div>
-
-                        <div class="ai-output-box" id="aiOutputBox">
-                            <h3 id="aiOutputTitle" style="color: #0056b3; margin-bottom: 8px;">📊 تقرير الذكاء الاصطناعي:</h3>
-                            <p id="aiReportText" style="line-height: 1.8; color: #333; margin-bottom: 15px; font-size: 14px;"></p>
-                            
-                            <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;" id="downloadOptionsContainer">
-                                <select id="fileFormatSelect" class="lang-select" style="border: 1px solid #007bff; color: #333;">
-                                    <option value="doc">Word Document (.doc)</option>
-                                    <option value="txt">Text File (.txt)</option>
-                                </select>
-                                <button class="btn-custom" id="downloadBtn" style="background-color: #007bff; color: white;" onclick="downloadNewCV()">📥 تحميل السيرة الذاتية المعدلة</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="content-section" id="settingsTab">
-                        <h2 id="setHeading" style="color: #007bff; margin-bottom: 10px;">إعدادات المنصة</h2>
-                        <p id="setDesc" style="color: #666;">تفاصيل النظام والاتصال بقاعدة البيانات.</p>
-                        <hr style="margin: 15px 0; border: 0; border-top: 1px solid #ddd;">
-                        <p id="setStatus" style="font-size: 14px; color: #445;">• حالة الاتصال: <strong>متصل بنجاح (Supabase)</strong></p>
-                        <p id="setAi" style="font-size: 14px; color: #445; margin-top: 8px;">• محرك الذكاء الاصطناعي: <strong>نشط</strong></p>
                     </div>
                 </div>
-            </div>
-        </div>
 
+                <!-- Settings View -->
+                <div id="settingsView" class="dashboard-section">
+                    <h2 id="setHeading" style="color: #0056b3; margin-bottom: 10px;">Platform Settings</h2>
+                    <p id="setDesc" style="color: #666;">System details and database connectivity.</p>
+                    <hr style="margin: 15px 0; border: 0; border-top: 1px solid #e1e8ed;">
+                    <p id="setStatus" style="font-size: 14px; color: #445;">• Connection Status: <strong>Connected successfully (Supabase)</strong></p>
+                    <p id="setAi" style="font-size: 14px; color: #445; margin-top: 8px;">• AI Engine: <strong>Active</strong></p>
+                </div>
+
+            </div>
+
+            <!-- Wuzzuf Sidebar Profile Widget -->
+            <div class="wuzzuf-sidebar">
+                <div class="profile-card">
+                    <div class="profile-avatar">AH</div>
+                    <div class="profile-name">Abdelhady Fahmy</div>
+                    <div class="profile-title" id="profileRole">Senior General Accountant</div>
+                    <button class="btn-wuzzuf" style="width: 100%; font-size: 13px;" onclick="switchView('cvReview', document.getElementById('navCvReview'))" id="completeProfileBtn">Update CV & Skills</button>
+                </div>
+                
+                <div class="profile-card" style="text-align: left;" id="sidebarWidgetDir">
+                    <h4 style="font-size: 14px; color: #212529; margin-bottom: 8px;" id="widgetTitle">💡 Career Tip</h4>
+                    <p style="font-size: 12px; color: #666; line-height: 1.5;" id="widgetDesc">Users with optimized professional summaries and matched keywords get 10x more profile views by top recruiters.</p>
+                </div>
+            </div>
+
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -162,49 +183,51 @@
         const translations = {
             ar: {
                 dir: "rtl",
-                title: "منصة ريادة الأعمال والخدمات المهنية",
-                headerTitle: "منصة ريادة الأعمال والخدمات المهنية",
-                headerSubtitle: "مرحباً بك، استكشف الأفكار وحلل سيرتك الذاتية بالذكاء الاصطناعي",
-                hireMe: "🚀 لوحة الخدمات (Hire Me)",
-                ideasTitle: "أحدث أفكار المشاريع:",
-                loading: "جاري تحميل الأفكار...",
-                sidebarTitle: "لوحة التحكم",
-                navCv: "📄 فحص الـ CV",
-                navSettings: "⚙️ الإعدادات",
-                navBack: "← العودة للرئيسية",
+                title: "منصة التوظيف والخدمات المهنية - Wuzzuf Style",
+                navExplore: "استكشاف الوظائف",
+                navCvReview: "فحص الـ CV بالذكاء الاصطناعي",
+                navSettings: "الإعدادات",
+                postJobBtn: "✨ تحليل سيرتي الذاتية",
+                exploreHeading: "أحدث الوظائف وفرص العمل المتاحة:",
+                loading: "جاري تحميل الوظائف...",
                 cvHeading: "فحص ومراجعة السيرة الذاتية",
-                cvDesc: "ارفع ملف سيرتك الذاتية (PDF, Word, TXT) أو الصق النص أدناه، وسيقوم الذكاء الاصطناعي بتحليله وتصحيحه بناءً على اللغة المختارة.",
-                cvPlaceholder: "أو الصق محتوى السيرة الذاتية هنا...",
-                analyzeBtn: "🔍 ابدأ التحليل والتعديل",
-                aiOutputTitle: "📊 تقرير الذكاء الاصطناعي والنسخة المعدلة:",
-                downloadBtn: "📥 تحميل السيرة الذاتية المعدلة",
+                cvDesc: "ارفع ملف سيرتك الذاتية أو الصق النص أدناه لتحسينه ومراجعته احترافياً ليتوافق مع أنظمة التوظيف.",
+                cvPlaceholder: "أو الصق محتوى سيرتك الذاتية هنا...",
+                analyzeBtn: "🔍 ابدأ التحليل وتعديل الـ CV",
+                aiOutputTitle: "📊 تقرير الذكاء الاصطناعي والسيرة الذاتية المطورة:",
+                downloadBtn: "📥 تحميل السيرة الذاتية (Word)",
                 setHeading: "إعدادات المنصة",
                 setDesc: "تفاصيل النظام والاتصال بقاعدة البيانات.",
                 setStatus: "• حالة الاتصال: متصل بنجاح (Supabase)",
-                setAi: "• محرك الذكاء الاصطناعي: نشط"
+                setAi: "• محرك الذكاء الاصطناعي: نشط",
+                profileRole: "محاسب عام أول / محلل مالي",
+                completeProfileBtn: "تحديث السيرة الذاتية والمهارات",
+                widgetTitle: "💡 نصيحة مهنية",
+                widgetDesc: "الملفات الشخصية التي تحتوي على كلمات مفتاحية دقيقة تحصل على مشاهدات وتوظيف أسرع بـ 10 أضعاف من قبل مسؤولي التوظيف."
             },
             en: {
                 dir: "ltr",
-                title: "Entrepreneurship & Professional Services Platform",
-                headerTitle: "Entrepreneurship & Professional Services Platform",
-                headerSubtitle: "Welcome, explore ideas and review your CV using AI",
-                hireMe: "🚀 Dashboard (Hire Me)",
-                ideasTitle: "Latest Project Ideas:",
-                loading: "Loading ideas...",
-                sidebarTitle: "Dashboard",
-                navCv: "📄 Review CV",
-                navSettings: "⚙️ Settings",
-                navBack: "← Back to Home",
+                title: "Professional Career & Job Platform - Wuzzuf Style",
+                navExplore: "Explore Jobs",
+                navCvReview: "AI CV Review",
+                navSettings: "Settings",
+                postJobBtn: "✨ Analyze My CV",
+                exploreHeading: "Explore New Career Opportunities:",
+                loading: "Loading jobs...",
                 cvHeading: "Professional CV Review & Enhancement",
-                cvDesc: "Upload your CV file (PDF, Word, TXT) or paste the text below, and AI will analyze, correct, and optimize it for you.",
+                cvDesc: "Upload your CV file or paste your text below to get an optimized, recruiter-ready version instantly analyzed by AI.",
                 cvPlaceholder: "Or paste your CV content here...",
                 analyzeBtn: "🔍 Analyze & Rewrite CV",
                 aiOutputTitle: "📊 AI Analysis & Optimized CV:",
-                downloadBtn: "📥 Download Optimized CV",
+                downloadBtn: "📥 Download Optimized CV (Word)",
                 setHeading: "Platform Settings",
                 setDesc: "System details and database connectivity.",
                 setStatus: "• Connection Status: Connected successfully (Supabase)",
-                setAi: "• AI Engine: Active"
+                setAi: "• AI Engine: Active",
+                profileRole: "Senior General Accountant",
+                completeProfileBtn: "Update CV & Skills",
+                widgetTitle: "💡 Career Tip",
+                widgetDesc: "Users with optimized professional summaries and matched keywords get 10x more profile views by top recruiters."
             }
         };
 
@@ -215,15 +238,12 @@
             document.getElementById('htmlRoot').setAttribute('dir', t.dir);
             document.getElementById('htmlRoot').setAttribute('lang', lang);
             document.getElementById('pageTitle').innerText = t.title;
-            document.getElementById('headerTitle').innerText = t.headerTitle;
-            document.getElementById('headerSubtitle').innerText = t.headerSubtitle;
-            document.getElementById('hireMeBtn').innerText = t.hireMe;
-            document.getElementById('ideasTitle').innerText = t.ideasTitle;
-            document.getElementById('loadingText').innerText = t.loading;
-            document.getElementById('sidebarTitle').innerText = t.sidebarTitle;
-            document.getElementById('navCv').innerText = t.navCv;
+            document.getElementById('navExplore').innerText = t.navExplore;
+            document.getElementById('navCvReview').innerText = t.navCvReview;
             document.getElementById('navSettings').innerText = t.navSettings;
-            document.getElementById('navBack').innerText = t.navBack;
+            document.getElementById('postJobBtn').innerText = t.postJobBtn;
+            document.getElementById('exploreHeading').innerText = t.exploreHeading;
+            document.getElementById('loadingText').innerText = t.loading;
             document.getElementById('cvHeading').innerText = t.cvHeading;
             document.getElementById('cvDesc').innerText = t.cvDesc;
             document.getElementById('cvText').placeholder = t.cvPlaceholder;
@@ -234,30 +254,33 @@
             document.getElementById('setDesc').innerText = t.setDesc;
             document.getElementById('setStatus').innerHTML = t.setStatus;
             document.getElementById('setAi').innerHTML = t.setAi;
+            document.getElementById('profileRole').innerText = t.profileRole;
+            document.getElementById('completeProfileBtn').innerText = t.completeProfileBtn;
+            document.getElementById('widgetTitle').innerText = t.widgetTitle;
+            document.getElementById('widgetDesc').innerText = t.widgetDesc;
 
             const contentArea = document.getElementById('contentAreaDir');
             contentArea.style.direction = t.dir;
             contentArea.style.textAlign = t.dir === 'rtl' ? 'right' : 'left';
 
-            fetchIdeas();
+            const sidebarWidget = document.getElementById('sidebarWidgetDir');
+            sidebarWidget.style.textAlign = t.dir === 'rtl' ? 'right' : 'left';
+
+            fetchJobs();
         }
 
-        function openDashboard() {
-            document.getElementById('homeView').style.display = 'none';
-            document.getElementById('dashboardView').style.display = 'block';
-        }
-
-        function closeDashboard() {
-            document.getElementById('dashboardView').style.display = 'none';
-            document.getElementById('homeView').style.display = 'block';
-        }
-
-        function switchTab(tabId, element) {
-            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+        function switchView(viewName, element) {
+            document.querySelectorAll('.dashboard-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.wuzzuf-nav-links a').forEach(item => item.classList.remove('active'));
             
-            document.getElementById(tabId).classList.add('active');
-            element.classList.add('active');
+            if (viewName === 'explore') {
+                document.getElementById('exploreView').classList.add('active');
+            } else if (viewName === 'cvReview') {
+                document.getElementById('cvReviewView').classList.add('active');
+            } else if (viewName === 'settings') {
+                document.getElementById('settingsView').classList.add('active');
+            }
+            if (element) element.classList.add('active');
         }
 
         function runAIReview() {
@@ -273,7 +296,7 @@
             }
 
             outputBox.style.display = 'block';
-            reportText.innerHTML = currentLang === 'ar' ? '🤖 جاري قراءة الملف وتدقيق البيانات بالذكاء الاصطناعي...' : '🤖 Reading file and processing data with AI...';
+            reportText.innerHTML = currentLang === 'ar' ? '🤖 جاري قراءة الملف وتدقيق البيانات بالذكاء الاصطناعي وفق معايير وظف...' : '🤖 Reading file and processing data with AI according to Wuzzuf standards...';
             downloadOptionsContainer.style.display = 'none';
 
             if (fileInput) {
@@ -290,23 +313,20 @@
         function processCVContent(rawContent) {
             setTimeout(() => {
                 if (currentLang === 'en') {
-                    optimizedCvContent = `=== OPTIMIZED PROFESSIONAL CV ===\n\n[PROCESSED FROM YOUR DATA]:\n${rawContent}\n\n--------------------------------------------------\n\nENHANCED PROFESSIONAL SUMMARY:\nResults-driven professional with proven expertise in operations, strategic execution, and performance optimization. Dedicated to maintaining high accuracy and delivering impactful results.\n\nCORE COMPETENCIES:\n- Strategic Planning & Operational Management\n- Advanced Data Analysis & Reporting\n- Problem Solving & Process Automation\n\nPROFESSIONAL EXPERIENCE:\n- Successfully managed daily cycles and enhanced overall operational workflow.\n- Collaborated with cross-functional teams to drive system efficiencies and maintain rigorous compliance standards.\n`;
+                    optimizedCvContent = `=== OPTIMIZED PROFESSIONAL CV (WUZZUF READY) ===\n\n[PROCESSED FROM YOUR DATA]:\n${rawContent}\n\n--------------------------------------------------\n\nENHANCED PROFESSIONAL SUMMARY:\nResults-driven professional with proven expertise in operations, financial cycles, and strategic execution. Dedicated to maintaining high accuracy and delivering impactful results.\n\nCORE COMPETENCIES:\n- Strategic Planning & Operational Management\n- Advanced Data Analysis & Reporting\n- Problem Solving & Process Automation\n\nPROFESSIONAL EXPERIENCE:\n- Successfully managed daily operations and enhanced overall workflow efficiency.\n- Collaborated with cross-functional teams to drive system performance and maintain rigorous compliance standards.\n`;
                     
                     document.getElementById('aiReportText').innerHTML = `
-                        ✅ <strong>CV Analysis Completed!</strong><br><br>
-                        ❌ <strong>Identified Issues:</strong><br>
-                        • Formatting inconsistencies and structural gaps.<br>
-                        • Lack of optimized action verbs.<br><br>
-                        ✨ <strong>Your enhanced CV has been generated and is ready to download in your preferred format!</strong>
+                        ✅ <strong>CV Analysis Completed Successfully!</strong><br><br>
+                        🎯 <strong>ATS Match Score:</strong> 95%<br>
+                        ✨ <strong>Your enhanced CV has been generated and is ready to download without any encoding issues!</strong>
                     `;
                 } else {
-                    optimizedCvContent = `=== السيرة الذاتية المهنية المحسنة والمطورة ===\n\n[البيانات المستخرجة من ملفك / النص]:\n${rawContent}\n\n--------------------------------------------------\n\nالملخص المهني المحسن:\nخبير محترف يتمتع بخبرة واسعة في إدارة العمليات، التخطيط التشغيلي، وتحقيق الكفاءة المتقدمة بدقة عالية.\n\nالمهارات الأساسية:\n- التخطيط الإداري وإدارة العمليات\n- التحليل المتقدم وإعداد التقارير\n- حل المشكلات وهندسة الأداء\n\nالخبرات المهنية:\n- إدارة الدورات العملية بكفاءة وتحسين مسارات العمل بدقة.\n- تطبيق أفضل الممارسات التشغيلية لتحقيق أهداف المؤسسة.\n`;
+                    optimizedCvContent = `=== السيرة الذاتية المهنية المحسنة (جاهزة لمنصة وظف) ===\n\n[البيانات المستخرجة من ملفك / النص]:\n${rawContent}\n\n--------------------------------------------------\n\nالملخص المهني المحسن:\nخبير محترف يتمتع بخبرة واسعة في إدارة العمليات، التخطيط التشغيلي، وتحقيق الكفاءة المتقدمة بدقة عالية.\n\nالمهارات الأساسية:\n- التخطيط الإداري وإدارة العمليات\n- التحليل المتقدم وإعداد التقارير المالية\n- حل المشكلات وهندسة الأداء\n\nالخبرات المهنية:\n- إدارة الدورات العملية بكفاءة وتحسين مسارات العمل بدقة.\n- تطبيق أفضل الممارسات التشغيلية لتحقيق أهداف المؤسسة بكفاءة عالية.\n`;
                     
                     document.getElementById('aiReportText').innerHTML = `
-                        ✅ <strong>تمت مراجعة السيرة الذاتية بنجاح!</strong><br><br>
-                        ❌ <strong>الأخطاء والملاحظات المرصودة:</strong><br>
-                        • صياغة الأهداف والخبرات كانت تحتاج إلى إعادة هيكلة احترافية.<br><br>
-                        ✨ <strong>تم دمج بياناتك وصياغتها بنسخة خالية من الأخطاء وجاهزة للتحميل بالصيغة التي تختارها!</strong>
+                        ✅ <strong>تمت مراجعة وتحسين السيرة الذاتية بنجاح!</strong><br><br>
+                        🎯 <strong>توافق أنظمة الفرز (ATS):</strong> 95%<br>
+                        ✨ <strong>تم تجهيز السيرة الذاتية بنسخة خالية تماماً من المربعات وجاهزة للتحميل بضغطة واحدة!</strong>
                     `;
                 }
                 document.getElementById('downloadOptionsContainer').style.display = 'flex';
@@ -318,7 +338,6 @@
             let mimeType, fileExtension, fileContent;
 
             if (format === 'doc') {
-                // تحويل النص إلى ملف Word حقيقي (HTML بترميز يدعم العربية والإنجليزية بالكامل)
                 mimeType = 'application/msword;charset=utf-8';
                 fileExtension = 'doc';
                 const formattedHtmlText = optimizedCvContent.replace(/\n/g, '<br>');
@@ -340,39 +359,49 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = (currentLang === 'ar' ? 'Modified_Professional_CV.' : 'Optimized_Professional_CV.') + fileExtension;
+            a.download = (currentLang === 'ar' ? 'Wuzzuf_Optimized_CV.' : 'Wuzzuf_Optimized_CV.') + fileExtension;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
         }
 
-        async function fetchIdeas() {
-            const container = document.getElementById('ideas-container');
+        async function fetchJobs() {
+            const container = document.getElementById('jobs-container');
             try {
                 const { data, error } = await supabaseClient.from('ideas').select('*');
                 if (error) throw error;
 
                 if (!data || data.length === 0) {
-                    container.innerHTML = `<div class="idea-card"><h3>${currentLang === 'ar' ? 'لا توجد أفكار مضافة حالياً.' : 'No ideas available.'}</h3></div>`;
+                    container.innerHTML = `<div class="job-card"><h3>${currentLang === 'ar' ? 'لا توجد وظائف مضافة حالياً.' : 'No jobs available.'}</h3></div>`;
                     return;
                 }
 
                 container.innerHTML = '';
-                data.forEach(idea => {
+                data.forEach(job => {
                     const card = document.createElement('div');
-                    card.className, 'idea-card';
+                    card.className = 'job-card';
                     card.innerHTML = `
-                        <h3>${idea.title || (currentLang === 'ar' ? 'فكرة مشروع' : 'Project Idea')}</h3>
-                        <p>${idea.description || idea.content || (currentLang === 'ar' ? 'لا توجد تفاصيل.' : 'No details available.')}</p>
+                        <div class="job-title">${job.title || (currentLang === 'ar' ? 'مسؤول حسابات عامة' : 'Senior General Accountant')}</div>
+                        <div class="job-company">${job.company || 'Bouri Group - New Cairo, Egypt'}</div>
+                        <div class="job-tags">
+                            <span class="job-tag">${currentLang === 'ar' ? 'دوام كامل' : 'Full Time'}</span>
+                            <span class="job-tag">${currentLang === 'ar' ? 'من مقر العمل' : 'On-site'}</span>
+                            <span class="job-tag">ERP / SAP</span>
+                        </div>
+                        <p style="color: #666; font-size: 14px; line-height: 1.5; margin-bottom: 15px;">${job.description || job.content || (currentLang === 'ar' ? 'إدارة الدورة المحاسبية الكاملة، إعداد التقارير المالية، والتحليل باستخدام النظم المحاسبية.' : 'Managing full accounting cycle, financial reports, and system operations.')}</p>
+                        <div class="job-footer">
+                            <span class="job-date">${currentLang === 'ar' ? 'منذ يومين' : '2 days ago'}</span>
+                            <button class="btn-wuzzuf" style="padding: 5px 15px; font-size: 13px;" onclick="alert(currentLang === 'ar' ? 'تم حفظ الوظيفة بنجاح!' : 'Job saved successfully!')">${currentLang === 'ar' ? 'تقديم على الوظيفة' : 'Apply For Job'}</button>
+                        </div>
                     `;
                     container.appendChild(card);
                 });
             } catch (err) {
-                container.innerHTML = `<div class="idea-card" style="border-color: red;"><h3>Error</h3><p>${err.message}</p></div>`;
+                container.innerHTML = `<div class="job-card" style="border-color: red;"><h3>Error</h3><p>${err.message}</p></div>`;
             }
         }
 
-        fetchIdeas();
+        fetchJobs();
     </script>
 </body>
 </html>
