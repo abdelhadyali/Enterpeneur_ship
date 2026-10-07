@@ -1,686 +1,294 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" id="htmlRoot" data-theme="light">
+<html lang="en" dir="ltr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hire_Me</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HIRE ME – App Prototype</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#f5f7fb; --surface:#ffffff; --text:#1c2333; --muted:#66708a; --border:#e3e8f1;
-  --primary:#3b5bdb; --primary-dark:#2f49b3; --primary-soft:#e9edff;
-  --ok:#2b9348; --ok-soft:#e3f6e8; --warn:#e8890c; --warn-soft:#fff2df; --bad:#d6336c; --bad-soft:#fde7ef;
-  --shadow:0 1px 2px rgba(20,30,60,.05),0 4px 14px rgba(20,30,60,.06);
-  --shadow-hover:0 8px 26px rgba(20,30,60,.12);
-}
-[data-theme="dark"]{
-  --bg:#0f1422; --surface:#182033; --text:#e8ecf7; --muted:#9aa5c2; --border:#27314a;
-  --primary:#7b93ff; --primary-dark:#6079f0; --primary-soft:#222c52;
-  --ok:#57d27a; --ok-soft:#173526; --warn:#ffb454; --warn-soft:#3a2b14; --bad:#ff7aa8; --bad-soft:#3b1a29;
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
-  --shadow-hover:0 8px 26px rgba(0,0,0,.4);
-}
-*{box-sizing:border-box;margin:0;padding:0;font-family:'Tajawal',sans-serif}
-body{background:var(--bg);color:var(--text);min-height:100vh;transition:background .25s,color .25s}
-button,input,select,textarea{font:inherit;color:inherit}
+:root{--bg:#F4F7F7;--sf:#FFFFFF;--tx:#14283D;--mu:#4F6272;--ln:#D7E1E3;--pri:#0B6E70;--onp:#fff;--acc:#F2A33A;--ok:#17724A;--okb:#E3F3EA;--er:#B3261E;--erb:#FBE9E7;--wn:#FFF1D6;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0D1A24;--sf:#152633;--tx:#E9F1F4;--mu:#A5B8C4;--ln:#27404F;--pri:#0F7F82;--okb:#12362A;--ok:#7FD6A8;--erb:#41201E;--er:#FFB4AB;--wn:#3E3118}}
+:root[data-theme="dark"]{--bg:#0D1A24;--sf:#152633;--tx:#E9F1F4;--mu:#A5B8C4;--ln:#27404F;--pri:#0F7F82;--okb:#12362A;--ok:#7FD6A8;--erb:#41201E;--er:#FFB4AB;--wn:#3E3118}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'Cairo',Arial,sans-serif;font-size:16px;line-height:1.5}
+#app{max-width:430px;height:100%;margin:0 auto;display:flex;flex-direction:column;background:var(--bg);position:relative;overflow:hidden}
+@media(min-width:500px){#app{height:min(100%,860px);margin-top:max(0px,calc((100% - 860px)/2));border:1px solid var(--ln);border-radius:28px}}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+button:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.top{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;min-height:56px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;letter-spacing:.5px;white-space:nowrap}.logo b{color:var(--pri)}.tag{font-size:11px;font-weight:600;letter-spacing:0;line-height:1.25;color:var(--mu);white-space:normal;max-width:96px;border-inline-start:2px solid var(--acc);padding-inline-start:9px}.top{gap:8px}
+.lang{min-height:44px;min-width:56px;padding:0 14px;border:1.5px solid var(--ln);border-radius:22px;font-weight:600;font-size:14px}
+.body{flex:1;overflow-y:auto;padding:6px 20px 20px}
+.foot{padding:12px 20px 18px}
+.cta{width:100%;min-height:56px;border-radius:16px;background:var(--pri);color:var(--onp);font-weight:800;font-size:17px}
+.cta:active{transform:scale(.98)}.cta:disabled{background:var(--ln);color:var(--mu);cursor:not-allowed}
+.ghost{width:100%;min-height:52px;margin-top:8px;border-radius:16px;border:1.5px solid var(--ln);font-weight:600}
+h1{font-size:28px;line-height:1.25;font-weight:800;margin:8px 0 10px}h2{font-size:20px;font-weight:800;margin-bottom:6px}
+p.mu,.mu{color:var(--mu)}.small{font-size:13px}
+.dots{display:flex;gap:6px;justify-content:center;margin:14px 0}.dots i{width:8px;height:8px;border-radius:4px;background:var(--ln)}.dots i.on{width:26px;background:var(--pri)}
+.seal{width:132px;height:132px;border-radius:50%;margin:18px auto;display:grid;place-items:center;background:var(--sf);border:3px solid var(--pri);box-shadow:0 0 0 7px var(--okb),0 0 0 9px var(--pri);text-align:center;font-weight:800;color:var(--pri);line-height:1.2}
+.seal span{display:block;font-size:34px;color:var(--ok)}.seal.off{border-color:var(--acc);box-shadow:0 0 0 7px var(--wn),0 0 0 9px var(--acc);color:var(--tx)}
+.chip{display:inline-block;padding:3px 12px;border-radius:14px;background:var(--wn);font-size:12px;font-weight:600}
+.chip.ok{background:var(--okb);color:var(--ok)}
+.opt{display:flex;gap:12px;align-items:center;width:100%;min-height:58px;padding:10px 14px;margin-bottom:10px;border:2px solid var(--ln);border-radius:14px;background:var(--sf);text-align:start;font-weight:600}
+.opt.sel{border-color:var(--pri);background:var(--okb)}.opt .m{flex:none;width:26px;height:26px;border-radius:50%;border:2px solid var(--mu);display:grid;place-items:center;font-size:14px}.opt.sel .m{background:var(--pri);border-color:var(--pri);color:#fff}
+.bar{height:8px;background:var(--ln);border-radius:4px;overflow:hidden;margin:6px 0 16px}.bar i{display:block;height:100%;background:var(--pri);transition:width .3s}
+.row{display:block;width:100%;text-align:start;padding:16px 0;border-bottom:1px solid var(--ln)}.row:last-child{border:0}
+.row .t{font-weight:800;font-size:18px}.row .s{display:flex;gap:14px;flex-wrap:wrap;margin-top:4px;font-size:14px}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid var(--ln)}.kv b{text-align:end}
+.note{padding:12px 14px;border-radius:14px;background:var(--okb);font-size:14px;margin:10px 0}.note.w{background:var(--wn)}.note.e{background:var(--erb);color:var(--er)}
+.nav{display:flex;border-top:1px solid var(--ln);background:var(--sf);padding-bottom:6px}.nav button{flex:1;min-height:58px;font-weight:600;color:var(--mu)}.nav button.on{color:var(--pri);box-shadow:inset 0 3px 0 var(--pri);font-weight:800}
+.steps{margin:14px 0}.stp{display:flex;gap:14px;position:relative;padding-bottom:20px}.stp::before{content:"";position:absolute;inset-inline-start:11px;top:24px;bottom:0;width:2px;background:var(--ln)}.stp:last-child::before{display:none}
+.stp .d{flex:none;width:24px;height:24px;border-radius:50%;border:2px solid var(--ln);background:var(--sf);display:grid;place-items:center;font-size:13px}.stp.done .d{background:var(--ok);border-color:var(--ok);color:#fff}.stp.now .d{border-color:var(--pri);box-shadow:0 0 0 4px var(--okb)}.stp.now b{color:var(--pri)}
+.sheet{position:absolute;inset:0;background:rgba(10,20,30,.55);display:flex;align-items:flex-end;animation:f .2s}.sheet>div{width:100%;background:var(--sf);border-radius:24px 24px 0 0;padding:22px 20px 24px;animation:u .25s}
+@keyframes f{from{opacity:0}}@keyframes u{from{transform:translateY(40px)}}
+.toast{position:absolute;inset-inline:20px;top:70px;padding:12px 16px;border-radius:14px;background:var(--tx);color:var(--bg);font-weight:600;animation:f .2s}
+.proto{font-size:12px;text-align:center;color:var(--mu);padding:6px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.pill{display:inline-flex;align-items:center;min-height:46px;padding:0 16px;margin:0 8px 8px 0;border:2px solid var(--ln);border-radius:23px;background:var(--sf);font-weight:600}
+[dir=rtl] .pill{margin:0 0 8px 8px}.pill.sel{border-color:var(--pri);background:var(--okb);font-weight:800}
+label.f{display:block;font-weight:700;margin:16px 0 6px}
+input.in{width:100%;min-height:52px;padding:0 14px;border:2px solid var(--ln);border-radius:14px;background:var(--sf);color:var(--tx);font:inherit}
+input.in:focus{border-color:var(--pri);outline:none}input.bad{border-color:var(--er)}
+.err{color:var(--er);font-size:14px;margin-top:4px}
+.sw{display:flex;justify-content:space-between;align-items:center;width:100%;min-height:56px;text-align:start;font-weight:700}
+.sw i{flex:none;width:52px;height:30px;border-radius:15px;background:var(--ln);position:relative}.sw i::after{content:"";position:absolute;top:3px;inset-inline-start:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:.2s}.sw.on i{background:var(--pri)}.sw.on i::after{inset-inline-start:25px}
+.av{width:84px;height:84px;border-radius:50%;margin:10px auto;display:grid;place-items:center;background:var(--okb);color:var(--ok);font-weight:800;font-size:28px;border:3px solid var(--pri)}
+.two{display:flex;gap:10px}.two button{flex:1}
+.cand{padding:18px;border:2px solid var(--ln);border-radius:20px;background:var(--sf);margin-top:12px}
+.role{display:block;width:100%;text-align:start;padding:20px;border:2px solid var(--ln);border-radius:20px;background:var(--sf);margin-bottom:14px;min-height:96px}.role b{font-size:20px}.role:active{transform:scale(.98)}
+.spin{width:48px;height:48px;border:5px solid var(--ln);border-top-color:var(--pri);border-radius:50%;margin:0 auto 20px;animation:sp 1s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}
+.shr{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border-radius:16px;color:#fff;font-weight:800;text-decoration:none}.shr b{display:grid;place-items:center;width:26px;height:26px;border-radius:6px;background:#fff;font-size:15px}.shr.li{background:#0A66C2}.shr.li b{color:#0A66C2}.shr.fb{background:#1664D9}.shr.fb b{color:#1664D9}.shr:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.code{font-family:ui-monospace,Menlo,monospace;font-weight:800;font-size:24px;letter-spacing:3px;text-align:center;border:2px dashed var(--pri);border-radius:12px;padding:10px;margin:10px 0;background:var(--okb)}.shr.ud{background:#8A2BC9}
 
-/* Header */
-.header{position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:1px solid var(--border);
-  padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.brand{font-size:24px;font-weight:900;color:var(--primary);letter-spacing:.3px}
-.nav{display:flex;gap:6px}
-.nav a{padding:8px 14px;border-radius:8px;font-weight:700;font-size:14px;color:var(--muted);cursor:pointer;transition:.2s}
-.nav a:hover{color:var(--primary);background:var(--primary-soft)}
-.nav a.active{color:var(--primary);background:var(--primary-soft)}
-.controls{display:flex;gap:10px;align-items:center}
-.select,.icon-btn{border:1px solid var(--border);background:var(--surface);border-radius:8px;padding:7px 10px;font-weight:700;cursor:pointer}
-.icon-btn{width:38px;height:38px;display:grid;place-items:center;font-size:16px}
-.btn{background:var(--primary);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:700;font-size:14px;cursor:pointer;transition:.2s}
-.btn:hover{background:var(--primary-dark);transform:translateY(-1px)}
-.btn.ghost{background:var(--primary-soft);color:var(--primary)}
-.btn.ghost:hover{background:var(--primary);color:#fff}
-.btn.danger{background:var(--bad);color:#fff}
-
-/* Layout */
-.container{max-width:920px;margin:0 auto;padding:28px 20px 60px}
-.view{display:none;animation:fade .3s ease}
-.view.active{display:block}
-@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-.hero{margin-bottom:20px}
-.hero h1{font-size:26px;font-weight:900;margin-bottom:6px}
-.hero p{color:var(--muted);font-size:15px}
-
-/* Filters */
-.filters{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}
-.filters input{flex:1;min-width:200px;border:1px solid var(--border);background:var(--surface);border-radius:10px;padding:11px 14px;outline:none}
-.count{color:var(--muted);font-size:13px;margin-bottom:12px}
-
-/* Job cards */
-.job-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:14px;
-  box-shadow:var(--shadow);transition:.2s;display:flex;gap:16px}
-.job-card:hover{box-shadow:var(--shadow-hover);transform:translateY(-2px)}
-.avatar{width:52px;height:52px;border-radius:12px;background:var(--primary-soft);color:var(--primary);
-  display:grid;place-items:center;font-weight:900;font-size:20px;flex-shrink:0}
-.job-body{flex:1;min-width:0}
-.job-title{font-size:18px;font-weight:800;margin-bottom:3px}
-.job-company{font-size:14px;color:var(--muted);margin-bottom:10px}
-.tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-.tag{background:var(--primary-soft);color:var(--primary);padding:4px 11px;border-radius:999px;font-size:12px;font-weight:700}
-.job-desc{color:var(--muted);font-size:14px;line-height:1.8;margin-bottom:14px}
-.job-footer{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:12px}
-.job-date{font-size:12px;color:var(--muted)}
-.skeleton{height:130px;border-radius:14px;margin-bottom:14px;background:linear-gradient(90deg,var(--surface) 25%,var(--border) 50%,var(--surface) 75%);
-  background-size:200% 100%;animation:sh 1.3s infinite}
-@keyframes sh{to{background-position:-200% 0}}
-.empty{text-align:center;color:var(--muted);padding:40px 0}
-
-/* Panels */
-.panel{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;box-shadow:var(--shadow);margin-bottom:16px}
-.panel h2{font-size:20px;margin-bottom:6px}
-.panel .sub{color:var(--muted);font-size:14px;margin-bottom:16px;line-height:1.7}
-.drop{border:2px dashed var(--primary);background:var(--primary-soft);border-radius:12px;padding:18px;text-align:center;margin-bottom:12px}
-textarea,input[type="email"],input[type="password"]{width:100%;border:1px solid var(--border);background:var(--bg);border-radius:10px;padding:12px;outline:none;line-height:1.7;margin-bottom:12px}
-label.l{display:block;font-weight:700;font-size:14px;margin:14px 0 6px}
-.hint{font-size:12px;color:var(--muted);margin-top:4px}
-.err{color:var(--bad);font-size:13px;margin-top:8px;min-height:18px}
-.success{color:var(--ok);font-size:13px;margin-top:8px;min-height:18px}
-
-/* Result */
-.score-wrap{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
-.ring{--p:0;width:130px;height:130px;border-radius:50%;display:grid;place-items:center;flex-shrink:0;
-  background:conic-gradient(var(--c,var(--primary)) calc(var(--p)*1%),var(--border) 0)}
-.ring>div{width:104px;height:104px;border-radius:50%;background:var(--surface);display:grid;place-items:center;text-align:center}
-.ring b{font-size:30px;line-height:1}
-.ring small{color:var(--muted);font-size:12px}
-.verdict h3{font-size:19px;margin-bottom:4px}
-.verdict p{color:var(--muted);font-size:14px;line-height:1.7}
-.checks{list-style:none;margin-top:6px}
-.checks li{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:10px;margin-bottom:8px;font-size:14px;line-height:1.6}
-.checks li.ok{background:var(--ok-soft)}
-.checks li.warn{background:var(--warn-soft)}
-.checks li.bad{background:var(--bad-soft)}
-.checks .pts{margin-inline-start:auto;font-weight:800;font-size:12px;white-space:nowrap;opacity:.8}
-.kw{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-.kw span{padding:4px 11px;border-radius:999px;font-size:12px;font-weight:700}
-.kw .miss{background:var(--bad-soft);color:var(--bad)}
-.kw .hit{background:var(--ok-soft);color:var(--ok)}
-.result{display:none}
-.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}
-.status-line{display:flex;align-items:center;gap:8px;font-size:14px;margin-top:8px}
-.dot{width:10px;height:10px;border-radius:50%;background:var(--muted)}
-.dot.on{background:var(--ok)} .dot.off{background:var(--bad)}
-.toast{position:fixed;bottom:24px;inset-inline:0;margin:auto;width:max-content;max-width:90%;background:var(--text);color:var(--bg);
-  padding:12px 20px;border-radius:10px;font-weight:700;font-size:14px;opacity:0;pointer-events:none;transition:.3s;transform:translateY(10px)}
-.toast.show{opacity:1;transform:none}
-@media(max-width:600px){.header{padding:10px 14px}.job-card{flex-direction:column}.nav a{padding:7px 10px;font-size:13px}}
+.role{display:flex;align-items:center;gap:16px}.ico{flex:none;width:58px;height:58px;border-radius:18px;display:grid;place-items:center;background:var(--okb);color:var(--pri);animation:bob 2.6s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-5px)}}
+@keyframes up{from{opacity:0;transform:translateY(16px)}}
+@keyframes pop{from{opacity:0;transform:scale(.6)}}
+@keyframes draw{from{stroke-dashoffset:30}to{stroke-dashoffset:0}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 4px var(--okb)}50%{box-shadow:0 0 0 9px var(--okb)}}
+.chk{stroke-dasharray:30}.stp.now .d{animation:pulse 1.6s infinite}
+#app.enter .body>*{animation:up .45s both}
+#app.enter .body>*:nth-child(2){animation-delay:.07s}#app.enter .body>*:nth-child(3){animation-delay:.14s}#app.enter .body>*:nth-child(4){animation-delay:.21s}#app.enter .body>*:nth-child(5){animation-delay:.28s}#app.enter .body>*:nth-child(n+6){animation-delay:.35s}
+#app.enter .foot>*{animation:up .45s .3s both}
+#app.enter .role{animation:up .55s .1s both}#app.enter .role:nth-child(2){animation-delay:.25s}
+#app.enter .row,#app.enter .cand,#app.enter .stp{animation:up .45s both}
+#app.enter .stp:nth-child(2){animation-delay:.1s}#app.enter .stp:nth-child(3){animation-delay:.2s}#app.enter .stp:nth-child(4){animation-delay:.3s}
+#app.enter .tag{animation:up .6s .25s both}
+#app.enter svg[role=img]{animation:pop .65s cubic-bezier(.2,1.4,.4,1) both}
+#app.enter .chk{animation:draw .6s .45s both}
+#app.enter .seal{animation:pop .6s cubic-bezier(.2,1.4,.4,1) both}
+@media(prefers-reduced-motion:reduce){.ico,.stp.now .d{animation:none!important}}
 </style>
 </head>
 <body>
-
-<header class="header">
-  <div style="display:flex;align-items:center;gap:22px;flex-wrap:wrap">
-    <div class="brand">Hire_Me</div>
-    <nav class="nav">
-      <a id="navExplore" class="active" onclick="switchView('explore')" data-i18n="navExplore"></a>
-      <a id="navCv" onclick="switchView('cv')" data-i18n="navCv"></a>
-      <a id="navAuth" onclick="switchView('auth')" data-i18n="navAuth">تسجيل / دخول</a>
-      <a id="navSettings" onclick="switchView('settings')" data-i18n="navSettings"></a>
-    </nav>
-  </div>
-  <div class="controls">
-    <button class="icon-btn" id="themeBtn" onclick="toggleTheme()" title="Theme">🌙</button>
-    <select id="langSelector" class="select" onchange="changeLanguage(this.value)">
-      <option value="ar">العربية</option>
-      <option value="en">English</option>
-    </select>
-    <button class="btn" id="headerCtaBtn" onclick="switchView('auth')" data-i18n="ctaLogin">تسجيل الدخول</button>
-  </div>
-</header>
-
-<main class="container">
-
-  <!-- Explore -->
-  <section id="view-explore" class="view active">
-    <div class="hero">
-      <h1 data-i18n="exploreHeading"></h1>
-      <p data-i18n="exploreSub"></p>
-    </div>
-    <div class="filters">
-      <input id="searchInput" oninput="applyFilters()" data-i18n-ph="searchPh">
-      <select id="typeFilter" class="select" onchange="applyFilters()"></select>
-    </div>
-    <div class="count" id="jobsCount"></div>
-    <div id="jobs-container"></div>
-  </section>
-
-  <!-- CV Review -->
-  <section id="view-cv" class="view">
-    <div class="panel">
-      <h2 data-i18n="cvHeading"></h2>
-      <p class="sub" data-i18n="cvDesc"></p>
-
-      <div class="drop">
-        <div data-i18n="uploadLabel"></div>
-        <input type="file" id="cvFile" accept=".pdf,.docx,.txt" onchange="handleFile(this.files[0])">
-        <div class="hint" data-i18n="uploadHint"></div>
-      </div>
-      <textarea id="cvText" rows="8" data-i18n-ph="cvPh"></textarea>
-
-      <label class="l" data-i18n="jdLabel"></label>
-      <textarea id="jdText" rows="4" data-i18n-ph="jdPh"></textarea>
-      <div class="hint" data-i18n="jdHint"></div>
-
-      <div class="row">
-        <button class="btn" id="analyzeBtn" onclick="runReview()" data-i18n="analyzeBtn"></button>
-      </div>
-      <div class="err" id="cvErr"></div>
-    </div>
-
-    <div class="result" id="result">
-      <div class="panel">
-        <div class="score-wrap">
-          <div class="ring" id="ring"><div><span><b id="scoreNum">0</b><br><small>/ 100</small></span></div></div>
-          <div class="verdict"><h3 id="verdictTitle"></h3><p id="verdictText"></p></div>
-        </div>
-      </div>
-      <div class="panel">
-        <h2 data-i18n="detailsTitle"></h2>
-        <ul class="checks" id="checksList"></ul>
-      </div>
-      <div class="panel" id="matchPanel" style="display:none">
-        <h2 data-i18n="matchTitle"></h2>
-        <p class="sub" id="matchSummary"></p>
-        <b style="font-size:14px" data-i18n="missingKw"></b>
-        <div class="kw" id="missingKw"></div>
-        <b style="font-size:14px;display:block;margin-top:14px" data-i18n="foundKw"></b>
-        <div class="kw" id="foundKw"></div>
-      </div>
-      <div class="row">
-        <button class="btn ghost" onclick="downloadReport()" data-i18n="downloadBtn"></button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Auth View (Sign Up / Sign In) -->
-  <section id="view-auth" class="view">
-    <div class="panel" style="max-width: 450px; margin: 0 auto;">
-      <h2 id="authTitle" data-i18n="authLoginTitle">تسجيل الدخول إلى حسابك</h2>
-      <p class="sub" id="authSub" data-i18n="authLoginSub">أدخل بريدك الإلكتروني وكلمة المرور للمتابعة.</p>
-      
-      <div id="userLoggedBox" style="display:none;">
-        <p style="margin-bottom: 12px;" data-i18n="loggedInAs">أنت مسجل الدخول حالياً بريد:</p>
-        <b id="userEmailDisplay" style="color:var(--primary); display:block; margin-bottom:16px;"></b>
-        <button class="btn danger" onclick="handleSignOut()" data-i18n="signOutBtn">تسجيل الخروج</button>
-      </div>
-
-      <div id="authFormBox">
-        <label class="l" data-i18n="emailLabel">البريد الإلكتروني</label>
-        <input type="email" id="authEmail" placeholder="name@example.com">
-
-        <label class="l" data-i18n="passLabel">كلمة المرور</label>
-        <input type="password" id="authPass" placeholder="••••••••">
-
-        <div class="row" style="margin-top:10px;">
-          <button class="btn" id="authSubmitBtn" onclick="handleAuthSubmit()" data-i18n="loginBtn">دخول</button>
-          <button class="btn ghost" onclick="toggleAuthMode()" id="authSwitchModeBtn" data-i18n="switchToSignup">إنشاء حساب جديد؟</button>
-        </div>
-        <div class="err" id="authErr"></div>
-        <div class="success" id="authSuccess"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Settings -->
-  <section id="view-settings" class="view">
-    <div class="panel">
-      <h2 data-i18n="setHeading"></h2>
-      <p class="sub" data-i18n="setDesc"></p>
-      <div class="status-line"><span class="dot" id="dbDot"></span><span id="dbStatus"></span></div>
-      <div class="status-line"><span class="dot on"></span><span data-i18n="setCv"></span></div>
-    </div>
-  </section>
-
-</main>
-<div class="toast" id="toast"></div>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<div id="app"></div>
 <script>
-/* ============ CONFIG ============ */
-const SUPABASE_URL  = 'https://pojytwrjosezrmupjrvy.supabase.co';
-const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvanl0d3Jqb3NlenJtdXBqcnZ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2ODc5MzksImV4cCI6MjEwNjI2MzkzOX0.IjoesBsdZynzmjwsI2vEJ-IkL4Dbq8HRy8eVdPc-2yo';
-const JOBS_TABLE    = 'ideas';
+const DC={rl_t:["⚠️ Before you start","⚠️ قبل أن تبدأ"],rl_1t:["Camera monitoring","مراقبة بالكاميرا"],rl_1:["The exam will ask you to allow your camera so we can monitor the person taking it. Keep your face visible.","سيطلب منك الامتحان السماح للكاميرا لمراقبة من يمتحن. أبقِ وجهك ظاهراً."],rl_2t:["No copy and paste","ممنوع النسخ واللصق"],rl_2:["Copy, cut and paste are disabled. Do not switch tabs or apps during the exam.","النسخ والقص واللصق معطّلة. لا تغيّر التبويب أو التطبيق أثناء الامتحان."],rl_3t:["Cheating cancels the exam","الغش يلغي الامتحان"],rl_3:["Any attempt to cheat will cancel the exam.","أي محاولة غش سيتم بسببها إلغاء الامتحان."],rl_4t:["Repeating it means a block","التكرار يعني الحظر"],rl_4:["If it happens again, your account will be blocked.","وفي حال التكرار سيتم حظر حسابك."],rl_n:["Prototype: the camera is not turned on here.","نموذج أولي: الكاميرا لا تُفعَّل هنا."],rl_ok:["I understand and agree","أفهم وأوافق"],rl_go:["Start the exam","ابدأ الامتحان"],rl_need:["Agree to continue","وافق للمتابعة"],
+cx_t:["Exam cancelled","تم إلغاء الامتحان"],cx_copy:["Copy or paste was detected.","تم رصد نسخ أو لصق."],cx_tab:["You left the exam screen.","غادرت شاشة الامتحان."],cx_sim:["A cheating attempt was simulated.","تمت محاكاة محاولة غش."],cx_p:["This is your first warning. If it happens again, your account will be blocked.","هذا هو التحذير الأول. وفي حال التكرار سيتم حظر حسابك."],cx_back:["Back to my skills","العودة لمهاراتي"],
+bl_t:["Your account is blocked","تم حظر حسابك"],bl_p:["A second cheating attempt was detected. You can no longer use the app.","تم رصد محاولة غش ثانية. لم يعد بإمكانك استخدام التطبيق."],bl_n:["Prototype: logging out resets the block.","نموذج أولي: تسجيل الخروج يلغي الحظر."],sim:["Prototype control: simulate a cheating attempt","تحكم تجريبي: حاكِ محاولة غش"],more:["Apply to as many jobs as you like.","قدّم على أي عدد من الوظائف."],applied:["Applied","تم التقديم"],already:["Already applied","تم التقديم مسبقاً"],s6:["Interview completed","اكتملت المقابلة"],fb_t:["How was the interview?","كيف كانت المقابلة؟"],fb_p:["Your answers go to HIRE ME, not to the company.","إجاباتك تصل إلى HIRE ME وليس إلى الشركة."],fb_btn:["Share interview feedback","شارك ملاحظاتك على المقابلة"],fb_done:["Feedback sent to HIRE ME","تم إرسال الملاحظات إلى HIRE ME"],fb_ok:["Thanks, feedback sent","شكراً، تم إرسال الملاحظات"],
+a1:["Did the interview questions match the job you applied for?","هل طابقت أسئلة المقابلة الوظيفة التي قدّمت عليها؟"],a1y:["Yes","نعم"],a1p:["Partly","جزئياً"],a1n:["No, a different skill","لا، مهارة مختلفة"],
+a2:["Was the level right for you?","هل كان المستوى مناسباً؟"],a2r:["Right level","مناسب"],a2h:["Too advanced","متقدم جداً"],a2e:["Too easy","سهل جداً"],sub:["Send feedback","أرسل الملاحظات"],ud_h:["Recommended by HIRE ME's partner Udemy","موصى به من شريك HIRE ME: Udemy"],ud_off:["20% off with your HIRE ME code","خصم 20% بكود HIRE ME"],ud_cp:["Copy code","انسخ الكود"],ud_ok:["Code copied","تم نسخ الكود"],ud_open:["Open Udemy","افتح Udemy"],ud_n:["Prototype: the Udemy partnership and this code are examples.","نموذج أولي: شراكة Udemy وهذا الكود أمثلة."],rt_t:["Re-test available on","إعادة الاختبار متاحة في"],rt_b:["Re-test available in 30 days","إعادة الاختبار بعد 30 يوماً"],rt_why:["The 30 days give you time to study the topics above.","الـ 30 يوماً تمنحك وقتاً لمذاكرة المواضيع أعلاه."],rt_skip:["Prototype control: skip the 30 days","تحكم تجريبي: تخطَّ الـ 30 يوماً"],sh_t:["Share your badge","شارك شارتك"],sh_cp:["Copy caption","انسخ النص المرفق"],sh_ok:["Caption copied","تم نسخ النص"],sh_n:["The link must be public for the preview to show. Paste the caption into your post.","يجب أن يكون الرابط عاماً لتظهر المعاينة. الصق النص المرفق في منشورك."],
+brand:["HIRE ME","HIRE ME"],
+ob1t:["Prove your skills first","أثبت مهاراتك أولاً"],ob1p:["A short practical check turns your CV into verified skills.","اختبار عملي قصير يحوّل سيرتك إلى مهارات موثقة."],
+ob2t:["Always get an answer","احصل على رد دائماً"],ob2p:["Every application shows its status and a reply-by date.","كل طلب يعرض حالته وموعد الرد."],
+ob3t:["Apply without bias","قدّم دون تحيز"],ob3p:["Companies see your verified skills, not your name or photo, until a mutual match.","الشركات ترى مهاراتك الموثقة لا اسمك أو صورتك حتى المطابقة المتبادلة."],
+skip:["Skip","تخطَّ"],next:["Next","التالي"],start:["Start my skill check","ابدأ فحص مهارتي"],
+chk:["Your first skill check","فحص مهارتك الأول"],chkp:["Skills found in your CV. Verify one to unlock jobs.","مهارات من سيرتك. وثّق واحدة لتفتح الوظائف."],
+sk:["Excel · Junior","Excel · مبتدئ"],skm:["4 questions · 60 seconds each","4 أسئلة · 60 ثانية لكل سؤال"],
+proto:["Prototype: one sample skill. The full product covers every skill on your CV.","نموذج أولي: مهارة تجريبية واحدة. المنتج الكامل يغطي كل مهارات سيرتك."],
+goChk:["Start the 4 questions","ابدأ الأسئلة الأربعة"],q:["Question","السؤال"],of:["of","من"],left:["s left","ث متبقية"],
+nocopy:["Copy and paste are off during the check.","النسخ واللصق معطّلان أثناء الفحص."],pick:["Choose an answer","اختر إجابة"],nq:["Next question","السؤال التالي"],fin:["See my result","اعرض نتيجتي"],
+pass:["You are verified","تم توثيقك"],passp:["Score","النتيجة"],badge:["Verified","موثق"],
+fail:["Not passed this time","لم تجتز الاختبار هذه المرة"],failp:["You need 70% to earn the badge. Here is what to review:","تحتاج 70% لنيل الشارة. هذا ما تراجعه:"],
+course:["Partner course (example)","دورة من شريك (مثال)"],retry:["Take the check again","أعد الفحص"],
+jobsC:["See matching jobs","اعرض الوظائف المطابقة"],
+tJobs:["Jobs","الوظائف"],tApps:["My applications","طلباتي"],
+you:["Companies see: Verified · Excel · Junior. No name, photo or age.","الشركات ترى: موثق · Excel · مبتدئ. بلا اسم أو صورة أو سن."],
+ex:["Example data","بيانات توضيحية"],
+sal:["Salary","الراتب"],exp:["Experience really needed","الخبرة المطلوبة فعلاً"],mil:["Military service","التجنيد"],sch:["Schedule","المواعيد"],loc:["Location","الموقع"],rep:["Replies to applicants within","الرد على المتقدمين خلال"],
+yrs:["0 to 1 year","من 0 إلى سنة"],milv:["Completed or exempt","أدّى الخدمة أو معفى"],egp:["EGP","جنيه"],
+apply:["Apply with my verified skills","قدّم بمهاراتي الموثقة"],
+cf:["Send your application?","هل ترسل طلبك؟"],cfp:["The company sees your verified skills only. Your name and photo stay hidden until you both match.","الشركة ترى مهاراتك الموثقة فقط. اسمك وصورتك مخفيان حتى تتطابقا."],
+send:["Send application","أرسل الطلب"],cancel:["Not now","ليس الآن"],sent:["Application sent","تم إرسال الطلب"],
+empty:["No applications yet","لا توجد طلبات بعد"],emptyp:["Apply to a job and you will see its status here, with a date for the reply.","قدّم على وظيفة وسترى حالتها هنا مع موعد للرد."],browse:["Browse jobs","تصفح الوظائف"],
+s1:["Sent","أُرسل"],s2:["Seen by company","شاهدته الشركة"],s3:["In review","قيد المراجعة"],s4:["Result with a short reason","النتيجة مع سبب مختصر"],
+due:["Decision due by Oct 8","القرار المتوقع بحلول 8 أكتوبر"],adv:["Prototype control: move status forward","تحكم تجريبي: تقدّم الحالة"],msg:["Message the company","راسل الشركة"],
+msgs:["Message-first: the company contacts you in the app, not by surprise calls.","التواصل بالرسائل أولاً: تتواصل الشركة معك داخل التطبيق دون مكالمات مفاجئة."],
+time:["Time is up. Moving on.","انتهى الوقت. ننتقل للسؤال التالي."]};
+const Q=[
+{q:["Which function adds a column of numbers?","أي دالة تجمع عموداً من الأرقام؟"],o:[["SUM","SUM"],["LOOKUP","LOOKUP"],["TEXT","TEXT"],["COUNTA","COUNTA"]],c:0,r:["Basic functions","الدوال الأساسية"]},
+{q:["In a formula, what does $A$1 mean?","ماذا يعني $A$1 في المعادلة؟"],o:[["The cell is hidden","الخلية مخفية"],["The reference stays fixed when copied","المرجع يبقى ثابتاً عند النسخ"],["The cell holds a date","الخلية تحتوي تاريخاً"],["The cell is deleted","الخلية محذوفة"]],c:1,r:["Cell references","مراجع الخلايا"]},
+{q:["You need totals by category from a long list. Best tool?","تريد إجماليات حسب الفئة من قائمة طويلة. أفضل أداة؟"],o:[["Merge cells","دمج الخلايا"],["Page layout","تخطيط الصفحة"],["PivotTable","الجدول المحوري"],["Border style","نمط الحدود"]],c:2,r:["PivotTables","الجداول المحورية"]},
+{q:["What does VLOOKUP do?","ماذا تفعل VLOOKUP؟"],o:[["Finds a value in the first column and returns another column","تبحث عن قيمة في العمود الأول وترجع قيمة من عمود آخر"],["Sorts data","ترتب البيانات"],["Adds a border","تضيف حدوداً"],["Counts blank cells","تعد الخلايا الفارغة"]],c:0,r:["Lookups","دوال البحث"]}];
+const JOBS=[
+{t:["Junior Accountant","محاسب مبتدئ"],co:"Nile Foods",sal:"9,000–11,000",ex:["0 to 1 year","من 0 إلى سنة"],loc:["Maadi","المعادي"],sch:["Sun–Thu, 9 to 5","الأحد–الخميس، 9 إلى 5"],days:3},
+{t:["Data Entry Analyst","محلل إدخال بيانات"],co:"Delta Logistics",sal:"7,500–9,000",ex:["0 to 1 year","من 0 إلى سنة"],loc:["Nasr City","مدينة نصر"],sch:["Sun–Thu, 10 to 6","الأحد–الخميس، 10 إلى 6"],days:2},
+{t:["Sales Operations Assistant","مساعد عمليات المبيعات"],co:"Cairo Retail Group",sal:"8,000–10,000",ex:["1 to 2 years","من سنة إلى سنتين"],loc:["Giza","الجيزة"],sch:["Hybrid, 3 office days","هجين، 3 أيام في المكتب"],days:4}];
+let tm=null;
+function go(s){S.scr=s;clearInterval(tm);S.sheet=false;render();if(s==='test')timer()}
+function lang(){S.l=1-S.l;document.documentElement.lang=S.l?'ar':'en';document.documentElement.dir=S.l?'rtl':'ltr';render()}
+function timer(){S.left=60;clearInterval(tm);tm=setInterval(()=>{S.left--;const e=document.getElementById('tl');if(e)e.textContent=S.left+' '+t('left');if(S.left<=0){S.toast=t('time');nextQ(true)}},1000)}
+function nextQ(auto){clearInterval(tm);if(S.q<3){S.q++;render();timer();if(auto)setTimeout(()=>{S.toast='';render()},1800)}else{go('result')}}
+function pick(i){S.ans[S.q]=i;render()}
+function score(){return S.ans.filter((a,i)=>a===Q[i].c).length}
+function adv(){const a=S.apps[S.cur];if(a&&a.st<4)a.st++;render()}
+function send(){S.sheet=false;if(S.apps.some(a=>a.j===S.job)){return toast(t('already'))}S.apps.push({j:S.job,st:0,fb:false});S.cur=S.apps.length-1;S.scr='apps';toast(t('sent'))}
+function navC(a){return `<nav class="nav"><button class="${a=='jobs'?'on':''}" onclick="go('jobs')">${t('tJobs')}</button><button class="${a=='apps'?'on':''}" onclick="go('apps')">${t('tApps')}</button></nav>`}
+function renderC(){let h='';const s=S.scr;
+if(s==='rules'){h=`${topbar()}<div class="body"><h1 style="font-size:26px">${t('rl_t')}</h1>${[1,2,3,4].map(i=>`<div class="note ${i>2?'w':''}" style="display:flex;gap:12px"><span aria-hidden="true" style="font-size:22px">${['📷','🚫','⚠️','⛔'][i-1]}</span><div><b>${t('rl_'+i+'t')}</b><div class="small">${t('rl_'+i)}</div></div></div>`).join('')}<p class="mu small">${t('rl_n')}</p><button class="sw ${S.ok?'on':''}" role="switch" aria-checked="${!!S.ok}" onclick="S.ok=!S.ok;render()">${t('rl_ok')}<i></i></button></div><div class="foot"><button class="cta" ${S.ok?'':'disabled'} onclick="startTest()">${S.ok?t('rl_go'):t('rl_need')}</button><button class="ghost" onclick="go('detect')">${t('cancel')}</button></div>`;$.innerHTML=h;return}
+if(s==='cancelled'){h=`${topbar()}<div class="body" style="text-align:center"><div class="seal off"><div><span style="color:var(--acc)">!</span></div></div><h1>${t('cx_t')}</h1><p class="mu">${t('cx_'+S.vk)}</p><div class="note w">${t('cx_p')}</div></div><div class="foot"><button class="cta" onclick="go('detect')">${t('cx_back')}</button></div>`;$.innerHTML=h;return}
+if(s==='blocked'){h=`${topbar()}<div class="body" style="text-align:center"><div class="seal off"><div><span style="color:var(--er)">⛔</span></div></div><h1>${t('bl_t')}</h1><p class="mu">${t('bl_p')}</p><p class="mu small">${t('bl_n')}</p></div><div class="foot"><button class="ghost" onclick="logout()">${t('out')}</button></div>`;$.innerHTML=h;return}
 
-let supabaseClient = null;
-try {
-  if (window.supabase && SUPABASE_KEY) {
-    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-  }
-} catch (e) { supabaseClient = null; }
+if(s==='fb'){h=`${topbar()}<div class="body"><h1 style="font-size:24px">${t('fb_t')}</h1><p class="mu">${t('fb_p')}</p><h2 style="margin-top:16px;font-size:18px">${t('a1')}</h2>${[['y','a1y'],['p','a1p'],['n','a1n']].map(x=>pill(t(x[1]),S.a1===x[0],`S.a1='${x[0]}';render()`)).join('')}<h2 style="margin-top:14px;font-size:18px">${t('a2')}</h2>${[['r','a2r'],['h','a2h'],['e','a2e']].map(x=>pill(t(x[1]),S.a2===x[0],`S.a2='${x[0]}';render()`)).join('')}</div><div class="foot"><button class="cta" ${S.a1&&S.a2?'':'disabled'} onclick="fbSend()">${t('sub')}</button><button class="ghost" onclick="go('app')">${t('cancel')}</button></div>`;$.innerHTML=h;return}
 
-let currentLang = 'ar';
-let isSignUpMode = false; // لوضع التسجيل أو الدخول
-let allJobs = [];
-let dbConnected = false;
-let lastReport = '';
+if(s==='onb'){const n=S.ob+1;h=`${topbar()}<div class="body"><div class="seal ${S.ob?'':''}" aria-hidden="true"><div><span>${['✓','↻','◐'][S.ob]}</span>${t('brand')}</div></div><h1>${t('ob'+n+'t')}</h1><p class="mu">${t('ob'+n+'p')}</p><div class="dots">${[0,1,2].map(i=>`<i class="${i==S.ob?'on':''}"></i>`).join('')}</div></div><div class="foot">${S.ob<2?`<button class="cta" onclick="S.ob++;render()">${t('next')}</button><button class="ghost" onclick="go('skills')">${t('skip')}</button>`:`<button class="cta" onclick="go('skills')">${t('start')}</button>`}</div>`}
+if(s==='skills'){h=`${topbar()}<div class="body"><h1>${t('chk')}</h1><p class="mu">${t('chkp')}</p><div class="note" style="margin-top:18px"><b style="font-size:19px">${t('sk')}</b><div class="mu small">${t('skm')}</div></div><p class="mu small" style="margin-top:12px">${t('proto')}</p></div><div class="foot"><button class="cta" onclick="S.q=0;S.ans=[];go('test')">${t('goChk')}</button></div>`}
+if(s==='test'){const q=Q[S.q],a=S.ans[S.q];h=`${topbar()}<div class="body"><div class="mu small" style="display:flex;justify-content:space-between"><span>${t('q')} ${S.q+1} ${t('of')} 4</span><b id="tl">${S.left} ${t('left')}</b></div><div class="bar"><i style="width:${(S.q+1)*25}%"></i></div><h2 style="font-size:22px;margin-bottom:16px">${L(q.q)}</h2>${q.o.map((o,i)=>`<button class="opt ${a===i?'sel':''}" onclick="pick(${i})" aria-pressed="${a===i}"><span class="m">${a===i?'✓':''}</span>${L(o)}</button>`).join('')}<p class="mu small">${t('nocopy')}</p><button class="ghost small" style="min-height:44px" onclick="violation('sim')">${t('sim')}</button></div><div class="foot"><button class="cta" ${a===undefined?'disabled':''} onclick="nextQ()">${a===undefined?t('pick'):(S.q<3?t('nq'):t('fin'))}</button></div>${S.toast?`<div class="toast" role="status">${S.toast}</div>`:''}`}
+if(s==='result'){const sc=score(),pc=sc*25,ok=pc>=70;const miss=Q.filter((q,i)=>S.ans[i]!==q.c).map(q=>L(q.r)),missEN=Q.filter((q,i)=>S.ans[i]!==q.c).map(q=>q.r[0]);
+h=ok?`${topbar()}<div class="body" style="text-align:center">${badgeSVG(pc)}<h1>${t('pass')}</h1><p class="mu">${t('passp')}: ${pc}%</p><h2 style="margin-top:16px;font-size:17px">${t('sh_t')}</h2><div class="two" style="margin-top:8px"><a class="shr li" href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl())}" target="_blank" rel="noopener"><b>in</b> LinkedIn</a><a class="shr fb" href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl())}" target="_blank" rel="noopener"><b>f</b> Facebook</a></div><button class="ghost" onclick="copyCap(${pc})">${t('sh_cp')}</button><p class="mu small" style="margin-top:8px">${t('sh_n')}</p></div><div class="foot"><button class="cta" onclick="go('jobs')">${t('jobsC')}</button></div>${S.toast?`<div class="toast" role="status">${S.toast}</div>`:''}`
 
-/* ============ TRANSLATIONS ============ */
-const T = {
-ar:{dir:'rtl',navExplore:'استكشاف الوظائف',navCv:'فحص الـ CV',navAuth:'حسابي',navSettings:'الإعدادات',cta:'✨ حلل سيرتي الذاتية', ctaLogin:'تسجيل الدخول',
- exploreHeading:'أحدث الوظائف وفرص العمل',exploreSub:'وظائف بتفاصيل واضحة وشركات موثقة.',searchPh:'ابحث بالمسمى الوظيفي أو الشركة أو المكان...',
- allTypes:'كل أنواع الدوام',fullTime:'دوام كامل',partTime:'دوام جزئي',remote:'عن بُعد',onsite:'من مقر العمل',
- jobsCount:n=>`${n} وظيفة`,noJobs:'مفيش وظائف مطابقة للبحث.',apply:'تقديم على الوظيفة',applied:'تم إرسال طلبك ✅',
- today:'النهارده',daysAgo:d=>d===1?'منذ يوم':d===2?'منذ يومين':`منذ ${d} أيام`,
- cvHeading:'فحص ومراجعة السيرة الذاتية',cvDesc:'ارفع الـ CV أو الصق نصه، ولو عندك وصف الوظيفة ضيفه وهنقولك الكلمات المفتاحية الناقصة.',
- uploadLabel:'ارفع ملف السيرة الذاتية',uploadHint:'PDF أو Word (docx) أو txt',cvPh:'أو الصق نص السيرة الذاتية هنا...',
- jdLabel:'وصف الوظيفة (اختياري)',jdPh:'الصق وصف الوظيفة اللي عايز تقدم عليها...',jdHint:'بنقارن الـ CV بالوظيفة ونطلعلك الكلمات الناقصة.',
- analyzeBtn:'🔍 ابدأ التحليل',reading:'جاري القراءة...',emptyErr:'ارفع ملف أو الصق نص الـ CV الأول.',shortErr:'النص قصير جداً.',
- readErr:'معرفتش أقرأ الملف.',
- detailsTitle:'تفاصيل التقييم',matchTitle:'التوافق مع الوظيفة',missingKw:'كلمات ناقصة:',foundKw:'كلمات موجودة:',
- matchSummary:(p)=>`نسبة توافق الكلمات: ${p}%`,noneMissing:'مفيش كلمات ناقصة 👌',downloadBtn:'📥 تحميل التقرير',
- authLoginTitle:'تسجيل الدخول إلى حسابك',authLoginSub:'أدخل بريدك الإلكتروني وكلمة المرور للمتابعة.',
- authSignupTitle:'إنشاء حساب جديد',authSignupSub:'سجل بريدك الإلكتروني وكلمة مرور جديدة للانضمام.',
- emailLabel:'البريد الإلكتروني',passLabel:'كلمة المرور',loginBtn:'دخول',signupBtn:'إنشاء حساب',
- switchToSignup:'حساب جديد؟ سجل الآن',switchToLogin:'عندك حساب؟ سجل دخول',
- loggedInAs:'أنت مسجل الدخول حالياً بالبريد:',signOutBtn:'تسجيل الخروج',
- setHeading:'إعدادات المنصة',setDesc:'حالة الاتصال بقاعدة البيانات.',dbOn:'متصل بقاعدة البيانات (Supabase)',dbOff:'غير متصل، بيتم عرض وظائف تجريبية',setCv:'محلل الـ CV: يعمل محلياً على جهازك',
- chk:{email:'بريد إلكتروني',phone:'رقم هاتف',link:'رابط LinkedIn أو موقع/Portfolio',summary:'ملخص مهني',exp:'قسم الخبرات',edu:'قسم التعليم',skills:'قسم المهارات',len:'طول مناسب',nums:'أرقام ونتائج قابلة للقياس',verbs:'أفعال إنجاز قوية'},
- ok:{email:'البريد الإلكتروني موجود.',phone:'رقم الهاتف موجود.',link:'فيه رابط LinkedIn أو Portfolio.',summary:'فيه ملخص مهني.',exp:'قسم الخبرات موجود.',edu:'قسم التعليم موجود.',skills:'قسم المهارات موجود.',len:w=>`الطول مناسب (${w} كلمة).`,nums:n=>`فيه ${n} رقم/نسبة.`,verbs:n=>`استخدمت ${n} فعل إنجاز.`},
- fix:{email:'ضيف بريد إلكتروني.',phone:'ضيف رقم هاتف.',link:'ضيف رابط.',summary:'ضيف ملخص مهني.',exp:'ضيف قسم الخبرات.',edu:'ضيف قسم التعليم.',skills:'ضيف قسم المهارات.',len:w=>`الطول (${w} كلمة).`,nums:'اكتب إنجازاتك بأرقام.',verbs:'ابدأ بفعل قوي.'}},
-en:{dir:'ltr',navExplore:'Explore Jobs',navCv:'CV Review',navAuth:'Account',navSettings:'Settings',cta:'✨ Analyze My CV', ctaLogin:'Sign In',
- exploreHeading:'Explore New Career Opportunities',exploreSub:'Clear job details and verified companies.',searchPh:'Search by title, company or location...',
- allTypes:'All job types',fullTime:'Full Time',partTime:'Part Time',remote:'Remote',onsite:'On-site',
- jobsCount:n=>`${n} jobs`,noJobs:'No jobs match your search.',apply:'Apply Now',applied:'Application sent ✅',
- today:'Today',daysAgo:d=>d===1?'1 day ago':`${d} days ago`,
- cvHeading:'Professional CV Review',cvDesc:'Upload your CV or paste its text. Add a job description to see missing keywords.',
- uploadLabel:'Upload your CV',uploadHint:'PDF, Word (docx) or txt',cvPh:'Or paste your CV text here...',
- jdLabel:'Job description (optional)',jdPh:'Paste the job description...',jdHint:'We compare your CV to the job.',
- analyzeBtn:'🔍 Analyze',reading:'Reading...',emptyErr:'Upload a file or paste your CV text first.',shortErr:'Text is too short.',
- readErr:'Could not read the file.',
- detailsTitle:'Score Breakdown',matchTitle:'Job Match',missingKw:'Missing keywords:',foundKw:'Keywords found:',
- matchSummary:(p)=>`Keyword match: ${p}%`,noneMissing:'Nothing missing 👌',downloadBtn:'📥 Download Report',
- authLoginTitle:'Sign In to Your Account',authLoginSub:'Enter your email and password to continue.',
- authSignupTitle:'Create a New Account',authSignupSub:'Register with your email and a new password.',
- emailLabel:'Email Address',passLabel:'Password',loginBtn:'Sign In',signupBtn:'Sign Up',
- switchToSignup:'No account? Sign up',switchToLogin:'Have an account? Sign in',
- loggedInAs:'You are currently signed in as:',signOutBtn:'Sign Out',
- setHeading:'Platform Settings',setDesc:'Database connection status.',dbOn:'Connected to database (Supabase)',dbOff:'Not connected, showing demo jobs',setCv:'CV analyzer: runs locally in your browser',
- chk:{email:'Email address',phone:'Phone number',link:'LinkedIn / portfolio link',summary:'Professional summary',exp:'Experience section',edu:'Education section',skills:'Skills section',len:'Suitable length',nums:'Measurable results',verbs:'Strong action verbs'},
- ok:{email:'Email found.',phone:'Phone number found.',link:'LinkedIn / portfolio link found.',summary:'Summary section found.',exp:'Experience section found.',edu:'Education section found.',skills:'Skills section found.',len:w=>`Good length (${w} words).`,nums:n=>`${n} numbers/percentages.`,verbs:n=>`${n} action verbs.`},
- fix:{email:'Add email.',phone:'Add phone.',link:'Add link.',summary:'Add summary.',exp:'Add experience.',edu:'Add education.',skills:'Add skills.',len:w=>`Length (${w} words).`,nums:'Add numbers.',verbs:'Use action verbs.'}}
-};
+:`${ensureRt()||''}${topbar()}<div class="body"><div class="seal off"><div><span style="color:var(--acc)">!</span>${pc}%</div></div><h1 style="text-align:center">${t('fail')}</h1><p class="mu">${t('failp')}</p><div class="note w"><b>${miss.join(' · ')}</b></div><div class="cand"><span class="chip">Udemy</span> <b>${t('ud_h')}</b><div style="margin-top:10px">${t('ud_off')}</div><div class="code" dir="ltr">HIREME20</div><div class="two"><button class="ghost" style="margin:0" onclick="copyTxt('HIREME20','ud_ok')">${t('ud_cp')}</button><a class="shr ud" href="https://www.udemy.com/courses/search/?q=${encodeURIComponent('Excel '+missEN[0])}" target="_blank" rel="noopener">${t('ud_open')}</a></div><p class="mu small" style="margin-top:8px">${t('ud_n')}</p></div><div class="note w"><b>${t('rt_t')} ${retestDate()}</b><div class="small">${t('rt_why')}</div></div></div><div class="foot"><button class="cta" ${canRetest()?'':'disabled'} onclick="S.ok=false;go('rules')">${canRetest()?t('retry'):t('rt_b')}</button>${canRetest()?'':`<button class="ghost small" style="min-height:44px" onclick="S.sk=1;render()">${t('rt_skip')}</button>`}</div>${S.toast?`<div class="toast" role="status">${S.toast}</div>`:''}`}
+if(s==='jobs'){h=`${topbar()}<div class="body"><div class="note"><span class="chip ok">${t('badge')}</span> ${t('you')}</div><span class="chip">${t('ex')}</span>${JOBS.map((j,i)=>`<button class="row" onclick="S.job=${i};go('job')"><div class="t">${L(j.t)}${S.apps.some(a=>a.j===i)?` <span class="chip ok">${t('applied')}</span>`:''}</div><div class="mu small">${j.co}</div><div class="s"><span>${j.sal} ${t('egp')}</span><span>${L(j.loc)}</span><span>${L(j.ex)}</span></div></button>`).join('')}</div>${navC('jobs')}`}
+if(s==='job'){const j=JOBS[S.job];h=`${topbar()}<div class="body"><button class="small mu" style="min-height:44px" onclick="go('jobs')">‹ ${t('tJobs')}</button><h1 style="font-size:24px">${L(j.t)}</h1><div class="mu">${j.co} <span class="chip">${t('ex')}</span></div><div style="margin-top:12px"><div class="kv"><span class="mu">${t('sal')}</span><b>${j.sal} ${t('egp')}</b></div><div class="kv"><span class="mu">${t('exp')}</span><b>${L(j.ex)}</b></div><div class="kv"><span class="mu">${t('mil')}</span><b>${t('milv')}</b></div><div class="kv"><span class="mu">${t('sch')}</span><b>${L(j.sch)}</b></div><div class="kv"><span class="mu">${t('loc')}</span><b>${L(j.loc)}</b></div><div class="kv"><span class="mu">${t('rep')}</span><b>${j.days} ${S.l?'أيام':'days'}</b></div></div></div><div class="foot">${S.apps.some(a=>a.j===S.job)?`<button class="cta" disabled>${t('already')}</button>`:`<button class="cta" onclick="S.sheet=true;render()">${t('apply')}</button>`}</div>${S.sheet?`<div class="sheet" onclick="if(event.target===this){S.sheet=false;render()}"><div role="dialog" aria-modal="true"><h2>${t('cf')}</h2><p class="mu">${t('cfp')}</p><button class="cta" style="margin-top:16px" onclick="send()">${t('send')}</button><button class="ghost" onclick="S.sheet=false;render()">${t('cancel')}</button></div></div>`:''}`}
+if(s==='apps'){const A=S.apps;h=A.length?`${topbar()}<div class="body"><h1 style="font-size:24px">${t('tApps')}</h1>${A.map((a,i)=>{const j=JOBS[a.j],k=['s1','s2','s3','s6','s4'][a.st];return `<button class="row" onclick="S.cur=${i};go('app')"><div class="t">${L(j.t)}</div><div class="mu small">${j.co}</div><div class="s"><span class="chip ${a.st>=3?'ok':''}">${t(k)}</span></div></button>`}).join('')}<p class="mu small" style="margin-top:12px">${t('more')}</p></div><div class="foot"><button class="cta" onclick="go('jobs')">${t('browse')}</button></div>${navC('apps')}${S.toast?`<div class="toast" role="status">${S.toast}</div>`:''}`:`${topbar()}<div class="body" style="text-align:center;padding-top:60px"><h1>${t('empty')}</h1><p class="mu">${t('emptyp')}</p></div><div class="foot"><button class="cta" onclick="go('jobs')">${t('browse')}</button></div>${navC('apps')}`}
+if(s==='app'){const a=S.apps[S.cur],j=JOBS[a.j],st=['s1','s2','s3','s6','s4'];h=`${topbar()}<div class="body"><button class="small mu" style="min-height:44px" onclick="go('apps')">‹ ${t('tApps')}</button><h1 style="font-size:24px">${L(j.t)}</h1><div class="mu">${j.co}</div><div class="note w" style="margin-top:14px"><b>${t('due')}</b></div><div class="steps">${st.map((k,i)=>`<div class="stp ${i<a.st?'done':i==a.st?'now':''}"><span class="d">${i<a.st?'✓':''}</span><b>${t(k)}</b></div>`).join('')}</div>${a.st>=3?(a.fb?`<div class="note"><span class="chip ok">${t('fb_done')}</span></div>`:`<div class="note w"><b>${t('fb_t')}</b><div class="small">${t('fb_p')}</div><button class="cta" style="margin-top:10px" onclick="S.a1=null;S.a2=null;go('fb')">${t('fb_btn')}</button></div>`):''}<p class="mu small">${t('msgs')}</p><button class="ghost">${t('msg')}</button><button class="ghost small" style="min-height:44px" onclick="adv()">${t('adv')}</button></div>${navC('apps')}${S.toast?`<div class="toast" role="status">${S.toast}</div>`:''}`}
+$.innerHTML=h}
 
-/* ============ UI ============ */
-function esc(s){const d=document.createElement('div');d.textContent=s==null?'':String(s);return d.innerHTML;}
-function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 
-function switchView(name){
-  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-  document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'));
-  const target = document.getElementById('view-'+name);
-  if(target) target.classList.add('active');
-  const map={explore:'navExplore',cv:'navCv',auth:'navAuth',settings:'navSettings'};
-  if(map[name]) document.getElementById(map[name]).classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
-}
+const DK={
+ob1t:["Hire on proven skills","وظّف بناءً على مهارات مثبتة"],ob1p:["See candidates who already passed a skill check for the exact skill you need.","شاهد مرشحين اجتازوا فحصاً للمهارة التي تحتاجها بالضبط."],
+ob2t:["Blind until a mutual match","مخفي حتى المطابقة المتبادلة"],ob2p:["Judge skills first. Photo and profile unlock after you both match.","احكم على المهارات أولاً. الصورة والملف يُفتحان بعد المطابقة."],
+ob3t:["Every applicant gets an answer","كل متقدم يحصل على رد"],ob3p:["Set a reply-by date and send a short reason with each decision.","حدد موعداً للرد وأرسل سبباً مختصراً مع كل قرار."],
+skip:["Skip","تخطَّ"],next:["Next","التالي"],start:["Create my first job","أنشئ وظيفتي الأولى"],
+pt:["Describe the job","صف الوظيفة"],pp:["Candidates see exactly this before they apply.","المتقدمون يرون هذا بالضبط قبل التقديم."],
+jt:["Job title","المسمى الوظيفي"],jph:["e.g. Junior Accountant","مثال: محاسب مبتدئ"],
+sk:["Skill to verify","المهارة المطلوب توثيقها"],lvl:["Level","المستوى"],jr:["Junior","مبتدئ"],md:["Mid","متوسط"],sr:["Senior","متقدم"],
+sal:["Monthly salary (EGP)","الراتب الشهري (جنيه)"],min:["From","من"],max:["To","إلى"],
+exp:["Experience really needed","الخبرة المطلوبة فعلاً"],e0:["0 to 1 year","من 0 إلى سنة"],e1:["1 to 3 years","من 1 إلى 3 سنوات"],e3:["3+ years","أكثر من 3 سنوات"],
+pres:["Professional presentation required","مظهر مهني مطلوب"],why:["Why? (shown to candidates)","السبب (يظهر للمتقدمين)"],whyph:["e.g. meets clients every day","مثال: يقابل العملاء يومياً"],
+rb:["Reply to every applicant within","الرد على كل متقدم خلال"],d:["days","أيام"],publish:["Publish job","انشر الوظيفة"],
+eSal:["Enter a salary range. Candidates skip jobs without one.","أدخل نطاق الراتب. المتقدمون يتخطون الوظائف بدونه."],eTit:["Add a job title.","أضف مسمى وظيفياً."],eWhy:["Say why presentation matters for this job.","اذكر لماذا المظهر مهم لهذه الوظيفة."],
+live:["Your job is live","وظيفتك منشورة"],livep:["Verified candidates for this skill are ready to review.","مرشحون موثقون لهذه المهارة جاهزون للمراجعة."],see:["Review verified candidates","راجع المرشحين الموثقين"],
+tTal:["Talent","المواهب"],tApp:["Applicants","المتقدمون"],
+bl:["You see skills only. No name, photo or age.","ترى المهارات فقط. بلا اسم أو صورة أو سن."],ex:["Example data","بيانات توضيحية"],
+ver:["Verified","موثق"],score:["Skill check score","نتيجة فحص المهارة"],fast:["Fast Learner","سريع التعلم"],
+match:["Match","مطابقة"],skp:["Skip","تخطي"],sent:["Interest sent. You will see it if they match.","أُرسل الاهتمام. ستراه إن تطابقتما."],
+none:["No more verified candidates right now","لا يوجد مرشحون موثقون الآن"],nonep:["Try again later or widen the level or salary range.","حاول لاحقاً أو وسّع المستوى أو نطاق الراتب."],edit:["Edit job","عدّل الوظيفة"],
+mt:["It is a match","تمت المطابقة"],mp:["Photo and profile are now unlocked.","فُتحت الصورة والملف الآن."],cn:["Ahmed S. (example)","أحمد س. (مثال)"],ph:["Photo unlocked · example illustration","الصورة مفتوحة · رسم توضيحي"],
+slot:["Pick an interview time","اختر موعد المقابلة"],book:["Book video interview","احجز مقابلة فيديو"],pick:["Choose a time","اختر موعداً"],
+bk:["Interview booked","تم حجز المقابلة"],bkp:["The applicant gives feedback on the interview to HIRE ME, not to you.","المتقدم يرسل ملاحظاته على المقابلة إلى HIRE ME وليس إليك."],rate:["Rate the interview","قيّم المقابلة"],later:["Later","لاحقاً"],
+a1:["Did the questions match the posted skill?","هل طابقت الأسئلة المهارة المعلنة؟"],a1y:["Yes","نعم"],a1n:["A different skill","مهارة مختلفة"],
+a2:["Was the level right?","هل كان المستوى مناسباً؟"],a2r:["Right level","مناسب"],a2h:["Too advanced","متقدم جداً"],a2e:["Too easy","سهل جداً"],
+sub:["Send feedback","أرسل الملاحظات"],th:["Thanks","شكراً"],thp:["If questions do not match the posted job, we will review it with you.","إن لم تطابق الأسئلة الوظيفة المعلنة سنراجع ذلك معك."],
+ap:["Applicants","المتقدمون"],due:["Reply by","الرد قبل"],verc:["Verified · Excel · Junior","موثق · Excel · مبتدئ"],dec:["Send decision","أرسل القرار"],
+rec:["Your reply record","سجل ردودك"],ontime:["replied on time","ردود في الموعد"],of:["of","من"],
+dt:["Your decision","قرارك"],inv:["Invite to interview","دعوة لمقابلة"],rej:["Not selected","غير مختار"],rs:["Short reason for the applicant","سبب مختصر للمتقدم"],
+r1:["Skill level did not fit","مستوى المهارة لم يناسب"],r2:["Position filled","تم شغل الوظيفة"],r3:["Another requirement","متطلب آخر"],
+send:["Send to applicant","أرسل للمتقدم"],cancel:["Not now","ليس الآن"],done:["Decision sent","تم إرسال القرار"],replied:["Replied","تم الرد"],
+empty:["No applicants yet","لا يوجد متقدمون بعد"],emptyp:["Publish a job to start receiving applications.","انشر وظيفة لتبدأ باستقبال الطلبات."],
+left2:["candidates left","مرشحين متبقين"],proto:["Prototype: example applicants. You can invite more than one.","نموذج أولي: متقدمون توضيحيون. يمكنك دعوة أكثر من واحد."],apl:["Applicant","متقدم"],ivh:["Interviews","المقابلات"],noiv:["No interviews yet","لا توجد مقابلات بعد"],invd:["Invited to interview","مدعو للمقابلة"],nsel:["Not selected","غير مختار"],cont:["Keep reviewing talent","تابع مراجعة المواهب"],exs:["example","مثال"]};
+const C=[{n:["Ahmed S.","أحمد س."],sc:88,f:1,m:1,s:["Excel","Data entry"]},{n:["Mariam K.","مريم ك."],sc:84,f:0,m:1,s:["Excel","Reporting"]},{n:["Omar H.","عمر ح."],sc:76,f:0,m:0,s:["Excel"]},{n:["Nour A.","نور أ."],sc:91,f:1,m:1,s:["Excel","Pivot tables"]},{n:["Youssef M.","يوسف م."],sc:79,f:0,m:0,s:["Excel","Data entry"]},{n:["Salma R.","سلمى ر."],sc:86,f:0,m:1,s:["Excel","Reporting"]}];
+const APPL=[1,2,4,5];
+const SLOTS=[["Tue 11:00","الثلاثاء 11:00"],["Wed 14:00","الأربعاء 14:00"],["Thu 10:00","الخميس 10:00"]];
+const F={t:'',s1:'',s2:'',e:0,p:0,w:'',days:3};
+function toast(m){S.toast=m;render();setTimeout(()=>{S.toast='';render()},2200)}
+function publish(){const e={};if(!F.t.trim())e.t=t('eTit');const a=+F.s1,b=+F.s2;if(!(a>0&&b>=a))e.s=t('eSal');if(F.p&&!F.w.trim())e.w=t('eWhy');S.err=e;if(Object.keys(e).length)return render();S.c=0;S.done=false;go('posted')}
+const rem=()=>C.map((c,i)=>i).filter(i=>!S.gone.includes(i));
+function nextId(from){const r=rem();if(!r.length)return -1;const n=r.find(i=>i>from);return n===undefined?r[0]:n}
+function curId(){const r=rem();return r.includes(S.c)?S.c:(r.length?r[0]:-1)}
+function skipC(){S.c=nextId(curId());render()}
+function match(){const id=curId();if(id<0)return;S.gone.push(id);S.c=nextId(id);if(C[id].m){S.mc=id;S.sl=null;go('match')}else{toast(t('sent'))}}
+function bookIt(){S.iv.push({c:S.mc,sl:S.sl});go('booked')}
+function dueDate(){const d=new Date();d.setDate(d.getDate()+F.days);return d.toLocaleDateString(S.l?'ar-EG':'en-GB',{day:'numeric',month:'long'})}
+function sendDec(){S.sheet=false;S.dc[S.sel]={d:S.dec};S.rep=Object.keys(S.dc).length;S.tot=APPL.length;toast(t('done'))}
+function navK(a){return `<nav class="nav"><button class="${a=='talent'?'on':''}" onclick="go('talent')">${t('tTal')}</button><button class="${a=='apps'?'on':''}" onclick="go('apps')">${t('tApp')}</button></nav>`}
+function pill(txt,sel,fn){return `<button class="pill ${sel?'sel':''}" aria-pressed="${!!sel}" onclick="${fn}">${txt}</button>`}
+function renderK(){let h='';const s=S.scr,tt=S.toast?`<div class="toast" role="status">${S.toast}</div>`:'';
+if(s==='onb'){const n=S.ob+1;h=`${topbar()}<div class="body"><div class="seal"><div><span>${['◎','◐','✉'][S.ob]}</span>HIRE ME</div></div><h1>${t('ob'+n+'t')}</h1><p class="mu">${t('ob'+n+'p')}</p><div class="dots">${[0,1,2].map(i=>`<i class="${i==S.ob?'on':''}"></i>`).join('')}</div></div><div class="foot">${S.ob<2?`<button class="cta" onclick="S.ob++;render()">${t('next')}</button><button class="ghost" onclick="go('post')">${t('skip')}</button>`:`<button class="cta" onclick="go('post')">${t('start')}</button>`}</div>`}
+if(s==='post'){const E=S.err;h=`${topbar()}<div class="body"><h1 style="font-size:24px">${t('pt')}</h1><p class="mu">${t('pp')}</p>
+<label class="f" for="jt">${t('jt')}</label><input id="jt" class="in ${E.t?'bad':''}" placeholder="${t('jph')}" value="${F.t.replace(/"/g,'&quot;')}" oninput="F.t=this.value">${E.t?`<div class="err" role="alert">${E.t}</div>`:''}
+<label class="f">${t('sk')}</label><span class="chip ok">Excel</span> <span class="mu small">${S.l?'(تجريبي)':'(prototype)'}</span>
+<label class="f">${t('lvl')}</label>${['jr','md','sr'].map((k,i)=>pill(t(k),S.lv==i,`S.lv=${i};render()`)).join('')}
+<label class="f">${t('sal')}</label><div class="two"><input class="in ${E.s?'bad':''}" inputmode="numeric" aria-label="${t('min')}" placeholder="${t('min')}" value="${F.s1}" oninput="F.s1=this.value"><input class="in ${E.s?'bad':''}" inputmode="numeric" aria-label="${t('max')}" placeholder="${t('max')}" value="${F.s2}" oninput="F.s2=this.value"></div>${E.s?`<div class="err" role="alert">${E.s}</div>`:''}
+<label class="f">${t('exp')}</label>${['e0','e1','e3'].map((k,i)=>pill(t(k),F.e==i,`F.e=${i};render()`)).join('')}
+<label class="f">${t('rb')}</label>${[3,5,7].map(n=>pill(n+' '+t('d'),F.days==n,`F.days=${n};render()`)).join('')}
+<button class="sw ${F.p?'on':''}" role="switch" aria-checked="${!!F.p}" onclick="F.p=1-F.p;render()" style="margin-top:8px">${t('pres')}<i></i></button>
+${F.p?`<label class="f" for="jw">${t('why')}</label><input id="jw" class="in ${E.w?'bad':''}" placeholder="${t('whyph')}" value="${F.w.replace(/"/g,'&quot;')}" oninput="F.w=this.value">${E.w?`<div class="err" role="alert">${E.w}</div>`:''}`:''}</div><div class="foot"><button class="cta" onclick="publish()">${t('publish')}</button></div>`}
+if(s==='posted'){h=`${topbar()}<div class="body" style="text-align:center"><div class="seal"><div><span>✓</span>${S.l?'منشورة':'Live'}</div></div><h1>${t('live')}</h1><p class="mu">${t('livep')}</p></div><div class="foot"><button class="cta" onclick="go('talent')">${t('see')}</button></div>`}
+if(s==='talent'){const id=curId(),c=C[id];h=`${topbar()}<div class="body"><div class="note">${t('bl')}</div><span class="chip">${t('ex')}</span> <span class="mu small">${rem().length} ${t('left2')}</span>${c?`<div class="cand"><span class="chip ok">${t('ver')}</span> <b>Excel · ${t(['jr','md','sr'][S.lv])}</b>${c.f?` <span class="chip">${t('fast')}</span>`:''}<div class="mu" style="margin-top:8px">${t('score')}: <b style="color:var(--tx)">${c.sc}%</b></div><div style="margin-top:8px">${c.s.map(x=>`<span class="chip ok" style="margin-inline-end:6px">${x}</span>`).join('')}</div></div><div class="two" style="margin-top:16px"><button class="ghost" style="margin:0" onclick="skipC()">${t('skp')}</button><button class="cta" onclick="match()">${t('match')}</button></div>`:`<div style="text-align:center;padding-top:50px"><h2>${t('none')}</h2><p class="mu">${t('nonep')}</p><button class="ghost" onclick="go('post')">${t('edit')}</button></div>`}</div>${navK('talent')}${tt}`}
+if(s==='match'){h=`${topbar()}<div class="body" style="text-align:center">${avatarSVG(S.mc,132)}<span class="chip">${t('ph')}</span><h1>${t('mt')}</h1><p class="mu">${t('mp')}</p><b>${L(C[S.mc].n)} (${t('exs')})</b><div style="text-align:start;margin-top:20px"><label class="f">${t('slot')}</label>${SLOTS.map((x,i)=>pill(L(x),S.sl===i,`S.sl=${i};render()`)).join('')}</div></div><div class="foot"><button class="cta" ${S.sl===null?'disabled':''} onclick="bookIt()">${S.sl===null?t('pick'):t('book')}</button></div>`}
+if(s==='booked'){const m=S.iv[S.iv.length-1];h=`${topbar()}<div class="body" style="text-align:center">${avatarSVG(m.c,110)}<h1>${t('bk')}</h1><p class="mu"><b>${L(C[m.c].n)}</b> · ${L(SLOTS[m.sl])}</p><p class="mu">${t('bkp')}</p></div><div class="foot"><button class="cta" onclick="go('talent')">${t('cont')}</button><button class="ghost" onclick="go('apps')">${t('tApp')}</button></div>`}
+if(s==='audit'){h=`${topbar()}<div class="body"><h2 style="margin-top:8px">${t('a1')}</h2>${pill(t('a1y'),S.a1==='y',"S.a1='y';render()")}${pill(t('a1n'),S.a1==='n',"S.a1='n';render()")}<h2 style="margin-top:18px">${t('a2')}</h2>${[['r','a2r'],['h','a2h'],['e','a2e']].map(x=>pill(t(x[1]),S.a2===x[0],`S.a2='${x[0]}';render()`)).join('')}</div><div class="foot"><button class="cta" ${S.a1&&S.a2?'':'disabled'} onclick="go('thanks')">${t('sub')}</button></div>`}
+if(s==='thanks'){h=`${topbar()}<div class="body" style="text-align:center"><div class="seal"><div><span>✓</span>${t('th')}</div></div><h1>${t('th')}</h1><p class="mu">${t('thp')}</p></div><div class="foot"><button class="cta" onclick="go('apps')">${t('tApp')}</button></div>`}
+if(s==='apps'){const inv=[...S.iv.map(x=>({c:x.c,sl:L(SLOTS[x.sl])})),...APPL.filter(c=>S.dc[c]&&S.dc[c].d==='i').map(c=>({c,sl:t('invd')}))];
+h=`${topbar()}<div class="body">`+(!F.t.trim()?`<div style="text-align:center;padding-top:60px"><h1>${t('empty')}</h1><p class="mu">${t('emptyp')}</p><button class="ghost" onclick="go('post')">${t('start')}</button></div>`:`<span class="chip">${t('ex')}</span><h2 style="margin-top:10px">${t('ivh')} (${inv.length})</h2>${inv.length?inv.map(x=>`<div class="cand" style="display:flex;gap:12px;align-items:center;margin-top:8px;padding:10px">${avatarSVG(x.c,52)}<div><b>${L(C[x.c].n)}</b><div class="mu small">${x.sl}</div></div></div>`).join(''):`<p class="mu">${t('noiv')}</p>`}<h2 style="margin-top:20px">${t('tApp')}</h2><div class="note w small">${t('due')}: <b>${dueDate()}</b></div>${APPL.map((c,i)=>{const d=S.dc[c],rv=d&&d.d==='i';return `<div class="cand" style="display:flex;gap:12px;align-items:center;margin-top:8px;padding:12px">${rv?avatarSVG(c,52):blindSVG()}<div style="flex:1"><b>${rv?L(C[c].n):t('apl')+' '+(i+1)}</b><div class="mu small">${t('verc')} · ${C[c].sc}%</div>${d?`<span class="chip ${rv?'ok':''}">${rv?t('invd'):t('nsel')}</span>`:`<button class="pill" style="margin:6px 0 0;min-height:44px" onclick="S.sel=${c};S.sheet=true;S.dec=null;S.rsn=null;render()">${t('dec')}</button>`}</div></div>`}).join('')}<div class="note" style="margin-top:16px"><b>${t('rec')}:</b> ${S.rep} ${t('of')} ${APPL.length} ${t('ontime')}</div><p class="mu small">${t('proto')}</p>`)+`</div>${navK('apps')}${tt}${S.sheet?`<div class="sheet" onclick="if(event.target===this){S.sheet=false;render()}"><div role="dialog" aria-modal="true"><h2>${t('dt')}</h2>${pill(t('inv'),S.dec==='i',"S.dec='i';render()")}${pill(t('rej'),S.dec==='n',"S.dec='n';render()")}${S.dec==='n'?`<h2 style="margin-top:8px;font-size:17px">${t('rs')}</h2>${['r1','r2','r3'].map(k=>pill(t(k),S.rsn===k,`S.rsn='${k}';render()`)).join('')}`:''}<button class="cta" style="margin-top:10px" ${S.dec&&(S.dec==='i'||S.rsn)?'':'disabled'} onclick="sendDec()">${t('send')}</button><button class="ghost" onclick="S.sheet=false;render()">${t('cancel')}</button></div></div>`:''}`}
+$.innerHTML=h}
 
-function toggleTheme(){
-  const root=document.getElementById('htmlRoot');
-  const next=root.dataset.theme==='dark'?'light':'dark';
-  root.dataset.theme=next;
-  const btn = document.getElementById('themeBtn');
-  if(btn) btn.textContent=next==='dark'?'☀️':'🌙';
-  try{localStorage.setItem('theme',next);}catch(e){}
-}
 
-function changeLanguage(lang){
-  currentLang=lang; const t=T[lang];
-  const root=document.getElementById('htmlRoot');
-  if(root){ root.dir=t.dir; root.lang=lang; }
-  document.title='Hire_Me';
-  document.querySelectorAll('[data-i18n]').forEach(el=>{const v=t[el.dataset.i18n]; if(typeof v==='string') el.textContent=v;});
-  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{el.placeholder=t[el.dataset.i18nPh];});
-  const tf=document.getElementById('typeFilter');
-  if(tf) tf.innerHTML=`<option value="">${t.allTypes}</option><option value="full">${t.fullTime}</option><option value="part">${t.partTime}</option><option value="remote">${t.remote}</option>`;
-  updateStatus();
-  updateAuthUI();
-  fetchJobs();
-}
+const D0={tag:["Your skills speak first","مهاراتك تتحدث أولاً"],
+r_t:["Welcome to HIRE ME","أهلاً بك في HIRE ME"],r_p:["Choose how you want to use the app.","اختر كيف تريد استخدام التطبيق."],
+r_c:["I am looking for a job","أبحث عن وظيفة"],r_cp:["Prove your skills and apply without bias.","أثبت مهاراتك وقدّم دون تحيز."],
+r_k:["I am hiring","أنا شركة أوظّف"],r_kp:["Find verified talent and answer every applicant.","اعثر على مواهب موثقة وردّ على كل متقدم."],
+l_c:["Log in as a job seeker","تسجيل دخول المتقدم"],l_k:["Log in as a company","تسجيل دخول الشركة"],
+l_u:["Username or email","اسم المستخدم أو البريد"],l_pw:["Password","كلمة المرور"],l_show:["Show","إظهار"],l_hide:["Hide","إخفاء"],l_go:["Log in","تسجيل الدخول"],
+l_note:["Prototype: no real account is created. Any username and a password of 6+ characters works.","نموذج أولي: لا يُنشأ حساب حقيقي. يصلح أي اسم مستخدم وكلمة مرور من 6 أحرف فأكثر."],
+l_eu:["Enter your username or email.","أدخل اسم المستخدم أو البريد."],l_ep:["Password needs at least 6 characters.","كلمة المرور تحتاج 6 أحرف على الأقل."],l_back:["Change role","تغيير الدور"],out:["Log out","خروج"],
+cv_t:["Upload your CV","ارفع سيرتك الذاتية"],cv_p:["We read it to find your skills. Then you verify them with a short check.","نقرؤها لنكتشف مهاراتك. ثم توثّقها بفحص قصير."],
+cv_up:["Choose CV file","اختر ملف السيرة"],cv_hint:["PDF, DOC or DOCX, up to 5 MB","PDF أو DOC أو DOCX حتى 5 ميجا"],cv_sample:["Use a sample CV","استخدم سيرة تجريبية"],
+cv_read:["Reading your CV…","نقرأ سيرتك…"],cv_err:["This file type is not supported. Use PDF, DOC or DOCX.","نوع الملف غير مدعوم. استخدم PDF أو DOC أو DOCX."],cv_big:["The file is larger than 5 MB.","حجم الملف أكبر من 5 ميجا."],
+det_t:["We found 3 skills in your CV","وجدنا 3 مهارات في سيرتك"],det_p:["Verify them to unlock jobs. Start with Excel.","وثّقها لتفتح الوظائف. ابدأ بـ Excel."],
+det_x:["Prototype: these skills are examples. Automatic detection is the next build, and this prototype verifies Excel only.","نموذج أولي: هذه المهارات أمثلة. الاكتشاف التلقائي هو الخطوة القادمة، وهذا النموذج يوثّق Excel فقط."],
+det_btn:["Start Excel verification","ابدأ توثيق Excel"],det_lock:["Verify next","توثيقها لاحقاً"],det_this:["Needs verification","تحتاج توثيقاً"]};
+const SK=[{n:["Excel","Excel"],l:["Junior","مبتدئ"]},{n:["Data entry","إدخال بيانات"],l:["Junior","مبتدئ"]},{n:["Customer service","خدمة العملاء"],l:["Mid","متوسط"]}];
+const fresh=()=>({scr:'role',role:null,ob:0,q:0,ans:[],job:0,apps:[],cur:0,sheet:false,toast:'',left:60,lv:0,c:0,sl:null,a1:null,a2:null,dec:null,rsn:null,rep:0,tot:0,done:false,err:{},u:'',p:'',sp:false,cv:null,busy:false,lerr:'',rt:null,sk:0,iv:[],dc:{},sel:0,mc:0,gone:[],ok:false,strikes:0,vk:''});
+const S=Object.assign({l:0},fresh());
+const $=document.getElementById('app'),L=a=>a[S.l];
+const t=k=>{const d=S.role==='c'?DC:S.role==='k'?DK:null;return ((d&&d[k])||D0[k])[S.l]};
+function topbar(){return `<div class="top"><span class="logo"><span>HIRE <b>ME</b></span><span class="tag">${t('tag')}</span></span><span style="display:flex;gap:8px">${S.role?`<button class="lang" onclick="logout()">${t('out')}</button>`:''}<button class="lang" onclick="lang()" aria-label="Language">${S.l?'EN':'عربي'}</button></span></div>`}
+function logout(){clearInterval(tm);const l=S.l;Object.assign(S,fresh(),{l});Object.assign(F,{t:'',s1:'',s2:'',e:0,p:0,w:'',days:3});render()}
+function chooseRole(r){S.role=r;S.scr='login';S.err={};render()}
+function doLogin(){const e={};if(!S.u.trim())e.u=t('l_eu');if(S.p.length<6)e.p=t('l_ep');S.err=e;if(Object.keys(e).length)return render();S.p='';S.scr=S.role==='c'?'cv':'onb';render()}
+function onFile(i){const f=i.files[0];if(!f)return;if(!/\.(pdf|docx?)$/i.test(f.name)){S.lerr=t('cv_err');return render()}if(f.size>5*1024*1024){S.lerr=t('cv_big');return render()}readCV(f.name)}
+function readCV(n){S.cv=n;S.lerr='';S.busy=true;render();setTimeout(()=>{S.busy=false;S.scr='detect';render()},1400)}
+function rRole(){$.innerHTML=`${topbar()}<div class="body"><h1>${t('r_t')}</h1><p class="mu">${t('r_p')}</p><div style="margin-top:20px"><button class="role" onclick="chooseRole('c')"><span class="ico"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5"/><path d="M16.5 9.5l2 2 3.5-4"/></svg></span><span><b>${t('r_c')}</b><div class="mu">${t('r_cp')}</div></span></button><button class="role" onclick="chooseRole('k')"><span class="ico" style="animation-delay:.4s"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="11" height="18" rx="1.5"/><path d="M15 9h5v12h-5M8 7.5h3M8 11.5h3M8 15.5h3"/></svg></span><span><b>${t('r_k')}</b><div class="mu">${t('r_kp')}</div></span></button></div></div>`}
+function rLogin(){const E=S.err||{},k=S.role==='k',q=v=>v.replace(/"/g,'&quot;');$.innerHTML=`${topbar()}<div class="body"><button class="small mu" style="min-height:44px" onclick="S.scr='role';S.role=null;S.err={};render()">‹ ${t('l_back')}</button><h1 style="font-size:26px">${t(k?'l_k':'l_c')}</h1><label class="f" for="lu">${t('l_u')}</label><input id="lu" class="in ${E.u?'bad':''}" autocomplete="username" value="${q(S.u)}" oninput="S.u=this.value">${E.u?`<div class="err" role="alert">${E.u}</div>`:''}<label class="f" for="lp">${t('l_pw')}</label><div style="display:flex;gap:8px"><input id="lp" class="in ${E.p?'bad':''}" type="${S.sp?'text':'password'}" autocomplete="current-password" value="${q(S.p)}" oninput="S.p=this.value"><button class="pill" style="margin:0" onclick="S.sp=!S.sp;render()">${t(S.sp?'l_hide':'l_show')}</button></div>${E.p?`<div class="err" role="alert">${E.p}</div>`:''}<p class="mu small" style="margin-top:14px">${t('l_note')}</p></div><div class="foot"><button class="cta" onclick="doLogin()">${t('l_go')}</button></div>`}
+function rCV(){let h=topbar();
+if(S.scr==='cv'){h+=S.busy?`<div class="body" style="text-align:center;padding-top:80px"><div class="spin" aria-hidden="true"></div><h2 role="status">${t('cv_read')}</h2><p class="mu small">${S.cv}</p></div>`:`<div class="body"><h1>${t('cv_t')}</h1><p class="mu">${t('cv_p')}</p><div class="note" style="margin-top:16px;text-align:center;padding:26px 14px"><b>${t('cv_hint')}</b></div>${S.lerr?`<div class="note e" role="alert">${S.lerr}</div>`:''}<input id="cvf" type="file" accept=".pdf,.doc,.docx" onchange="onFile(this)" hidden></div><div class="foot"><button class="cta" onclick="document.getElementById('cvf').click()">${t('cv_up')}</button><button class="ghost" onclick="readCV('sample-cv.pdf')">${t('cv_sample')}</button></div>`}
+else{h+=`<div class="body"><span class="chip ok">✓ ${S.cv}</span><h1 style="margin-top:10px">${t('det_t')}</h1><p class="mu">${t('det_p')}</p>${SK.map((k,i)=>`<div class="cand" style="${i?'opacity:.75':''}"><b style="font-size:18px">${L(k.n)}</b> <span class="chip">${L(k.l)}</span><div class="mu small" style="margin-top:6px">${t(i?'det_lock':'det_this')}</div></div>`).join('')}<p class="mu small" style="margin-top:12px">${t('det_x')}</p></div><div class="foot"><button class="cta" ${S.rt&&!canRetest()?'disabled':''} onclick="S.ok=false;go('rules')">${S.rt&&!canRetest()?t('rt_t')+' '+retestDate():t('det_btn')}</button></div>`}
+$.innerHTML=h}
 
-function updateStatus(){
-  const t=T[currentLang];
-  const dot = document.getElementById('dbDot');
-  const status = document.getElementById('dbStatus');
-  if(dot) dot.className='dot '+(dbConnected?'on':'off');
-  if(status) status.textContent=dbConnected?t.dbOn:t.dbOff;
-}
+function badgeSVG(pc){const sk=S.l?'Excel · مبتدئ':'Excel · Junior';return `<svg viewBox="0 0 200 200" width="190" height="190" role="img" aria-label="${t('badge')}: ${sk}, ${pc}%" style="margin:14px auto 0;display:block"><circle cx="100" cy="100" r="94" fill="var(--okb)"/><circle cx="100" cy="100" r="88" fill="none" stroke="var(--pri)" stroke-width="6"/><circle cx="100" cy="100" r="80" fill="none" stroke="var(--acc)" stroke-width="2" stroke-dasharray="3 7"/><circle cx="100" cy="100" r="72" fill="var(--sf)"/><circle cx="100" cy="58" r="18" fill="var(--ok)"/><path class="chk" d="M91 58l6 6 12-13" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><text x="100" y="100" text-anchor="middle" font-size="20" font-weight="800" fill="var(--pri)" style="font-family:inherit">${S.l?'موثق':'VERIFIED'}</text><text x="100" y="124" text-anchor="middle" font-size="15" font-weight="700" fill="var(--tx)" style="font-family:inherit">${sk}</text><text x="100" y="146" text-anchor="middle" font-size="14" fill="var(--mu)" style="font-family:inherit">${pc}% · HIRE ME</text></svg>`}
+function shareUrl(){try{return location.href}catch(e){return ''}}
+function copyCap(pc){const c=S.l?`وثّقت مهارتي في Excel (مبتدئ) على HIRE ME بنتيجة ${pc}%.`:`I verified my Excel (Junior) skill on HIRE ME with a score of ${pc}%.`;const done=()=>toast(t('sh_ok')),fail=()=>{S.toast=c;render()};try{navigator.clipboard.writeText(c).then(done,fail)}catch(e){fail()}}
+function fbSend(){S.apps[S.cur].fb=true;S.scr='app';toast(t('fb_ok'))}
+function startTest(){S.q=0;S.ans=[];S.rt=null;S.sk=0;S.ok=false;go('test')}
+function violation(k){if(S.scr!=='test')return;clearInterval(tm);S.strikes++;S.vk=k;S.scr=S.strikes>=2?'blocked':'cancelled';render()}
+['copy','cut','paste'].forEach(ev=>document.addEventListener(ev,e=>{if(S.scr==='test'){e.preventDefault();violation('copy')}}));
+document.addEventListener('contextmenu',e=>{if(S.scr==='test')e.preventDefault()});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)violation('tab')});
+function ensureRt(){if(!S.rt)S.rt=Date.now()+30*864e5}
+function canRetest(){return !!S.sk||(S.rt&&Date.now()>=S.rt)}
+function retestDate(){return new Date(S.rt).toLocaleDateString(S.l?'ar-EG':'en-GB',{day:'numeric',month:'long',year:'numeric'})}
+function copyTxt(c,key){const done=()=>toast(t(key)),fail=()=>{S.toast=c;render()};try{navigator.clipboard.writeText(c).then(done,fail)}catch(e){fail()}}
+const AVC=[{sk:'#D9A27A',hr:'#2B2118',st:'short',su:'#1F3A5F',tie:'#9B2C2C'},{sk:'#C98F68',st:'hijab',cv:'#6B3F5E',su:'#2F2F3A'},{sk:'#8D5B3E',hr:'#141010',st:'short',su:'#3C4650',tie:'#1F6F8B'},{sk:'#E8B796',hr:'#5A3320',st:'long',su:'#7A2E3A'},{sk:'#B87A55',hr:'#1A1410',st:'beard',su:'#232A33',tie:'#C98B1F'},{sk:'#F0C7A4',hr:'#A0522D',st:'bun',su:'#2D4A3E'}];
+function avatarSVG(i,z){i=i||0;z=z||132;const a=AVC[i%AVC.length],id='cp'+i+'_'+z,hj=a.st==='hijab';
+const back=a.st==='long'?`<path d="M36 52C34 28 46 22 60 22s26 6 24 30c0 18 4 32 8 40H28c4-8 8-22 8-40z" fill="${a.hr}"/>`:a.st==='bun'?`<circle cx="60" cy="19" r="9" fill="${a.hr}"/>`:'';
+const mid=hj?`<path d="M33 56C31 28 46 19 60 19s29 9 27 37c0 14 4 28 9 38-12 8-26 10-36 10s-24-2-36-10c5-10 9-24 9-38z" fill="${a.cv}"/>`:`<rect x="52" y="70" width="16" height="17" rx="4" fill="${a.sk}"/>`;
+const head=hj?`<ellipse cx="60" cy="55" rx="16" ry="19" fill="${a.sk}"/>`:`<ellipse cx="60" cy="52" rx="19" ry="22" fill="${a.sk}"/><circle cx="41" cy="54" r="3.5" fill="${a.sk}"/><circle cx="79" cy="54" r="3.5" fill="${a.sk}"/>`;
+let hair='';
+if(a.st==='short'||a.st==='beard'||a.st==='bun')hair=`<path d="M40 49C39 30 51 25 60 25s22 5 20 24c-4-9-12-12-20-12s-16 3-20 12z" fill="${a.hr}"/>`;
+if(a.st==='long')hair=`<path d="M41 50C40 32 50 27 60 27s20 5 19 23c-5-8-11-11-19-11s-14 3-19 11z" fill="${a.hr}"/>`;
+if(a.st==='beard')hair+=`<path d="M42 56c2 16 8 24 18 24s16-8 18-24c-4 8-10 12-18 12s-14-4-18-12z" fill="${a.hr}"/>`;
+const ey=hj?55:52,tie=a.tie?`<path d="M56 88h8l-2 20-2 6-2-6z" fill="${a.tie}"/>`:'';
+const face=`<circle cx="53" cy="${ey}" r="2.2" fill="#2B2118"/><circle cx="67" cy="${ey}" r="2.2" fill="#2B2118"/><path d="M48 ${ey-6}q5-3 9 0M63 ${ey-6}q5-3 9 0" stroke="#2B2118" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M53 ${ey+11}q7 6 14 0" stroke="#7A4A2E" stroke-width="2.2" fill="none" stroke-linecap="round"/>`;
+return `<svg viewBox="0 0 120 120" width="${z}" height="${z}" role="img" aria-label="${S.l?'صورة المتقدم (رسم توضيحي)':'Candidate photo (example illustration)'}" style="display:block;margin:6px auto 8px;flex:none"><defs><clipPath id="${id}"><circle cx="60" cy="60" r="57"/></clipPath></defs><g clip-path="url(#${id})"><rect width="120" height="120" fill="var(--okb)"/>${back}<path d="M8 124C8 94 32 84 60 84s52 10 52 40z" fill="${a.su}"/><path d="M47 83l13 22 13-22z" fill="#fff"/><path d="M47 83l13 22-22 15-10-12z" fill="#000" opacity=".2"/><path d="M73 83L60 105l22 15 10-12z" fill="#000" opacity=".2"/>${tie}${mid}${head}${hair}${face}</g><circle cx="60" cy="60" r="57" fill="none" stroke="var(--pri)" stroke-width="3"/></svg>`}
+function blindSVG(){return `<svg viewBox="0 0 120 120" width="52" height="52" role="img" aria-label="${t('apl')}" style="flex:none;margin:0"><circle cx="60" cy="60" r="57" fill="var(--ln)" stroke="var(--mu)" stroke-width="3"/><circle cx="60" cy="48" r="18" fill="var(--mu)"/><path d="M24 110c4-24 20-34 36-34s32 10 36 34z" fill="var(--mu)"/></svg>`}
+let LK=null;
+function render(){const s=S.scr,key=s+'|'+S.role+(s==='test'?S.q:'');$.className=key!==LK?'enter':'';LK=key;if(s==='role')return rRole();if(s==='login')return rLogin();if(S.role==='c'&&(s==='cv'||s==='detect'))return rCV();return S.role==='k'?renderK():renderC()}
 
-/* ============ AUTHENTICATION SYSTEM ============ */
-async function checkUserSession(){
-  if(!supabaseClient) return;
-  try {
-    const { data: { session } } = await supabaseClient.auth.getSession();
-    if(session && session.user){
-      showLoggedInState(session.user.email);
-    } else {
-      showLoggedOutState();
-    }
-  } catch(e){ showLoggedOutState(); }
-}
-
-function toggleAuthMode(){
-  isSignUpMode = !isSignUpMode;
-  const t = T[currentLang];
-  document.getElementById('authTitle').textContent = isSignUpMode ? t.authSignupTitle : t.authLoginTitle;
-  document.getElementById('authSub').textContent = isSignUpMode ? t.authSignupSub : t.authLoginSub;
-  document.getElementById('authSubmitBtn').textContent = isSignUpMode ? t.signupBtn : t.loginBtn;
-  document.getElementById('authSwitchModeBtn').textContent = isSignUpMode ? t.switchToLogin : t.switchToSignup;
-  document.getElementById('authErr').textContent = '';
-  document.getElementById('authSuccess').textContent = '';
-}
-
-async function handleAuthSubmit(){
-  const t = T[currentLang];
-  const email = document.getElementById('authEmail').value.trim();
-  const password = document.getElementById('authPass').value.trim();
-  const errEl = document.getElementById('authErr');
-  const succEl = document.getElementById('authSuccess');
-  
-  errEl.textContent = '';
-  succEl.textContent = '';
-
-  if(!email || !password){
-    errEl.textContent = currentLang==='ar' ? 'الرجاء إدخال البريد وكلمة المرور' : 'Please enter email and password';
-    return;
-  }
-
-  if(!supabaseClient){
-    errEl.textContent = 'Supabase client not initialized.';
-    return;
-  }
-
-  try {
-    if(isSignUpMode){
-      const { data, error } = await supabaseClient.auth.signUp({ email, password });
-      if(error) throw error;
-      succEl.textContent = currentLang==='ar' ? 'تم إنشاء الحساب بنجاح! يمكنك تسجيل الدخول الآن.' : 'Account created successfully! You can now sign in.';
-      toast(currentLang==='ar' ? 'تم إنشاء الحساب بنجاح' : 'Account created successfully');
-    } else {
-      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-      if(error) throw error;
-      showLoggedInState(email);
-      toast(currentLang==='ar' ? 'مرحباً بك مجدداً!' : 'Welcome back!');
-      setTimeout(()=>switchView('explore'), 1000);
-    }
-  } catch(e){
-    errEl.textContent = e.message;
-  }
-}
-
-async function handleSignOut(){
-  if(supabaseClient) await supabaseClient.auth.signOut();
-  showLoggedOutState();
-  toast(currentLang==='ar' ? 'تم تسجيل الخروج' : 'Signed out');
-}
-
-function showLoggedInState(email){
-  document.getElementById('userLoggedBox').style.display = 'block';
-  document.getElementById('authFormBox').style.display = 'none';
-  document.getElementById('userEmailDisplay').textContent = email;
-  document.getElementById('navAuth').textContent = currentLang==='ar' ? 'حسابي (مفعل)' : 'My Account';
-  document.getElementById('headerCtaBtn').textContent = currentLang==='ar' ? 'حسابي' : 'Account';
-}
-
-function showLoggedOutState(){
-  document.getElementById('userLoggedBox').style.display = 'none';
-  document.getElementById('authFormBox').style.display = 'block';
-  document.getElementById('navAuth').textContent = currentLang==='ar' ? 'تسجيل / دخول' : 'Sign In';
-  document.getElementById('headerCtaBtn').textContent = currentLang==='ar' ? 'تسجيل الدخول' : 'Sign In';
-}
-
-function updateAuthUI(){
-  checkUserSession();
-}
-
-/* ============ JOBS ============ */
-function demoJobs(){
-  return [
-    {title:'محاسب عام أول',title_en:'Senior General Accountant',company:'Bouri Group',location:'New Cairo, Egypt',type:'full',
-     description:'إدارة الدورة المحاسبية الكاملة، إعداد التقارير المالية، والتحليل باستخدام النظم المحاسبية.',
-     description_en:'Managing the full accounting cycle, financial reporting, and analysis using accounting systems.',days:2},
-    {title:'محلل بيانات ومتقن لـ ERP',title_en:'Data Analyst & ERP Specialist',company:'Tech Solutions',location:'Cairo',type:'full',
-     description:'تحليل البيانات التشغيلية والمالية وتقديم تقارير دقيقة لدعم اتخاذ القرار.',
-     description_en:'Analyzing operational and financial data and delivering accurate reports to support decisions.',days:2}
-  ];
-}
-
-async function fetchJobs(){
-  const c=document.getElementById('jobs-container');
-  if(!c) return;
-  c.innerHTML='<div class="skeleton"></div><div class="skeleton"></div>';
-  allJobs=demoJobs(); dbConnected=false;
-  if(supabaseClient){
-    try{
-      const {data,error}=await supabaseClient.from(JOBS_TABLE).select('*');
-      if(!error && data && data.length){ allJobs=data; dbConnected=true; }
-    }catch(e){}
-  }
-  updateStatus();
-  applyFilters();
-}
-
-function applyFilters(){
-  const qEl = document.getElementById('searchInput');
-  const tyEl = document.getElementById('typeFilter');
-  const q = qEl ? qEl.value.trim().toLowerCase() : '';
-  const ty = tyEl ? tyEl.value : '';
-  const list=allJobs.filter(j=>{
-    const hay=[j.title,j.title_en,j.company,j.location,j.description].join(' ').toLowerCase();
-    return (!q||hay.includes(q)) && (!ty||(j.type||'full')===ty);
-  });
-  renderJobs(list);
-}
-
-function renderJobs(list){
-  const t=T[currentLang], c=document.getElementById('jobs-container');
-  if(!c) return;
-  const countEl = document.getElementById('jobsCount');
-  if(countEl) countEl.textContent=t.jobsCount(list.length);
-  if(!list.length){c.innerHTML=`<div class="empty">${t.noJobs}</div>`;return;}
-  c.innerHTML='';
-  list.forEach((j,i)=>{
-    const en=currentLang==='en';
-    const title=(en&&j.title_en)||j.title||'-';
-    const desc=(en&&j.description_en)||j.description||j.content||'';
-    const typeKey=j.type||'full';
-    const typeLabel={full:t.fullTime,part:t.partTime,remote:t.remote}[typeKey]||t.fullTime;
-    let days=j.days;
-    if(j.created_at){days=Math.max(0,Math.floor((Date.now()-new Date(j.created_at))/86400000));}
-    const when=days==null?'':(days===0?t.today:t.daysAgo(days));
-    const company=j.company||'-';
-    const card=document.createElement('div');
-    card.className='job-card';
-    card.innerHTML=`
-      <div class="avatar">${esc(company.trim().charAt(0).toUpperCase())}</div>
-      <div class="job-body">
-        <div class="job-title">${esc(title)}</div>
-        <div class="job-company">${esc(company)}${j.location?' · '+esc(j.location):''}</div>
-        <div class="tags"><span class="tag">${esc(typeLabel)}</span>${j.location?`<span class="tag">${esc(t.onsite)}</span>`:''}</div>
-        <p class="job-desc">${esc(desc)}</p>
-        <div class="job-footer"><span class="job-date">${esc(when)}</span>
-          <button class="btn" data-i="${i}">${t.apply}</button></div>
-      </div>`;
-    card.querySelector('button').onclick=()=>applyToJob(j);
-    c.appendChild(card);
-  });
-}
-
-function applyToJob(job){
-  toast(T[currentLang].applied);
-}
-
-/* ============ FILE READING ============ */
-function loadScript(src){return new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=rej;document.head.appendChild(s);});}
-
-async function handleFile(file){
-  if(!file) return;
-  const t=T[currentLang], err=document.getElementById('cvErr');
-  if(err) err.textContent=t.reading;
-  try{
-    const ext=file.name.split('.').pop().toLowerCase();
-    let text='';
-    if(ext==='txt'){ text=await file.text(); }
-    else if(ext==='docx'){
-      if(!window.mammoth) await loadScript('https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js');
-      const r=await window.mammoth.extractRawText({arrayBuffer:await file.arrayBuffer()});
-      text=r.value;
-    } else if(ext==='pdf'){
-      if(!window.pdfjsLib){
-        await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');
-        window.pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-      }
-      const pdf=await window.pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise;
-      for(let p=1;p<=pdf.numPages;p++){
-        const pg=await pdf.getPage(p); const c=await pg.getTextContent();
-        text+=c.items.map(i=>i.str).join(' ')+'\n';
-      }
-    } else { throw new Error('type'); }
-    const cvTextEl = document.getElementById('cvText');
-    if(cvTextEl) cvTextEl.value=text.trim();
-    if(err) err.textContent='';
-  }catch(e){ if(err) err.textContent=t.readErr; }
-}
-
-/* ============ CV ANALYZER ============ */
-const RX={
-  email:/[\w.+-]+@[\w-]+\.[\w.-]+/,
-  phone:/(\+?\d[\d\s().-]{8,}\d)/,
-  link:/(linkedin\.com|github\.com|behance\.net|portfolio|https?:\/\/)/i,
-  summary:/(professional summary|career objective|\bsummary\b|\bprofile\b|\bobjective\b|الملخص|نبذة|الهدف الوظيفي|ملخص مهني)/i,
-  exp:/(experience|work history|employment|الخبرات|الخبرة|الخبرات العملية|الخبرة العملية)/i,
-  edu:/(education|qualification|degree|التعليم|المؤهل|المؤهلات|الدراسة)/i,
-  skills:/(\bskills\b|competencies|المهارات|الكفاءات)/i
-};
-const VERBS=['managed','led','developed','improved','reduced','increased','created','implemented','prepared','analyzed','designed','coordinated','delivered','achieved','built','optimized','reconciled','audited','trained','launched',
- 'أدرت','قدت','طورت','حسنت','حسّنت','خفضت','خفّضت','زدت','أنشأت','نفذت','نفّذت','أعددت','حللت','صممت','نسقت','نسّقت','حققت','بنيت','راجعت','دربت','دعمت','أشرفت'];
-const STOP=new Set(('the and for with you your our are will this that have from has not but all can any who job role work team years year experience ability strong must should able such their they them his her its also more than into over per out use using used including other etc about which what when where while within across '+
- 'على في من الى إلى عن مع هذا هذه ذلك التي الذي التى الذى كما أو او ان أن كان يكون لدى لديه خلال بين عند حتى كل بعد قبل ذات وفق تكون يجب المطلوب مطلوب خبرة سنوات سنة').split(' '));
-
-function words(s){return (s.toLowerCase().match(/[a-z0-9#+.]{2,}|[\u0600-\u06FF]{2,}/g)||[]);}
-
-function analyze(cv){
-  const w=words(cv).length;
-  const verbHits=VERBS.filter(v=>cv.toLowerCase().includes(v)).length;
-  const nums=(cv.match(/\d+\s?%|\d+[.,]?\d*\s?(k|m|million|مليون|ألف)?\b/gi)||[]).filter(x=>!/^(19|20)\d\d$/.test(x.trim())).length;
-  const items=[
-    {k:'email',pts:10,pass:RX.email.test(cv)},
-    {k:'phone',pts:10,pass:RX.phone.test(cv)},
-    {k:'link', pts:5, pass:RX.link.test(cv)},
-    {k:'summary',pts:10,pass:RX.summary.test(cv)},
-    {k:'exp',pts:15,pass:RX.exp.test(cv)},
-    {k:'edu',pts:10,pass:RX.edu.test(cv)},
-    {k:'skills',pts:10,pass:RX.skills.test(cv)},
-    {k:'len',pts:10,pass:w>=250&&w<=800,arg:w,partial:(w>=150&&w<250)||(w>800&&w<=1000)},
-    {k:'nums',pts:10,pass:nums>=3,arg:nums,partial:nums>=1&&nums<3},
-    {k:'verbs',pts:10,pass:verbHits>=4,arg:verbHits,partial:verbHits>=2&&verbHits<4}
-  ];
-  let score=0;
-  items.forEach(i=>{ i.got=i.pass?i.pts:(i.partial?Math.round(i.pts/2):0); score+=i.got; });
-  return {score,items,words:w};
-}
-
-function matchJob(cv,jd){
-  const cvSet=new Set(words(cv));
-  const freq={};
-  words(jd).forEach(x=>{ if(x.length>=3&&!STOP.has(x)&&!/^\d+$/.test(x)) freq[x]=(freq[x]||0)+1; });
-  const kws=Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,25).map(e=>e[0]);
-  const found=kws.filter(k=>cvSet.has(k)), missing=kws.filter(k=>!cvSet.has(k));
-  return {pct:kws.length?Math.round(found.length/kws.length*100):0,found,missing};
-}
-
-function runReview(silent){
-  const t=T[currentLang], err=document.getElementById('cvErr');
-  const cvEl = document.getElementById('cvText');
-  const jdEl = document.getElementById('jdText');
-  const cv=cvEl ? cvEl.value.trim() : '';
-  const jd=jdEl ? jdEl.value.trim() : '';
-  
-  if(!cv){ if(!silent && err) err.textContent=t.emptyErr; return; }
-  if(words(cv).length<30){ if(err) err.textContent=t.shortErr; return; }
-  if(err) err.textContent='';
-
-  const r=analyze(cv);
-  const color=r.score>=75?'var(--ok)':r.score>=50?'var(--warn)':'var(--bad)';
-  const ring=document.getElementById('ring');
-  if(ring){
-    ring.style.setProperty('--c',color);
-    ring.style.setProperty('--p',r.score);
-  }
-  const scoreNum = document.getElementById('scoreNum');
-  if(scoreNum) scoreNum.textContent=r.score;
-  const v=r.score>=75?t.v.great:r.score>=50?t.v.good:t.v.weak;
-  const vTitle = document.getElementById('verdictTitle');
-  const vText = document.getElementById('verdictText');
-  if(vTitle) vTitle.textContent=v[0];
-  if(vText) vText.textContent=v[1];
-
-  const ul=document.getElementById('checksList');
-  if(ul){
-    ul.innerHTML='';
-    const lines=[];
-    r.items.forEach(i=>{
-      const cls=i.pass?'ok':(i.partial?'warn':'bad');
-      const okTxt=typeof t.ok[i.k]==='function'?t.ok[i.k](i.arg):t.ok[i.k];
-      const fixTxt=typeof t.fix[i.k]==='function'?t.fix[i.k](i.arg):t.fix[i.k];
-      const msg=i.pass?okTxt:fixTxt;
-      const li=document.createElement('li'); li.className=cls;
-      li.innerHTML=`<span>${i.pass?'✅':(i.partial?'⚠️':'❌')}</span><span><b>${esc(t.chk[i.k])}:</b> ${esc(msg)}</span><span class="pts">${i.got}/${i.pts}</span>`;
-      ul.appendChild(li);
-      lines.push(`${i.pass?'[OK]':(i.partial?'[~]':'[X]')} ${t.chk[i.k]} (${i.got}/${i.pts}): ${msg}`);
-    });
-  }
-
-  let matchTxt='';
-  const mp=document.getElementById('matchPanel');
-  if(jd && mp){
-    const m=matchJob(cv,jd);
-    mp.style.display='block';
-    const sumEl = document.getElementById('matchSummary');
-    if(sumEl) sumEl.textContent=t.matchSummary(m.pct);
-    const mk=document.getElementById('missingKw'), fk=document.getElementById('foundKw');
-    if(mk) mk.innerHTML=m.missing.length?m.missing.map(k=>`<span class="miss">${esc(k)}</span>`).join(''):`<span class="hit">${t.noneMissing}</span>`;
-    if(fk) fk.innerHTML=m.found.map(k=>`<span class="hit">${esc(k)}</span>`).join('');
-    matchTxt=`\n${t.matchTitle}: ${m.pct}%\n${t.missingKw} ${m.missing.join(', ')}\n${t.foundKw} ${m.found.join(', ')}\n`;
-  } else if(mp) { mp.style.display='none'; }
-
-  lastReport=`Hire_Me - CV Report\n${'='.repeat(30)}\nScore: ${r.score}/100\n${v[0]}\n\n${matchTxt}`;
-  const resEl = document.getElementById('result');
-  if(resEl){
-    resEl.style.display='block';
-    if(!silent) resEl.scrollIntoView({behavior:'smooth'});
-  }
-}
-
-function downloadReport(){
-  const blob=new Blob(["\uFEFF"+lastReport],{type:'text/plain;charset=utf-8'});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob); a.download='HireMe_CV_Report.txt';
-  document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
-}
-
-/* ============ INIT ============ */
-try{
-  const saved=localStorage.getItem('theme');
-  if(saved){
-    const root = document.getElementById('htmlRoot');
-    if(root) root.dataset.theme=saved;
-    const btn = document.getElementById('themeBtn');
-    if(btn) btn.textContent=saved==='dark'?'☀️':'🌙';
-  }
-}catch(e){}
-
-changeLanguage('ar');
-checkUserSession();
+render();
 </script>
 </body>
 </html>
