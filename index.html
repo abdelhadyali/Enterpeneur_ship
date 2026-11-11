@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-KBQF0RCE9Y"></script>
@@ -7,23 +7,18 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
+
   gtag('config', 'G-KBQF0RCE9Y');
 </script>
+  <script defer src="/_vercel/insights/script.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0B6E70">
-<title>HIRE ME - Skills-First Hiring</title>
+<title>Hire Me</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230B6E70'/%3E%3Ctext x='50' y='66' text-anchor='middle' font-size='55' fill='white'%3EH%3C/text%3E%3C/svg%3E">
-
-<!-- Tailwind CSS -->
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-<!-- Babel for in-browser JSX compilation -->
 <script src="https://unpkg.com/@babel/standalone@7.28.4/babel.min.js"></script>
-<!-- EmailJS for real email delivery (Optional for real presentation emails) -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap');
 
 @layer base {
   :root {
@@ -41,6 +36,7 @@
     --er: #B3261E;
     --erb: #FBE9E7;
     --wn: #FFF1D6;
+    --android-bar: #0B6E70;
   }
 
   [data-theme="dark"] {
@@ -58,10 +54,11 @@
     --er: #FFB4AB;
     --erb: #41201E;
     --wn: #3E3118;
+    --android-bar: #0A141C;
   }
 
   body {
-    font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+    font-family: 'Cairo', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background-color: #0b151f;
     margin: 0;
     padding: 0;
@@ -69,346 +66,349 @@
   }
 }
 
-::-webkit-scrollbar { width: 5px; height: 5px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--ln); border-radius: 9999px; }
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--ln);
+  border-radius: 9999px;
+}
 
-@keyframes pop { 0% { transform: scale(0.85); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-@keyframes up { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes draw { from { stroke-dashoffset: 35; } to { stroke-dashoffset: 0; } }
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
 
-.animate-pop { animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both; }
-.animate-up { animation: up 0.35s cubic-bezier(0.16, 1, 0.3, 1) both; }
-.chk-path { stroke-dasharray: 35; animation: draw 0.6s 0.2s cubic-bezier(0.65, 0, 0.45, 1) forwards; }
-.btn-tactile:active { transform: scale(0.96); }
+@keyframes pop {
+  0% { transform: scale(0.85); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
 
-html,body,#root { min-height:100%; width:100%; }
-body { background:#0b151f!important; }
-#root { min-height:100vh; }
+@keyframes up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes draw {
+  from { stroke-dashoffset: 35; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(11, 110, 112, 0.4); }
+  50% { box-shadow: 0 0 0 10px rgba(11, 110, 112, 0); }
+}
+
+.animate-bob {
+  animation: bob 2.6s ease-in-out infinite;
+}
+
+.animate-pop {
+  animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+.animate-up {
+  animation: up 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s cubic-bezier(0.25, 1, 0.5, 1) both;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.chk-path {
+  stroke-dasharray: 35;
+  animation: draw 0.6s 0.2s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.pulse-glow {
+  animation: pulseGlow 2s infinite;
+}
+
+/* Tactile button feel */
+.btn-tactile {
+  transition: transform 0.15s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.15s ease, background-color 0.15s ease;
+}
+.btn-tactile:active {
+  transform: scale(0.96);
+}
+
+/* Staggered card appearance */
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.1s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.2s; }
+.stagger-5 { animation-delay: 0.25s; }
+
+</style>
+<style>
+html,body,#root{min-height:100%;width:100%;}
+body{background:#0b151f!important;}
+#root{min-height:100vh;}
 </style>
 </head>
 <body>
 <div id="root"></div>
-
 <script type="module">
 import React from 'https://esm.sh/react@19.0.1';
 import {createRoot} from 'https://esm.sh/react-dom@19.0.1/client';
 import * as lucide from 'https://esm.sh/lucide-react@0.546.0?bundle';
 window.React=React; window.createRoot=createRoot; window.lucide=lucide;
+const {AlertCircle,AlertTriangle,ArrowLeft,ArrowRight,ArrowUpRight,Award,BarChart3,BookOpen,Briefcase,Building,Calendar,CalendarCheck,Check,CheckCheck,CheckCircle,CheckCircle2,ChevronLeft,ChevronRight,Clock,Copy,Download,ExternalLink,Eye,EyeOff,FileText,Globe,GraduationCap,Laptop,Layers,LogOut,Mail,MapPin,Maximize2,MessageSquare,Mic,MicOff,Minimize2,Moon,Phone,PhoneOff,RefreshCw,RotateCcw,Search,Send,Share2,Shield,ShieldCheck,SlidersHorizontal,Smartphone,Sparkles,Sun,Table,Tag,Terminal,TrendingUp,User,UserCheck,Video,VideoOff,Volume2,VolumeX,WifiOff,X}=lucide;
+const {useState,useEffect,useRef,useMemo,useCallback,useContext,useReducer}=React;
 
-const {AlertCircle, ArrowLeft, ArrowRight, Award, BarChart3, BookOpen, Briefcase, Building, Calendar, CalendarCheck, Check, CheckCheck, CheckCircle, CheckCircle2, ChevronLeft, ChevronRight, Clock, Copy, Download, ExternalLink, EyeOff, FileText, GraduationCap, Laptop, Layers, LogOut, Mail, MapPin, Maximize2, MessageSquare, Mic, MicOff, Minimize2, Moon, PhoneOff, RotateCcw, Search, Send, Share2, ShieldCheck, SlidersHorizontal, Smartphone, Sparkles, Sun, Table, Terminal, TrendingUp, User, UserCheck, Video, VideoOff, Volume2, VolumeX, WifiOff, X} = lucide;
-const {useState, useEffect, useRef} = React;
-
-// --- Dictionaries & Data ---
+// ===== src/data.ts =====
 const D0 = {
   tag: ["Your skills speak first", "مهاراتك تتحدث أولاً"],
-  r_t: ["Welcome to HIRE ME", "أهلاً بك في منصة HIRE ME"],
-  r_p: ["Choose how you want to use the app.", "حدد دورك للبدء في استخدام المنصة."],
-  r_c: ["I am looking for a job", "أبحث عن فرصة عمل"],
-  r_cp: ["Prove your skills and apply without bias.", "وثّق مهاراتك وقدم على الوظائف بدون أي تحيز."],
-  r_k: ["I am hiring", "أمثل شركة وأرغب بالتوظيف"],
-  r_kp: ["Find verified talent easily.", "ابحث عن كفاءات تم اختبارها وتوثيقها عملياً."],
-  
-  // NEW LOGIN FIELDS
-  l_c: ["Job Seeker Login", "إنشاء حساب / تسجيل دخول متقدم"],
-  l_k: ["Company Login", "إنشاء حساب / دخول الشركات"],
-  l_name: ["Full Name", "الاسم الرباعي"],
-  l_co_name: ["Company Name", "اسم الشركة"],
-  l_email: ["Actual Email Address (Gmail)", "البريد الإلكتروني الفعلي (لتلقي رسالة التفعيل)"],
-  l_job: ["Current Job Title", "الوظيفة الحالية / التخصص (مثال: محاسب عام)"],
+  r_t: ["Welcome to HIRE ME", "أهلاً بك في HIRE ME"],
+  r_p: ["Choose how you want to use the app.", "اختر كيف تريد استخدام التطبيق."],
+  r_c: ["I am looking for a job", "أبحث عن وظيفة"],
+  r_cp: ["Prove your skills and apply without bias.", "أثبت مهاراتك وقدّم دون تحيز."],
+  r_k: ["I am hiring", "أنا شركة أوظّف"],
+  r_kp: ["Find verified talent and answer every applicant.", "اعثر على مواهب موثقة وردّ على كل متقدم."],
+  l_c: ["Log in as a job seeker", "تسجيل دخول المتقدم"],
+  l_k: ["Log in as a company", "تسجيل دخول الشركة"],
+  l_u: ["Username or email", "اسم المستخدم أو البريد"],
   l_pw: ["Password", "كلمة المرور"],
   l_show: ["Show", "إظهار"],
   l_hide: ["Hide", "إخفاء"],
-  l_go: ["Register & Activate", "تسجيل وتفعيل الحساب"],
-  l_note: ["Prototype: Entering real email will simulate a verification process for the presentation.", "نسخة العرض: بإدخالك لبريدك الإلكتروني، سيقوم النظام بمحاكاة إرسال بريد حقيقي لتفعيل حسابك وإشعارك بالقبول."],
-  l_eu: ["Name is required.", "يرجى إدخال الاسم أو اسم الشركة."],
-  l_ee: ["Valid email required.", "يرجى إدخال بريد إلكتروني صحيح."],
-  l_ej: ["Current job required.", "يرجى إدخال المسمى الوظيفي الحالي."],
+  l_go: ["Log in", "تسجيل الدخول"],
+  l_note: [
+    "Prototype: no real account is created. Any username and a password of 6+ characters works.",
+    "نموذج تجريبي: سيتم محاكاة إرسال إيميل تفعيل حقيقي عند التسجيل لعرض الفكرة في البريزنتيشن."
+  ],
+  l_eu: ["Enter your username or email.", "أدخل اسم المستخدم أو البريد."],
   l_ep: ["Password needs at least 6 characters.", "كلمة المرور تحتاج 6 أحرف على الأقل."],
   l_back: ["Change role", "تغيير الدور"],
-  out: ["Log out", "تسجيل خروج"],
-
-  // CV
+  out: ["Log out", "خروج"],
   cv_t: ["Upload your CV", "ارفع سيرتك الذاتية"],
-  cv_p: ["We read it to extract your claimed skills. Then you verify them.", "نقرؤها بالذكاء الاصطناعي لاكتشاف مهاراتك. ثم تقوم أنت بتوثيقها عملياً."],
-  cv_up: ["Choose CV file", "اختر ملف السيرة الذاتية (PDF)"],
+  cv_p: ["We read it to find your skills. Then you verify them with a short check.", "نقرؤها لنكتشف مهاراتك. ثم توثّقها باختبار عملي قصير."],
+  cv_up: ["Choose CV file", "اختر ملف السيرة"],
   cv_hint: ["PDF, DOC or DOCX, up to 5 MB", "PDF أو DOC أو DOCX حتى 5 ميجا"],
   cv_sample: ["Use a sample CV", "استخدم سيرة تجريبية"],
-  cv_read: ["Reading your CV…", "جاري تحليل سيرتك الذاتية بالذكاء الاصطناعي…"],
-  
-  det_t: ["Skills Extracted!", "تم استخراج مهاراتك بنجاح"],
-  det_p: ["We found skills ready for verification. Start with Excel.", "نحتاج لتوثيق هذه المهارات لتتمكن من التقديم على الوظائف."],
-  det_btn: ["Start Excel Verification", "ابدأ اختبار توثيق Excel"],
-  det_this: ["Needs verification", "تحتاج إلى توثيق"],
+  cv_read: ["Reading your CV…", "جاري قراءة وتحليل سيرتك…"],
+  cv_err: ["This file type is not supported. Use PDF, DOC or DOCX.", "نوع الملف غير مدعوم. استخدم PDF أو DOC أو DOCX."],
+  cv_big: ["The file is larger than 5 MB.", "حجم الملف أكبر من 5 ميجا."],
+  det_t: ["We found 3 skills in your CV", "وجدنا 3 مهارات في سيرتك"],
+  det_p: ["Verify them to unlock jobs. Start with Excel.", "وثّقها لتفتح الوظائف. ابدأ بـ Excel."],
+  det_x: [
+    "Prototype: these skills are examples. Excel practical test is active in this version.",
+    "نموذج تجريبي: المهارات تم استخراجها تلقائياً. اختبار Excel العملي مفعّل الآن."
+  ],
+  det_btn: ["Start Excel verification", "ابدأ توثيق Excel"],
   det_lock: ["Verify next", "توثيقها لاحقاً"],
-  det_x: ["Prototype Note: Excel practical sandbox is active.", "ملاحظة: اختبار برنامج الإكسيل هو المفعل في هذه النسخة التجريبية."],
+  det_this: ["Needs verification", "تحتاج توثيقاً"],
+  
+  // Status & Tracking (Universal)
+  s1: ["Application Sent", "تم إرسال الطلب للشركة"],
+  s2: ["Seen by Company", "شاهدت الشركة ملفك الموثق"],
+  s3: ["In Technical Review", "قيد الفحص والتقييم الفني"],
+  s6: ["Interview Scheduled", "تم قبولك وتحديد موعد المقابلة 🎉"],
+  s4: ["Offer Confirmed / Decision Sent", "تم تأكيد العرض وقبول الطلب بنجاح"],
+  due: ["Guaranteed Reply by Deadline", "الرد مضمون ومحدد بالموعد الأقصى"],
+  msg: ["Message Hiring Team", "مراسلة مسؤول التوظيف"],
+  adv: ["Advance Step (Demo)", "تحكم تجريبي: تقدّم خطوة بالمسار"],
+  fb_done: ["Feedback sent to HIRE ME", "تم إرسال التقييم بنجاح إلى HIRE ME"],
+  fb_t: ["How was your interview experience?", "كيف كانت تجربة المقابلة؟"],
+  fb_p: ["Your answers go directly to HIRE ME to ensure hiring fairness.", "إجاباتك تصل لإدارة HIRE ME لضمان النزاهة وحماية المتقدمين."],
+  fb_btn: ["Share Interview Feedback", "شارك تقييمك للمقابلة"],
+
+  // Android Specific
+  android_badge: ["Android App Ready", "تطبيق أندرويد جاهز"],
+  install_android: ["Install Android App", "تثبيت تطبيق أندرويد"],
+  install_guide: ["Android Install Guide", "دليل التثبيت على الهاتف"],
+  export_apk: ["Android APK / Source", "حزمة ملفات أندرويد APK"],
+  already_installed: ["Running as Installed App", "يعمل كتطبيق أندرويد مثبت"],
+  offline_notice: ["Offline Mode - Cached Data", "وضع عدم الاتصال - تم حفظ البيانات"],
 };
 
 const DC = {
-  rl_t: ["⚠️ Exam Rules", "⚠️ تعليمات قبل بدء الاختبار"],
-  rl_1t: ["Camera monitoring", "مراقبة الكاميرا"],
-  rl_1: ["Keep your face visible.", "سيطلب منك النظام السماح بالكاميرا، ابقِ وجهك ظاهراً."],
-  rl_2t: ["No copy & paste", "ممنوع النسخ واللصق"],
-  rl_2: ["Shortcuts are disabled.", "أدوات النسخ واللصق والتبديل بين الشاشات معطلة."],
-  rl_ok: ["I understand and agree", "أوافق وأتعهد بالالتزام"],
-  rl_go: ["Start the exam", "بدء الاختبار الآن"],
-  rl_need: ["Agree to continue", "يجب الموافقة للمتابعة"],
-  rl_n: ["Prototype simulation.", "محاكاة لبيئة الاختبار الآمنة."],
-  time: ["Time is up.", "انتهى الوقت المخصص للسؤال."],
-  
-  tJobs: ["Jobs", "الوظائف المتاحة"],
-  tApps: ["Applications", "الطلبات المرسلة"],
-  jobsC: ["See matching jobs", "تصفح الوظائف المطابقة"],
-  sal: ["Salary", "الراتب الشهري"],
-  exp: ["Experience", "الخبرة المطلوبة"],
-  mil: ["Military", "الموقف التجنيدي"],
-  milv: ["Completed / Exempt", "أدى الخدمة / معفى"],
-  sch: ["Schedule", "نظام العمل"],
-  loc: ["Location", "الموقع"],
-  apply: ["Apply Blindly", "تقديم الطلب بناءً على الكفاءة"],
-  cf: ["Confirm Application?", "هل أنت متأكد من التقديم؟"],
-  cfp: ["Companies will only see your verified skills and test scores. Name and photo are hidden.", "الشركات سترى كفاءاتك ونتيجة الاختبار فقط. لن تظهر بياناتك الشخصية إلا في حال الموافقة."],
-  send: ["Send application", "تأكيد وإرسال"],
-  cancel: ["Cancel", "إلغاء"],
-  sent: ["Application sent!", "تم التقديم بنجاح!"],
+  rl_t: ["⚠️ Before you start", "⚠️ قبل أن تبدأ"],
+  rl_1t: ["Camera monitoring", "مراقبة بالكاميرا"],
+  rl_1: [
+    "The exam will ask you to allow your camera so we can monitor the person taking it. Keep your face visible.",
+    "سيطلب منك الامتحان السماح للكاميرا لمراقبة من يمتحن. أبقِ وجهك ظاهراً."
+  ],
+  rl_2t: ["No copy and paste", "ممنوع النسخ واللصق"],
+  rl_2: [
+    "Copy, cut and paste are disabled. Do not switch tabs or apps during the exam.",
+    "النسخ والقص واللصق معطّلة. لا تغيّر التبويب أو التطبيق أثناء الامتحان."
+  ],
+  rl_3t: ["Cheating cancels the exam", "الغش يلغي الامتحان"],
+  rl_3: ["Any attempt to cheat will cancel the exam.", "أي محاولة غش سيتم بسببها إلغاء الامتحان فوراً."],
+  rl_4t: ["Repeating it means a block", "التكرار يعني الحظر"],
+  rl_4: ["If it happens again, your account will be blocked.", "وفي حال التكرار سيتم حظر حسابك نهائياً."],
+  rl_n: ["Prototype simulation: safe test environment.", "نموذج تجريبي: بيئة اختبار آمنة محاكية للأندرويد."],
+  rl_ok: ["I understand and agree", "أفهم وأوافق على الشروط"],
+  rl_go: ["Start the exam", "ابدأ الامتحان"],
+  rl_need: ["Agree to continue", "وافق للمتابعة"],
+
+  cx_t: ["Exam cancelled", "تم إلغاء الامتحان"],
+  cx_copy: ["Copy or paste was detected.", "تم رصد محاولة نسخ أو لصق."],
+  cx_tab: ["You left the exam screen.", "غادرت شاشة الامتحان أو بدّلت التطبيق."],
+  cx_sim: ["A cheating attempt was simulated.", "تمت محاكاة محاولة غش."],
+  cx_p: [
+    "This is your first warning. If it happens again, your account will be blocked.",
+    "هذا هو التحذير الأول. وفي حال التكرار سيتم حظر حسابك."
+  ],
+  cx_back: ["Back to my skills", "العودة لمهاراتي"],
+
+  bl_t: ["Your account is blocked", "تم حظر حسابك"],
+  bl_p: [
+    "A second cheating attempt was detected. You can no longer use the app.",
+    "تم رصد محاولة غش ثانية. تم تعليق الاختبار لمنع التلاعب."
+  ],
+  bl_n: ["Prototype control: logging out resets the block.", "تحكم تجريبي: تسجيل الخروج يعيد ضبط الحظر للتجربة."],
+  sim: ["Simulate a cheating attempt", "تحكم تجريبي: حاكِ محاولة غش"],
+  more: ["Apply to as many jobs as you like.", "قدّم على أي عدد يناسبك من الوظائف."],
+  applied: ["Applied", "تم التقديم"],
   already: ["Already applied", "تم التقديم مسبقاً"],
-  
-  badge: ["Verified", "موثق معتمد"],
-  you: ["Companies see: Verified · Excel. No photo or name.", "ما تراه الشركات: موثق · مهارة Excel. (بدون اسم أو صورة)"],
-  empty: ["No applications yet", "لا توجد طلبات بعد"],
-  emptyp: ["Apply to jobs to track them here.", "قدم على الوظائف وتابع حالتها من هنا."],
-  s1: ["Sent", "تم الإرسال"],
-  s2: ["Seen", "شوهد من الشركة"],
-  s3: ["In Review", "قيد الفرز الفني"],
-  s4: ["Result", "القرار النهائي"],
-  due: ["Guaranteed Reply", "رد مضمون خلال المهلة"],
-  adv: ["Advance status (Demo)", "تسريع الحالة (توضيحي)"],
+  s6: ["Interview scheduled", "تم تحديد المقابلة"],
+  fb_t: ["How was the interview?", "كيف كانت المقابلة؟"],
+  fb_p: ["Your answers go to HIRE ME, not to the company.", "إجاباتك تصل لإدارة HIRE ME لضمان النزاهة وليس للشركة."],
+  fb_btn: ["Share interview feedback", "شارك ملاحظاتك على المقابلة"],
+  fb_done: ["Feedback sent to HIRE ME", "تم إرسال الملاحظات بنجاح إلى HIRE ME"],
+  fb_ok: ["Thanks, feedback sent", "شكراً، تم إرسال تقييمك"],
+
+  a1: ["Did the interview questions match the job you applied for?", "هل طابقت أسئلة المقابلة الوظيفة التي قدّمت عليها؟"],
+  a1y: ["Yes", "نعم تماماً"],
+  a1p: ["Partly", "جزئياً"],
+  a1n: ["No, a different skill", "لا، مهارة مختلفة"],
+
+  a2: ["Was the level right for you?", "هل كان المستوى مناسباً؟"],
+  a2r: ["Right level", "مناسب جداً"],
+  a2h: ["Too advanced", "متقدم جداً"],
+  a2e: ["Too easy", "سهل جداً"],
+  sub: ["Send feedback", "أرسل الملاحظات"],
+  ud_h: ["Recommended by partner Udemy", "موصى به من شريك HIRE ME: Udemy"],
+  ud_off: ["20% off with your HIRE ME code", "خصم 20% بكود HIRE ME"],
+  ud_cp: ["Copy code", "انسخ الكود"],
+  ud_ok: ["Code copied", "تم نسخ الكود"],
+  ud_open: ["Open Udemy", "افتح دورات Udemy"],
+  ud_n: ["Example discount code for skill enhancement.", "كود خصم تجريبي لتقوية المهارة وإعادة الاختبار."],
+  rt_t: ["Re-test available on", "إعادة الاختبار متاحة في"],
+  rt_b: ["Re-test available in 30 days", "إعادة الاختبار بعد 30 يوماً"],
+  rt_why: ["The 30 days give you time to study the topics above.", "فترة الـ 30 يوماً تمنحك وقتاً لمراجعة النقاط الضعيفة."],
+  rt_skip: ["Skip the 30 days (Prototype)", "تخطَّ الـ 30 يوماً (تحكم تجريبي)"],
+  sh_t: ["Share your badge", "شارك شارة التوثيق"],
+  sh_cp: ["Copy caption", "انسخ النص المرفق"],
+  sh_ok: ["Caption copied", "تم نسخ النص بنجاح"],
+  sh_n: ["Share on LinkedIn or Facebook with your verified badge.", "انشر إنجازك على لينكد إن وفيسبوك لزيادة فرصك."],
+
+  brand: ["HIRE ME", "HIRE ME"],
+  ob1t: ["Prove your skills first", "أثبت مهاراتك أولاً"],
+  ob1p: ["A short practical check turns your CV into verified skills.", "اختبار عملي قصير يحوّل سيرتك إلى مهارات معتمدة وموثقة."],
+  ob2t: ["Always get an answer", "احصل على رد دائماً"],
+  ob2p: ["Every application shows its status and a guaranteed reply-by date.", "كل طلب يعرض مساره الواضح وموعداً مضموناً للرد."],
+  ob3t: ["Apply without bias", "قدّم دون تحيز"],
+  ob3p: ["Companies see your verified skills, not your name or photo, until a mutual match.", "الشركات ترى مهاراتك الموثقة فقط دون اسمك أو صورتك حتى يحدث تطابق متبادل."],
+  skip: ["Skip", "تخطَّ"],
+  next: ["Next", "التالي"],
+  start: ["Start my skill check", "ابدأ فحص مهارتي"],
+
+  chk: ["Your first skill check", "فحص مهارتك الأول"],
+  chkp: ["Skills found in your CV. Verify one to unlock jobs.", "مهارات تم استخلاصها من سيرتك. وثّق واحدة لتفتح لك الوظائف."],
+  sk: ["Excel · Junior", "Excel · مبتدئ"],
+  skm: ["4 questions · 60 seconds each", "4 أسئلة · 60 ثانية لكل سؤال"],
+  proto: ["Practical skill verification engine.", "محرك التوثيق العملي للمهارات."],
+  goChk: ["Start the 4 questions", "ابدأ الأسئلة الأربعة"],
+  q: ["Question", "السؤال"],
+  of: ["of", "من"],
+  left: ["s left", "ث متبقية"],
+  nocopy: ["Copy and paste are disabled during check.", "النسخ واللصق معطّلان لمنع التسريب."],
+  pick: ["Choose an answer", "اختر إجابة"],
+  nq: ["Next question", "السؤال التالي"],
+  fin: ["See my result", "اعرض نتيجتي"],
+  pass: ["You are verified!", "مبروك! تم توثيقك بنجاح"],
+  passp: ["Score", "النتيجة النهائية"],
+  badge: ["Verified", "موثق"],
+  fail: ["Not passed this time", "لم تجتز الاختبار هذه المرة"],
+  failp: ["You need 70% to earn the badge. Here is what to review:", "تحتاج إلى 70% لنيل الشارة. هذه مواضيع للمراجعة:"],
+  course: ["Partner course", "دورة مقترحة"],
+  retry: ["Take the check again", "أعد الاختبار"],
+  jobsC: ["See matching jobs", "اعرض الوظائف المطابقة"],
+  tJobs: ["Jobs", "الوظائف"],
+  tApps: ["My applications", "طلباتي"],
+  you: ["Companies see: Verified · Excel · Junior. No photo, name or age.", "الشركات ترى: موثق · Excel · مبتدئ. بلا صورة أو اسم أو سن."],
+  ex: ["Live opportunities", "فرص متاحة"],
+  sal: ["Salary", "الراتب"],
+  exp: ["Experience really needed", "الخبرة المطلوبة فعلياً"],
+  mil: ["Military service", "الموقف التجنيدي"],
+  sch: ["Schedule", "المواعيد وطبيعة العمل"],
+  loc: ["Location", "الموقع"],
+  rep: ["Replies to applicants within", "الرد على المتقدمين خلال"],
+  yrs: ["0 to 1 year", "من 0 إلى سنة"],
+  milv: ["Completed or exempt", "أدّى الخدمة أو معفى"],
+  egp: ["EGP", "جنيه"],
+  apply: ["Apply with my verified skills", "قدّم بمهاراتي الموثقة"],
+  cf: ["Send your application?", "هل ترغب بإرسال طلبك؟"],
+  cfp: ["The company sees your verified skills only. Your name and photo stay hidden until you both match.", "الشركة ترى كفاءتك الموثقة فقط. هويتك وصورتك مخفيتان لضمان العدالة حتى تتوافقا."],
+  send: ["Send application", "أرسل الطلب الآن"],
+  cancel: ["Not now", "ليس الآن"],
+  sent: ["Application sent successfully", "تم إرسال الطلب بنجاح"],
+  empty: ["No applications yet", "لا توجد طلبات مرسلة بعد"],
+  emptyp: ["Apply to a job and you will see its live track here.", "قدّم على وظيفة وستتابع تحديثات حالتها خطوة بخطوة."],
+  browse: ["Browse jobs", "تصفح الوظائف"],
+  s1: ["Sent", "أُرسل للشركة"],
+  s2: ["Seen by company", "شاهدته الشركة"],
+  s3: ["In review", "قيد الفحص والمراجعة"],
+  s4: ["Result with feedback", "القرار مع توضيح السبب"],
+  due: ["Decision due within deadline", "القرار متوقع خلال المهلة المحددة"],
+  adv: ["Move status forward (Demo)", "تحكم تجريبي: تقدّم الحالة خطوة"],
+  msg: ["Message the company", "مراسلة مسؤول التوظيف"],
+  msgs: ["Message-first: the company contacts you in the app directly.", "التواصل بالرسائل المباشرة عبر التطبيق لمنع الاتصالات العشوائية."],
+  time: ["Time is up. Moving on.", "انتهى الوقت. ننتقل للسؤال التالي."]
 };
 
 const DK = {
-  ob1t: ["Hire on proven skills", "التوظيف القائم على الجدارة"],
-  ob1p: ["See candidates who already passed practical checks.", "اكتشف مرشحين اجتازوا اختبارات المهارة المطلوبة بنجاح."],
-  ob2t: ["Blind initial screening", "فرز عادل بدون تحيز"],
-  ob2p: ["Judge skills first. Photo and details unlock on match.", "قيّم المهارة أولاً. تظهر البيانات والصور فقط بعد إعجابك بالمرشح."],
-  ob3t: ["Guaranteed Feedback", "ردود احترافية للمرشحين"],
-  ob3p: ["Maintain your brand image with fast, clear replies.", "حافظ على صورة شركتك الاحترافية بردود سريعة وواضحة."],
+  ob1t: ["Hire on proven skills", "وظّف بناءً على مهارات مثبتة عملياً"],
+  ob1p: ["See candidates who already passed a skill check for the exact skill you need.", "شاهد مرشحين اجتازوا بالفعل فحصاً للمهارة المحددة التي تحتاجها في عملك."],
+  ob2t: ["Blind until a mutual match", "تقييم أعمى حتى التوافق المتبادل"],
+  ob2p: ["Judge skills first. Photo and profile unlock after you both match.", "احكم على الكفاءة والنتيجة أولاً. الصورة والاسم يُكشفان فور إعجاب الطرفين."],
+  ob3t: ["Every applicant gets an answer", "كل متقدم يضمن رداً واضحاً"],
+  ob3p: ["Set a reply-by date and send a short reason with each decision.", "حدد موعداً للرد وأرسل سبباً مختصراً ومحترماً مع كل قرار توظيف."],
+  skip: ["Skip", "تخطَّ"],
   next: ["Next", "التالي"],
-  skip: ["Skip", "تخطي"],
-  start: ["Post a Job", "إضافة وظيفة جديدة"],
-  
-  pt: ["Job Details", "تفاصيل الوظيفة"],
-  pp: ["Clear expectations attract better candidates.", "المتطلبات الواضحة تجذب الكفاءات المناسبة."],
+  start: ["Create my first job", "أنشئ أول إعلان وظيفي"],
+  pt: ["Describe the job", "صف متطلبات الوظيفة"],
+  pp: ["Candidates see exactly this clear data before they apply.", "المتقدمون سيرون هذه التفاصيل بشفافية قبل إرسال مهاراتهم."],
   jt: ["Job title", "المسمى الوظيفي"],
-  jph: ["e.g. Senior Accountant", "مثال: محاسب عام أول"],
-  sk: ["Key Skill to Verify", "المهارة الأساسية للتوثيق"],
-  lvl: ["Skill Level", "المستوى المطلوب"],
+  jph: ["e.g. Junior Accountant", "مثال: محاسب مبتدئ"],
+  sk: ["Skill to verify", "المهارة الأساسية المطلوب توثيقها"],
+  lvl: ["Level", "المستوى المطلوب"],
   jr: ["Junior", "مبتدئ"],
   md: ["Mid", "متوسط"],
   sr: ["Senior", "متقدم"],
-  sal: ["Salary (EGP)", "نطاق الراتب (بالجنيه)"],
-  min: ["Min", "الحد الأدنى"],
-  max: ["Max", "الحد الأقصى"],
-  exp: ["Experience", "سنوات الخبرة"],
-  e0: ["0-1 year", "0 - 1 سنة"],
-  e1: ["1-3 years", "1 - 3 سنوات"],
-  e3: ["3+ years", "3+ سنوات"],
-  rb: ["Reply within (Days)", "الالتزام بالرد خلال (أيام)"],
-  d: ["Days", "أيام"],
-  publish: ["Publish Job", "نشر الوظيفة"],
-  live: ["Job is Live!", "تم نشر الوظيفة بنجاح!"],
-  livep: ["Candidates are ready to be reviewed.", "الكفاءات الجاهزة والموثقة في انتظارك لفرزها."],
-  see: ["Review Talent", "فرز المرشحين"],
-  
-  tTal: ["Verified Talent", "المواهب الموثقة"],
-  bl: ["Blind Profile Mode", "وضع الحماية من التحيز"],
-  match: ["Accept & Match", "إعجاب وتوافق"],
-  skp: ["Skip", "تخطي"],
-  sent: ["Feedback recorded", "تم تسجيل التقييم"],
-  none: ["No more candidates", "لا يوجد مزيد من المرشحين حالياً"],
-  nonep: ["Check back later.", "يرجى العودة لاحقاً لاكتشاف كفاءات جديدة."],
-  edit: ["Edit Job", "تعديل الوظيفة"],
-  
-  mt: ["It's a Match! 🎉", "تطابق رائع! 🎉"],
-  mp: ["Profile and contact details unlocked.", "تم كشف البيانات الشخصية وطرق التواصل بنجاح."],
-  ph: ["Profile Unlocked", "تم كشف الهوية"],
-  slot: ["Select Interview Time", "اختر موعداً مبدئياً للمقابلة"],
-  book: ["Book Interview", "تأكيد وحجز المقابلة"],
-  pick: ["Pick a slot", "اختر موعداً"],
-  bk: ["Interview Scheduled!", "تم تحديد المقابلة!"],
-  bkp: ["An encrypted video link has been generated.", "تم إرسال دعوة رسمية للمرشح ورابط فيديو مشفر للمقابلة."],
-  bk_pipe_btn: ["Go to Dashboard", "لوحة إدارة المقابلات"],
-  bk_next_btn: ["Next Candidate", "المرشح التالي"],
-  bk_chat_btn: ["Direct Message", "مراسلة مباشرة"],
-};
-
-// Simple audio mock (assuming the previous complex audio logic is retained or simplified)
-const playClickSound = () => {};
-const playSuccessSound = () => {};
-const playWarningSound = () => {};
-const playTransitionSound = () => {};
-
-// Exam data
-const QUESTIONS = [
-  { q: ["Which function adds a column of numbers?", "أي دالة تقوم بجمع عمود من الأرقام في Excel؟"], o: [["SUM", "SUM"], ["LOOKUP", "LOOKUP"], ["TEXT", "TEXT"], ["COUNTA", "COUNTA"]], c: 0, r: ["Basic math", "دوال حسابية"] },
-  { q: ["What does $A$1 mean?", "ماذا يعني التعبير $A$1؟"], o: [["Hidden", "خلية مخفية"], ["Absolute reference", "تثبيت مرجع الخلية"], ["Date cell", "خلية تاريخ"], ["Locked", "خلية مقفلة"]], c: 1, r: ["References", "المراجع"] },
-  { q: ["Best tool to summarize data?", "أفضل أداة لتلخيص بيانات المبيعات؟"], o: [["Merge", "الدمج"], ["Layout", "التخطيط"], ["PivotTable", "الجداول المحورية (Pivot)"], ["Border", "الحدود"]], c: 2, r: ["PivotTables", "الجداول المحورية"] },
-  { q: ["What does VLOOKUP do?", "ما هي وظيفة دالة VLOOKUP؟"], o: [["Search and return matching value", "البحث وإرجاع قيمة مطابقة"], ["Sort ascending", "ترتيب تصاعدي"], ["Format text", "تنسيق نص"], ["Count blanks", "عد الفراغات"]], c: 0, r: ["Lookups", "دوال البحث"] }
-];
-
-const INITIAL_JOBS = [
-  { t: ["Senior General Accountant", "محاسب عام أول"], co: "Nile Tech Solutions", sal: "12,000–15,000", expLevel: 'mid', ex: ["3+ years", "3+ سنوات"], loc: ["Cairo", "القاهرة"], workType: "office", sch: ["Sun-Thu", "الأحد-الخميس"], days: 3, marketTier: 'top', marketMedian: 10000, salaryMin: 12000, salaryMax: 15000 },
-  { t: ["ERP Implementation Specialist", "أخصائي تطبيق أنظمة ERP"], co: "Bouri Group", sal: "14,000–18,000", expLevel: 'mid', ex: ["2-5 years", "2-5 سنوات"], loc: ["New Cairo", "القاهرة الجديدة"], workType: "hybrid", sch: ["Hybrid", "هجين"], days: 5, marketTier: 'top', marketMedian: 13000, salaryMin: 14000, salaryMax: 18000 },
-];
-
-const CANDIDATES = [
-  { n: ["Abdelhady Fahmy", "عبد الهادي فهمي"], sc: 96, f: 1, m: 1, s: ["Excel", "SAP FICO", "ERP", "Reporting"], level: "Excel · Senior", levelAr: "Excel · متقدم", badgeId: "HM-96-EXC", specialty: ["General Accounting & ERP", "محاسبة عامة وتطبيقات ERP"], experience: ["8 Years Experience", "خبرة 8 سنوات"], phone: "+20 100 000 0000", email: "abdelhady@example.com" }
-];
-
-// App Component
-function App() {
-  const [langIndex, setLangIndex] = useState(1); // 1 = Arabic Default
-  const [darkMode, setDarkMode] = useState(false);
-  const [scr, setScr] = useState('role');
-  const [role, setRole] = useState(null); // 'c' or 'k'
-  
-  // Registration States
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [currentJob, setCurrentJob] = useState('');
-  const [companyName, setCompanyName] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [authError, setAuthError] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  
-  // Test/App states
-  const [cvName, setCvName] = useState('');
-  const [isReadingCV, setIsReadingCV] = useState(false);
-  const [examAgreed, setExamAgreed] = useState(false);
-  const [currentQ, setCurrentQ] = useState(0);
-  const [answers, setAnswers] = useState([]);
-  const [applications, setApplications] = useState([]);
-  const [toastMessage, setToastMessage] = useState('');
-  const [employerOnboardingStep, setEmployerOnboardingStep] = useState(0);
-  
-  const t = (k) => {
-    const isAr = langIndex === 1;
-    const item = (role === 'c' ? DC[k] : role === 'k' ? DK[k] : null) || DC[k] || DK[k] || D0[k];
-    if (!item) return k;
-    return item[langIndex];
-  };
-
-  const showToast = (msg) => {
-    setToastMessage(msg);
-    setTimeout(() => setToastMessage(''), 3500);
-  };
-
-  const navigateScreen = (s) => setScr(s);
-
-  // --- Real Email Simulation Logic ---
-  const handleLoginSubmit = () => {
-    const errs = {};
-    const isAr = langIndex === 1;
-    
-    if (role === 'c') {
-      if (!name.trim()) errs.u = D0.l_eu[langIndex];
-      if (!email.trim() || !email.includes('@')) errs.e = D0.l_ee[langIndex];
-      if (!currentJob.trim()) errs.j = D0.l_ej[langIndex];
-    } else {
-      if (!companyName.trim()) errs.c = D0.l_eu[langIndex];
-      if (!email.trim() || !email.includes('@')) errs.e = D0.l_ee[langIndex];
-    }
-    if (password.length < 6) errs.p = D0.l_ep[langIndex];
-
-    setAuthError(errs);
-    if (Object.keys(errs).length > 0) return;
-
-    setIsSubmitting(true);
-    showToast(isAr ? 'جاري إعداد بيئة العمل...' : 'Setting up workspace...');
-
-    // Simulate Server Request & Email Delivery
-    setTimeout(() => {
-      /* 
-        NOTE FOR GITHUB UPLOAD: 
-        To make this send a REAL email during your presentation, uncomment the block below 
-        and add your EmailJS Service ID, Template ID, and Public Key.
-        
-        emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
-          to_email: email,
-          to_name: name || companyName,
-          role: role === 'c' ? "Candidate" : "Company",
-          job: currentJob
-        }, "YOUR_PUBLIC_KEY")
-        .then(() => console.log("Email sent!"))
-        .catch(err => console.error("Email failed:", err));
-      */
-
-      setIsSubmitting(false);
-      
-      // Show massive success toast about the email
-      showToast(isAr ? `🎉 تم التفعيل بنجاح! راجع بريدك (${email}) للحصول على رسالة الترحيب.` : `🎉 Activated! Check your inbox (${email}) for the welcome email.`);
-
-      if (role === 'c') navigateScreen('cv');
-      else navigateScreen('onb');
-    }, 2000);
-  };
-
-  const simulateCVRead = (filename) => {
-    setCvName(filename);
-    setIsReadingCV(true);
-    setTimeout(() => {
-      setIsReadingCV(false);
-      navigateScreen('detect');
-    }, 1500);
-  };
-
-  return (
-    <div className={`min-h-screen w-full flex flex-col items-center justify-center p-0 sm:p-4 transition-colors duration-200 select-none ${darkMode ? 'dark bg-[#070D14]' : 'bg-[#0D1A24]'}`}>
-      
-      <div className={`w-full max-w-[430px] flex flex-col bg-[var(--bg)] text-[var(--tx)] relative overflow-hidden h-screen sm:h-[860px] sm:rounded-[36px] sm:border-[8px] sm:border-slate-800 sm:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7)]`}>
-        
-        {/* Status Bar */}
-        <div className="w-full h-7 px-5 flex items-center justify-between bg-[var(--sf)] border-b border-[var(--ln)]/40 text-[11px] font-bold text-[var(--mu)] z-30">
-          <span>09:41</span>
-          <div className="w-3.5 h-3.5 rounded-full bg-black/80 border border-slate-700/50"></div>
-          <div className="flex items-center gap-2">
-            <span>5G</span>
-            <div className="w-4 h-2.5 border border-current rounded-xs p-0.5"><div className="w-full h-full bg-current rounded-2xs"></div></div>
-          </div>
-        </div>
-
-        {/* App Header */}
-        <header className="flex items-center justify-between px-4 py-3 bg-[var(--sf)] border-b border-[var(--ln)] z-20">
-          <div className="flex items-center gap-2.5">
-            <div className="flex items-center font-black text-xl tracking-tight">
-              HIRE <span className="text-[var(--pri)] mx-1">ME</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <button onClick={() => setLangIndex(langIndex === 1 ? 0 : 1)} className="px-2.5 py-1 rounded-full border border-[var(--ln)] text-xs font-extrabold hover:border-[var(--pri)]">
-              {langIndex === 1 ? 'EN' : 'عربي'}
-            </button>
-            <button onClick={() => setDarkMode(!darkMode)} className="w-8 h-8 rounded-full border border-[var(--ln)] flex items-center justify-center text-[var(--mu)]">
-              {darkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4" />}
-            </button>
-          </div>
-        </header>
-
-        {/* Main Content */}
-        <main className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
-          {toastMessage && (
-            <div className="fixed top-14 left-4 right-4 z-50 p-4 rounded-2xl bg-[var(--pri)] text-white font-bold text-sm shadow-xl text-center animate-pop flex flex-col items-center gap-2">
-              <Mail className="w-6 h-6 animate-bounce" />
-              {toastMessage}
-            </div>
-          )}
-
-          {/* SCREEN: ROLE */}
-          {scr === 'role' && (
-            <div className="space-y-6 animate-up pt-4">
-              <div className="text-center space-y-2">
-                <h1 className="text-3xl font-black">{t('r_t')}</h1>
-                <p className="text-sm text-[var(--mu)] max-w-xs mx-auto">{t('r_p')}</p>
-              </div>
-              <div className="space-y-4">
-                <button onClick={() => { setRole('c'); navigateScreen('login'); }} className="w-full p-5 rounded-2xl border-2 border-[var(--ln)] bg-[var(--sf)] hover:border-[var(--pri)] text-start flex items
+  sal: ["Monthly salary (EGP)", "الراتب الشهري (بالجنيه المصري)"],
+  min: ["From", "الحد الأدنى"],
+  max: ["To", "الحد الأقصى"],
+  exp: ["Experience really needed", "الخبرة المطلوبة فعلياً"],
+  e0: ["0 to 1 year", "من 0 إلى سنة واحدة"],
+  e1: ["1 to 3 years", "من 1 إلى 3 سنوات"],
+  e3: ["3+ years", "أكثر من 3 سنوات"],
+  pres: ["Professional presentation required", "مظهر مهني مطلوب (للوظائف الميدانية/المقابلات)"],
+  why: ["Why? (shown to candidates)", "السبب (يظهر بوضوح للمتقدمين)"],
+  whyph: ["e.g. meets corporate clients daily", "مثال: يقابل عملاء الشركات يومياً في الفرع"],
+  rb: ["Reply to every applicant within", "الالتزام بالرد على المتقدمين خلال"],
+  d: ["days", "أيام"],
+  publish: ["Publish job to Android app", "انشر الوظيفة في التطبيق"],
+  eSal: ["Enter a realistic salary range.", "أدخل نطاق راتب صحيح."],
+  eTit: ["Add a job title.", "أضف المسمى الوظيفي."],
+  eWhy: ["Say why presentation matters for this job.", "اذكر سبب اشتراط المظهر المهني."],
+  live: ["Your job is live!", "تم نشر الوظيفة بنجاح!"],
+  livep: ["Verified candidates for this skill are ready to review.", "المرشحون الموثقون لهذه المهارة جاهزون للف
